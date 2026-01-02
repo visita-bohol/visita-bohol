@@ -8,7 +8,7 @@ import { calculateDistance } from '../utils/helpers';
 function MapRefresher({ center, zoom }) {
     const map = useMap();
     useEffect(() => {
-        if (center) map.flyTo(center, zoom || 13);
+        if (center) map.flyTo(center, zoom || 15);
     }, [center, zoom, map]);
     return null;
 }
@@ -17,7 +17,22 @@ export default function MapTab({ churches, visitedChurches, onChurchClick }) {
     const { location, getLocation, loading: geoLoading } = useGeolocation();
     const [searchTerm, setSearchTerm] = useState('');
     const [dioceseFilter, setDioceseFilter] = useState('All');
-    const [mapCenter] = useState([9.85, 124.15]);
+    const [activeCenter, setActiveCenter] = useState([9.85, 124.15]);
+    const [activeZoom, setActiveZoom] = useState(10);
+    const [isLocating, setIsLocating] = useState(false);
+
+    useEffect(() => {
+        if (location && isLocating) {
+            setActiveCenter([location.latitude, location.longitude]);
+            setActiveZoom(15);
+            setIsLocating(false);
+        }
+    }, [location, isLocating]);
+
+    const handleLocate = () => {
+        setIsLocating(true);
+        getLocation();
+    };
 
     const filteredChurches = useMemo(() => {
         return churches.filter(church => {
@@ -46,6 +61,7 @@ export default function MapTab({ churches, visitedChurches, onChurchClick }) {
 
     const findNearest = () => {
         if (!location) {
+            setIsLocating(true); // Treat as loading for both
             getLocation();
             return;
         }
@@ -57,6 +73,9 @@ export default function MapTab({ churches, visitedChurches, onChurchClick }) {
 
         const nearest = churchesWithDistance.sort((a, b) => a.distance - b.distance).slice(0, 3);
         const nearestChurch = nearest[0];
+
+        setActiveCenter(nearestChurch.Coords);
+        setActiveZoom(16);
 
         onChurchClick(nearestChurch, {
             text: `Nearest Church · ${nearestChurch.distance.toFixed(1)} km away`,
@@ -81,7 +100,7 @@ export default function MapTab({ churches, visitedChurches, onChurchClick }) {
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
-                    <button onClick={getLocation} id="locate-btn" className="floating-action-btn">
+                    <button onClick={handleLocate} id="locate-btn" className="floating-action-btn">
                         <i className={`fas ${geoLoading ? 'fa-spinner fa-spin' : 'fa-location-arrow'} text-lg`}></i>
                     </button>
                     <button onClick={findNearest} id="nearest-btn" className="floating-action-btn" title="Find Nearest Church">
@@ -98,8 +117,8 @@ export default function MapTab({ churches, visitedChurches, onChurchClick }) {
             </div>
 
             <MapContainer
-                center={mapCenter}
-                zoom={10}
+                center={activeCenter}
+                zoom={activeZoom}
                 className="h-full w-full"
                 zoomControl={false}
                 attributionControl={false}
@@ -110,7 +129,13 @@ export default function MapTab({ churches, visitedChurches, onChurchClick }) {
                         key={church.id}
                         position={church.Coords}
                         icon={createChurchIcon(church)}
-                        eventHandlers={{ click: () => onChurchClick(church) }}
+                        eventHandlers={{
+                            click: () => {
+                                setActiveCenter(church.Coords);
+                                setActiveZoom(16);
+                                onChurchClick(church);
+                            }
+                        }}
                     />
                 ))}
                 {location && (
@@ -120,7 +145,7 @@ export default function MapTab({ churches, visitedChurches, onChurchClick }) {
                         pathOptions={{ color: 'white', fillColor: '#2563eb', fillOpacity: 0.8, weight: 3 }}
                     />
                 )}
-                <MapRefresher />
+                <MapRefresher center={activeCenter} zoom={activeZoom} />
             </MapContainer>
 
             {/* Map Legend */}

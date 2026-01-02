@@ -105,7 +105,7 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick 
                             </span>
                         </div>
 
-                        <div className="hidden md:flex gap-2 absolute top-0 right-14 z-20">
+                        <div className="hidden md:flex gap-2 absolute top-0 right-2 z-20">
                             <button
                                 onClick={() => {
                                     if (fiestaContainerRef.current) {
