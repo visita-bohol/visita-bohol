@@ -25,47 +25,50 @@
     @apply bg-white/95 backdrop-blur-md border-b border-white/60 shadow-[0_4px_30px_-10px_rgba(37, 99, 235, 0.1)];
   }
 
-  .inline-header {
-    position: sticky;
+  .header-ui-container {
+    width: 100%;
+    z-index: 5000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 15px 0;
+    background: transparent;
+  }
+
+  .floating-header {
+    position: fixed;
     top: 0;
-    z-index: 40;
-    width: 100vw;
-    margin-left: -16px;
-    margin-right: -16px;
-    margin-bottom: 10px;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 20px 16px;
+    background: transparent;
+  }
+
+  .inline-header {
+    @apply sticky top-0 z-40 w-full mb-3;
     padding: 16px 16px 12px 16px;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(239, 246, 255, 0.95));
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
     border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
   }
 
   .search-input-wrapper {
-    position: relative;
-    background: white;
-    border-radius: 16px;
+    @apply relative bg-white rounded-2xl flex items-center px-4 h-[52px] border border-gray-100;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    height: 52px;
-    border: 1px solid rgba(226, 232, 240, 0.5);
+  }
+
+  .search-input-wrapper input {
+    @apply flex-1 bg-transparent border-none outline-none font-semibold text-[14px] text-gray-800 ml-3;
   }
 
   .floating-action-btn {
-    width: 52px;
-    height: 52px;
-    background: white;
-    border-radius: 16px;
+    @apply w-[52px] h-[52px] bg-white rounded-2xl flex items-center justify-center text-blue-600 flex-shrink-0 transition-all border border-gray-100;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #2563eb;
-    flex-shrink: 0;
-    transition: all 0.2s;
-    border: 1px solid rgba(226, 232, 240, 0.5);
   }
 
   .floating-action-btn:active {
@@ -73,11 +76,15 @@
   }
 
   .diocese-pill {
-    @apply px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all bg-slate-100 text-slate-500 border-none;
+    @apply px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-tighter whitespace-nowrap transition-all bg-gray-100 text-gray-500 border-none flex-shrink-0;
   }
 
   .diocese-pill.active {
-    @apply bg-blue-600 text-white;
+    @apply bg-blue-600 text-white shadow-lg shadow-blue-100;
+  }
+
+  .diocese-filter-container {
+    @apply flex gap-2 overflow-x-auto no-scrollbar pt-3 pb-1;
   }
 
   .fiesta-card-horizontal {

@@ -67,40 +67,33 @@ export default function MapTab({ churches, visitedChurches, onChurchClick }) {
 
     return (
         <div className="h-full w-full relative">
-            {/* Floating Top Header matching HTML exactly */}
-            <div className="absolute top-0 left-0 right-0 z-[1000] p-4 pointer-events-none">
-                <div className="max-w-xl mx-auto space-y-3 pointer-events-auto">
-                    <div className="flex gap-2">
-                        <div className="search-input-wrapper flex-1 !h-[52px] !rounded-[16px] !shadow-[0_4px_12px_rgba(0,0,0,0.08)] bg-white border border-gray-100 flex items-center px-4">
-                            <i className="fas fa-search text-gray-400 text-sm"></i>
-                            <input
-                                type="text"
-                                placeholder="Search churches..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="flex-1 bg-transparent border-none outline-none font-semibold text-[14px] text-gray-800 ml-3"
-                            />
-                        </div>
-                        <button onClick={getLocation} className="w-[52px] h-[52px] rounded-[16px] bg-white text-blue-600 flex items-center justify-center active:scale-95 transition-all shadow-[0_4px_12px_rgba(0,0,0,0.08)] border border-gray-100">
-                            <i className={`fas ${geoLoading ? 'fa-spinner fa-spin' : 'fa-location-arrow'} text-lg`}></i>
-                        </button>
-                        <button onClick={findNearest} className="w-[52px] h-[52px] rounded-[16px] bg-white text-blue-600 flex items-center justify-center active:scale-95 transition-all shadow-[0_4px_12px_rgba(0,0,0,0.08)] border border-gray-100">
-                            <i className="fas fa-compass text-lg"></i>
-                        </button>
+            {/* MATCHING EXACT HTML STRUCTURE */}
+            <div className="header-ui-container floating-header" id="top-ui" style={{ display: 'flex' }}>
+                <div className="flex gap-2">
+                    <div className="search-input-wrapper flex-1">
+                        <i className="fas fa-search text-gray-400 text-sm"></i>
+                        <input
+                            type="text"
+                            id="main-search"
+                            placeholder="Search churches..."
+                            autoComplete="off"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
                     </div>
+                    <button onClick={getLocation} id="locate-btn" className="floating-action-btn">
+                        <i className={`fas ${geoLoading ? 'fa-spinner fa-spin' : 'fa-location-arrow'} text-lg`}></i>
+                    </button>
+                    <button onClick={findNearest} id="nearest-btn" className="floating-action-btn" title="Find Nearest Church">
+                        <i className="fas fa-compass text-lg"></i>
+                    </button>
+                </div>
 
-                    <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-                        {['All', 'Tagbilaran', 'Talibon'].map(d => (
-                            <button
-                                key={d}
-                                onClick={() => setDioceseFilter(d)}
-                                className={`px-4 py-1.5 rounded-full text-[12px] font-semibold whitespace-nowrap transition-all ${dioceseFilter === d ? 'bg-blue-600 text-white shadow-md' : 'bg-white/90 backdrop-blur-md text-[#475569] border border-gray-100 shadow-sm'
-                                    }`}
-                            >
-                                {d === 'All' ? 'All' : `Diocese of ${d}`}
-                            </button>
-                        ))}
-                    </div>
+                {/* Diocese Filter Pills */}
+                <div className="diocese-filter-container">
+                    <button onClick={() => setDioceseFilter('All')} className={`diocese-pill ${dioceseFilter === 'All' ? 'active' : ''}`}>All</button>
+                    <button onClick={() => setDioceseFilter('Tagbilaran')} className={`diocese-pill ${dioceseFilter === 'Tagbilaran' ? 'active' : ''}`}>Diocese of Tagbilaran</button>
+                    <button onClick={() => setDioceseFilter('Talibon')} className={`diocese-pill ${dioceseFilter === 'Talibon' ? 'active' : ''}`}>Diocese of Talibon</button>
                 </div>
             </div>
 
@@ -124,21 +117,21 @@ export default function MapTab({ churches, visitedChurches, onChurchClick }) {
                     <CircleMarker
                         center={[location.latitude, location.longitude]}
                         radius={7}
-                        pathOptions={{ color: 'white', fillColor: '#2563eb', fillOpacity: 0.8, weight: 2 }}
+                        pathOptions={{ color: 'white', fillColor: '#2563eb', fillOpacity: 0.8, weight: 3 }}
                     />
                 )}
                 <MapRefresher />
             </MapContainer>
 
-            {/* Map Legend - Match HTML */}
-            <div className="absolute bottom-6 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-lg border border-gray-100 z-[400] text-[10px] font-bold space-y-2">
+            {/* Map Legend */}
+            <div className="absolute bottom-6 right-4 bg-white/95 backdrop-blur-md p-4 rounded-[24px] shadow-2xl border border-gray-100 z-[400] text-[10px] font-black space-y-3 min-w-[170px]">
                 <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-blue-600 ring-2 ring-white shadow-sm"></span>
-                    <span className="text-blue-700">Diocese of Tagbilaran</span>
+                    <span className="w-3 h-3 rounded-full bg-blue-600 ring-4 ring-blue-50"></span>
+                    <span className="text-gray-900 uppercase tracking-tighter">Diocese of Tagbilaran</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500 ring-2 ring-white shadow-sm"></span>
-                    <span className="text-amber-700">Diocese of Talibon</span>
+                    <span className="w-3 h-3 rounded-full bg-amber-500 ring-4 ring-amber-50"></span>
+                    <span className="text-gray-900 uppercase tracking-tighter">Diocese of Talibon</span>
                 </div>
             </div>
         </div>

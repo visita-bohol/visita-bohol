@@ -85,7 +85,7 @@ function App() {
 
     return (
         <div className="fixed inset-0 flex flex-col overflow-hidden bg-gray-50">
-            <main className="flex-1 relative overflow-hidden h-full">
+            <main className="flex-1 relative overflow-hidden w-full">
                 {activeTab === 'map' && (
                     <MapTab
                         churches={churches}
