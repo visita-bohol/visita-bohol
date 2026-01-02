@@ -76,7 +76,7 @@
   }
 
   .diocese-pill {
-    @apply px-4 py-1.5 rounded-xl text-[11px] font-bold whitespace-nowrap transition-all bg-gray-100/80 text-gray-500 border-none flex-shrink-0;
+    @apply flex-shrink-0 whitespace-nowrap rounded-xl border-none bg-gray-100/80 px-4 py-1.5 text-[12px] font-semibold text-slate-600 transition-all duration-150;
   }
 
   .diocese-pill.active {

@@ -8,20 +8,32 @@ export default function VisitaTab({ churches, prayers, visitedChurches, onVisitC
     const [currentStep, setCurrentStep] = useState(0);
     const [tempChurches, setTempChurches] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [isReviewing, setIsReviewing] = useState(false);
 
     const completedCount = useMemo(() => visitaProgress.filter(p => p >= 1 && p <= 7).length, [visitaProgress]);
 
     const startSelection = () => {
         setIsSelecting(true);
+        setIsReviewing(false);
         setCurrentStep(0);
         setTempChurches(visitaChurches.length > 0 ? [...visitaChurches] : Array(7).fill(null));
     };
 
     const confirmSelection = () => {
         if (tempChurches.filter(id => id).length === 7) {
-            setVisitaChurches(tempChurches);
-            setIsSelecting(false);
+            setIsReviewing(true);
         }
+    };
+
+    const finalConfirm = () => {
+        setVisitaChurches(tempChurches);
+        setIsSelecting(false);
+        setIsReviewing(false);
+    };
+
+    const editStep = (idx) => {
+        setCurrentStep(idx);
+        setIsReviewing(false);
     };
 
     const resetVisita = () => {
@@ -30,6 +42,98 @@ export default function VisitaTab({ churches, prayers, visitedChurches, onVisitC
             setVisitaProgress([]);
         }
     };
+
+    // --- REVIEW UI ---
+    if (isReviewing) {
+        return (
+            <div id="tab-visita" className="tab-content h-full overflow-y-auto px-4 pt-0 pb-20 bg-gradient-to-b from-blue-50 to-white active no-scrollbar">
+                <div id="visita-content">
+                    <div className="sticky top-0 z-40 -mx-4 px-4 pt-4 pb-4 mb-2 bg-gradient-to-b from-white/95 to-blue-50/95 backdrop-blur-xl border-b border-white/60 shadow-[0_4px_30px_-10px_rgba(37,99,235,0.1)] transition-all">
+                        <div className="flex items-center justify-between mb-4">
+                            <button onClick={() => setIsReviewing(false)} className="flex items-center gap-2 text-gray-600 active:text-blue-600 transition-colors group">
+                                <div className="w-8 h-8 rounded-full bg-white border border-gray-200 group-active:border-blue-200 flex items-center justify-center shadow-sm transition-colors">
+                                    <i className="fas fa-arrow-left text-xs group-active:text-blue-600"></i>
+                                </div>
+                                <span className="text-xs font-bold group-active:text-blue-600">Back</span>
+                            </button>
+
+                            <div className="text-center">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-blue-500 block mb-0.5">Review Selection</span>
+                                <h2 className="text-base font-black text-gray-900 leading-none">Your Itinerary</h2>
+                            </div>
+
+                            <div className="w-16 flex justify-end">
+                                <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg shadow-sm">7/7</span>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1 mb-2">
+                            {tempChurches.map((id, idx) => {
+                                const church = churches.find(c => c.id === id);
+                                return (
+                                    <div
+                                        key={idx}
+                                        onClick={() => editStep(idx)}
+                                        className="flex items-center gap-2 bg-white pl-3 pr-4 py-2 rounded-xl border border-blue-100 shadow-sm flex-shrink-0 cursor-pointer hover:border-blue-300 hover:bg-blue-50/60 transition-all"
+                                    >
+                                        <span className="bg-blue-600 text-white text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full shadow-sm">{idx + 1}</span>
+                                        <span className="text-[10px] font-bold text-gray-700 whitespace-nowrap mr-1 max-w-[80px] truncate">{church?.Name || 'Church'}</span>
+                                        <i className="fas fa-pen text-[9px] text-gray-400"></i>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    <div id="itinerary-list" className="space-y-4 mb-28 pt-4">
+                        {tempChurches.map((id, idx) => {
+                            const church = churches.find(c => c.id === id);
+                            if (!church) return null;
+                            const markerColor = church.Diocese === 'Tagbilaran' ? 'bg-blue-600' : 'bg-amber-500';
+
+                            return (
+                                <div key={idx} className="church-select-item rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group border-blue-600 bg-blue-50/20 shadow-md">
+                                    <div className="flex items-center gap-3 relative z-10">
+                                        <div className="drag-handle text-gray-300 px-1 cursor-grab active:cursor-grabbing hover:text-blue-400">
+                                            <i className="fas fa-grip-vertical text-lg"></i>
+                                        </div>
+
+                                        <div className={`w-10 h-10 rounded-full ${markerColor} text-white flex items-center justify-center flex-shrink-0 font-black text-sm relative z-10 border-2 border-white shadow-sm`}>
+                                            {idx + 1}
+                                        </div>
+                                        <div className="flex-1 min-w-0" onClick={() => editStep(idx)}>
+                                            <div className="flex items-center justify-between gap-2">
+                                                <h3 className="font-bold text-gray-900 text-sm truncate">{church.Name}</h3>
+                                                <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg shadow-sm uppercase flex items-center gap-1">
+                                                    <i className="fas fa-pen text-[8px]"></i> Edit
+                                                </span>
+                                            </div>
+                                            <p className="text-[11px] text-gray-500 mt-0.5 flex items-center gap-1.5">
+                                                <i className={`fas fa-location-dot ${church.Diocese === 'Tagbilaran' ? 'text-blue-500' : 'text-amber-500'} text-[10px]`}></i> {church.Location}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 z-50 flex flex-col gap-3 backdrop-blur-xl bg-white/90">
+                        <button
+                            onClick={finalConfirm}
+                            className="w-full bg-blue-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-blue-200 active:scale-95 transition-transform flex items-center justify-center gap-2"
+                        >
+                            <span>Start Journey</span>
+                            <i className="fas fa-chevron-right"></i>
+                        </button>
+                        <button onClick={() => setIsReviewing(false)} className="w-full text-gray-500 font-bold text-sm py-2">
+                            Back to Selection
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     // --- SELECTION UI ---
     if (isSelecting) {
