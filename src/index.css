@@ -88,11 +88,17 @@
   }
 
   .fiesta-card-horizontal {
-    flex: 0 0 85%;
+    flex: 0 0 calc(90vw - 32px);
     max-width: 320px;
     scroll-snap-align: start;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(239, 246, 255, 0.8));
-    backdrop-filter: blur(10px);
+  }
+
+  @media (min-width: 640px) {
+
+    .floating-header,
+    .inline-header {
+      @apply max-w-2xl mx-auto left-4 right-4 rounded-3xl mt-4 border border-white/50 shadow-2xl;
+    }
   }
 
   .bottom-sheet {

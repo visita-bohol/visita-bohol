@@ -61,11 +61,11 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick 
     };
 
     return (
-        <div id="tab-directory" className="tab-content h-full overflow-y-auto px-4 pt-0 pb-20 bg-gray-50 no-scrollbar">
+        <div id="tab-directory" className="tab-content h-full overflow-y-auto pt-0 pb-20 bg-gray-50 no-scrollbar">
             {/* EXACT HTML STRUCTURE FROM USER */}
             <div className="header-ui-container inline-header" id="top-ui" style={{ display: 'flex' }}>
                 <div className="flex gap-2">
-                    <div className="search-input-wrapper flex-1">
+                    <div className="search-input-wrapper flex-1 min-w-0">
                         <i className="fas fa-search text-gray-400 text-sm"></i>
                         <input
                             type="text"
@@ -105,28 +105,41 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick 
                             </span>
                         </div>
 
-                        <div className="flex overflow-x-auto gap-4 pb-4 -mx-1 px-1 snap-x no-scrollbar scroll-smooth">
+                        <div id="fiesta-container" className="flex overflow-x-auto gap-4 pb-4 -mx-4 px-4 snap-x no-scrollbar scroll-smooth">
                             {currentMonthChurches.map(church => {
                                 const isTagbilaran = church.Diocese === 'Tagbilaran';
                                 const iconBg = isTagbilaran ? 'bg-blue-600' : 'bg-amber-500';
+                                const iconShadow = isTagbilaran ? 'shadow-blue-200' : 'shadow-amber-200';
+
                                 return (
                                     <div
                                         key={church.id}
-                                        className="rounded-3xl p-5 border border-blue-50 shadow-sm active:scale-95 transition-all w-[300px] flex-shrink-0 snap-start bg-white relative overflow-hidden"
+                                        className="fiesta-card-horizontal rounded-2xl p-4 border border-blue-100/50 shadow-md shadow-blue-500/5 active:scale-95 transition-all hover:border-blue-300 relative overflow-hidden flex-shrink-0 snap-start"
                                         onClick={() => onChurchClick(church)}
                                     >
-                                        <div className="flex items-start gap-4">
-                                            <div className={`w-12 h-12 ${iconBg} text-white rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg`}>
+                                        <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm -z-10"></div>
+                                        <div className="flex items-start gap-3">
+                                            <div className={`w-12 h-12 ${iconBg} text-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg ${iconShadow}`}>
                                                 <i className="fas fa-church text-xl"></i>
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <h3 className="font-black text-gray-900 text-[15px] leading-tight truncate mb-1 uppercase tracking-tight">{church.Name}</h3>
-                                                <p className="text-[10px] font-bold text-gray-400 truncate flex items-center gap-1.5 uppercase tracking-wide mb-3">
-                                                    <i className={`fas fa-location-dot ${isTagbilaran ? 'text-blue-500' : 'text-amber-500'}`}></i> {church.Location}
+                                                <h3 className="font-black text-gray-900 text-base leading-tight truncate mb-1 lowercase first-letter:uppercase">
+                                                    <span className="uppercase">{church.Name}</span>
+                                                </h3>
+                                                <p className="text-[10px] font-semibold text-gray-500 truncate flex items-center gap-2 mb-2">
+                                                    <span><i className={`fas fa-location-dot ${isTagbilaran ? 'text-blue-500' : 'text-amber-500'}`}></i> {church.Location}</span>
+                                                    <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+                                                    <span className={`${isTagbilaran ? 'text-blue-600' : 'text-amber-600'} font-bold`}>
+                                                        <i className="fas fa-calendar-alt text-[9px] mr-1"></i>{church.Fiesta}
+                                                    </span>
                                                 </p>
 
-                                                <div className="pt-3 border-t border-gray-100">
-                                                    <p className="text-[10px] font-black text-blue-600 uppercase tracking-tighter leading-none">{church.Fiesta}</p>
+                                                <div className="pt-2 border-t border-gray-100/50">
+                                                    <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Sunday Mass</p>
+                                                    <p className="text-[10px] font-semibold text-gray-700 flex items-center gap-1.5">
+                                                        <i className={`fas fa-clock ${isTagbilaran ? 'text-blue-400' : 'text-amber-400'}`}></i>
+                                                        <span className="truncate">{church.Schedules && church.Schedules.Sunday ? church.Schedules.Sunday : "Schedule Varies"}</span>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>

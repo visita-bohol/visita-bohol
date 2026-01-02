@@ -1,7 +1,7 @@
 export default function AboutTab() {
     return (
-        <div id="tab-about" className="tab-content h-full overflow-y-auto px-4 pt-6 pb-32 bg-gray-50 no-scrollbar">
-            <div className="max-w-md mx-auto space-y-6">
+        <div id="tab-about" className="tab-content h-full overflow-y-auto pt-6 pb-32 bg-gray-50 no-scrollbar">
+            <div className="px-4 max-w-md mx-auto space-y-6">
                 {/* App Header */}
                 <div className="text-center pt-10 pb-4">
                     <div className="w-20 h-20 bg-blue-600 rounded-[28px] flex items-center justify-center mx-auto mb-5 shadow-2xl shadow-blue-100">
