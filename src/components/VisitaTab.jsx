@@ -68,7 +68,13 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
     };
 
     const resetVisita = () => {
-        onChurchClick({ Name: 'Reset Journey?', id: 'reset_journey' }, { text: 'Reset Journey', icon: 'fas fa-redo-alt', color: 'bg-red-600' });
+        onChurchClick({
+            Name: 'Reset Journey?',
+            id: 'reset_journey',
+            History: 'Are you sure you want to reset your entire pilgrimage itinerary and progress? This will clear all 7 selected churches and your prayer status. This action cannot be undone.',
+            Coords: [0, 0],
+            Diocese: 'System'
+        }, { text: 'Reset Journey', icon: 'fas fa-redo-alt', color: 'bg-red-600' });
     };
 
     const unmarkStation = (idx) => {
@@ -172,7 +178,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                         {tempChurches.map((id, idx) => {
                             const church = churches.find(c => c.id === id);
                             return (
-                                <div key={idx} className="bg-white p-4 rounded-2xl border border-blue-50 shadow-sm flex items-center gap-4 group active:scale-[0.98] transition-all">
+                                <div key={idx} className="bg-white p-4 rounded-3xl border border-blue-50 shadow-sm flex items-center gap-4 group active:scale-[0.98] transition-all">
                                     <div className="drag-handle cursor-grab active:cursor-grabbing w-8 h-8 flex items-center justify-center text-gray-300 hover:text-blue-400 transition-colors">
                                         <i className="fas fa-grip-vertical"></i>
                                     </div>
@@ -250,7 +256,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                         <div
                                             key={idx}
                                             onClick={() => setCurrentStep(idx)}
-                                            className="flex items-center gap-2 bg-white pl-3 pr-4 py-2 rounded-xl border shadow-sm flex-shrink-0 cursor-pointer transition-all border-blue-100 hover:border-blue-300 hover:bg-blue-50/60"
+                                            className="flex items-center gap-2 bg-white pl-3 pr-4 py-2 rounded-2xl border shadow-sm flex-shrink-0 cursor-pointer transition-all border-blue-100 hover:border-blue-300 hover:bg-blue-50/60"
                                         >
                                             <span className="bg-blue-600 text-white text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full shadow-sm">{idx + 1}</span>
                                             <span className="text-[10px] font-bold text-gray-700 whitespace-nowrap mr-1 max-w-[80px] truncate">{church?.Name || 'Church'}</span>
@@ -261,7 +267,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                     return (
                                         <div
                                             key={idx}
-                                            className="flex items-center gap-2 bg-white/60 pl-3 pr-4 py-2 rounded-xl border flex-shrink-0 transition-all border-blue-600 shadow-md bg-white cursor-pointer hover:border-blue-300 hover:shadow-sm"
+                                            className="flex items-center gap-2 bg-white/60 pl-3 pr-4 py-2 rounded-2xl border flex-shrink-0 transition-all border-blue-600 shadow-md bg-white cursor-pointer hover:border-blue-300 hover:shadow-sm"
                                         >
                                             <span className="bg-gray-200 text-gray-500 text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{idx + 1}</span>
                                             <span className="text-[10px] font-bold text-gray-400 whitespace-nowrap mr-1">{id ? 'Change' : 'Select'}</span>
@@ -271,7 +277,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                     return (
                                         <div
                                             key={idx}
-                                            className="flex items-center gap-2 bg-white/60 pl-3 pr-4 py-2 rounded-xl border flex-shrink-0 transition-all border-dashed border-gray-300 opacity-50"
+                                            className="flex items-center gap-2 bg-white/60 pl-3 pr-4 py-2 rounded-2xl border flex-shrink-0 transition-all border-dashed border-gray-300 opacity-50"
                                         >
                                             <span className="bg-gray-200 text-gray-500 text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{idx + 1}</span>
                                             <span className="text-[10px] font-bold text-gray-400 whitespace-nowrap mr-1">Select</span>
@@ -414,14 +420,20 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
             </div>
 
             <div className="px-0 space-y-4 pt-0">
-                <div className="mb-6 bg-blue-600 rounded-[32px] p-6 text-white shadow-xl shadow-blue-100 relative overflow-hidden">
+                <div className="mb-6 bg-blue-600 rounded-[28px] p-6 text-white shadow-xl shadow-blue-100 relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-4 opacity-10"><i className="fas fa-info-circle text-6xl"></i></div>
                     <h3 className="font-black text-xl mb-2 leading-tight">Begin Your Pilgrimage</h3>
                     <p className="text-blue-100 text-xs mb-8">Follow these tips and guides for a meaningful visiting experience.</p>
 
                     <button
                         onClick={() => {
-                            onChurchClick({ Name: 'Begin Your Pilgrimage', id: 'opening', Coords: [9.85, 124.1], Diocese: 'Instruction' }, { text: 'VISITA IGLESIA', icon: 'fas fa-info-circle', color: 'text-blue-600' });
+                            onChurchClick({
+                                Name: 'Begin Your Pilgrimage',
+                                id: 'opening',
+                                Coords: [9.85, 124.1],
+                                Diocese: 'Instruction',
+                                History: 'Welcome to your spiritual journey! Here are some helpful tips for your Visita Iglesia:\n\n1. Prepare your heart with an opening prayer at the first station.\n2. Spend at least 10-15 minutes in quiet reflection at each church.\n3. Follow the designated route to avoid unnecessary travel.\n4. You can track each station by tapping "Complete" after your prayer.'
+                            }, { text: 'VISITA IGLESIA', icon: 'fas fa-info-circle', color: 'text-blue-600' });
                         }}
                         className="w-full bg-white text-blue-600 py-4 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2"
                     >
@@ -438,10 +450,10 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                     const markerColor = church.Diocese === 'Tagbilaran' ? 'bg-blue-600' : 'bg-amber-500';
 
                     return (
-                        <div key={index} className="bg-white rounded-[32px] border border-blue-50/50 shadow-sm overflow-hidden group">
+                        <div key={index} className="bg-white rounded-[28px] border border-blue-50/50 shadow-sm overflow-hidden group">
                             <div className="p-5">
                                 <div className="flex items-start gap-4">
-                                    <div className={`w-12 h-12 rounded-2xl ${isDone ? 'bg-green-500' : markerColor} text-white flex items-center justify-center text-lg font-black shadow-lg transition-colors`}>
+                                    <div className={`w-12 h-12 rounded-full ${isDone ? 'bg-green-500' : markerColor} text-white flex items-center justify-center text-lg font-black shadow-lg transition-colors border-4 border-white`}>
                                         {isDone ? <i className="fas fa-check"></i> : index + 1}
                                     </div>
                                     <div className="flex-1 min-w-0">

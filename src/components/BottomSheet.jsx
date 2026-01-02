@@ -158,8 +158,8 @@ export default function BottomSheet({ isOpen, church, allChurches, userLocation,
                             </div>
 
                             <div className="prose prose-sm max-w-none">
-                                {currentChurch.History.split('\n\n').map((para, pIdx) => (
-                                    <p key={pIdx} className="text-sm text-gray-600 leading-relaxed font-medium mb-4 whitespace-pre-wrap">{para}</p>
+                                {((currentChurch && currentChurch.History) || "This station provides guidance for your pilgrimage journey. Explore the details below to prepare for your visit.").split('\n\n').map((para, pIdx) => (
+                                    <p key={pIdx} className="text-sm text-gray-600 leading-relaxed font-medium mb-4 whitespace-pre-wrap italic">{para}</p>
                                 ))}
                             </div>
 
