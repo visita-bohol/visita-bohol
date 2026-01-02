@@ -156,7 +156,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
         return (
             <div id="tab-visita" className="tab-content h-full overflow-y-auto px-4 pt-0 pb-20 bg-gray-50 active no-scrollbar">
                 <div id="visita-content">
-                    <div className="sticky top-0 z-40 w-[100vw] -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-3 bg-gradient-to-b from-white/95 to-blue-50/95 backdrop-blur-md border-b border-white/80 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] transition-all">
+                    <div className="sticky top-0 z-40 w-[100vw] -ml-4 -mr-4 mb-[10px] px-4 pt-3 pb-2 bg-gradient-to-b from-white/95 to-blue-50/95 backdrop-blur-md border-b border-white/80 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] transition-all">
                         <div className="flex items-center justify-between mb-4">
                             <button onClick={() => setIsReviewing(false)} className="flex items-center gap-2 text-gray-600 active:text-blue-600 transition-colors group">
                                 <div className="w-8 h-8 rounded-full bg-white border border-gray-200 group-active:border-blue-200 flex items-center justify-center shadow-sm transition-colors">
@@ -196,7 +196,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                     <div
                         id="itinerary-list"
                         ref={sortableRef}
-                        className="space-y-4 mb-28 pt-4"
+                        className="space-y-4 mb-48 pt-4"
                     >
                         {tempChurches.map((id, idx) => {
                             const church = churches.find(c => c.id === id);
@@ -204,7 +204,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                             const markerColor = church.Diocese === 'Tagbilaran' ? 'bg-blue-600' : 'bg-amber-500';
 
                             return (
-                                <div key={id} className="church-select-item rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group border-blue-600 bg-blue-50/20 shadow-md">
+                                <div key={id} className="church-select-item rounded-2xl p-3 border transition-all cursor-pointer relative overflow-hidden group border-blue-600 bg-blue-50/20 shadow-md">
                                     <div className="flex items-center gap-3 relative z-10">
                                         <div className="drag-handle text-gray-300 px-1 cursor-grab active:cursor-grabbing hover:text-blue-400">
                                             <i className="fas fa-grip-vertical text-lg"></i>
