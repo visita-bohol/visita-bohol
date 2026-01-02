@@ -5,11 +5,11 @@ import { useGeolocation } from '../hooks/useGeolocation';
 
 export default function VisitaTab({ churches, prayers, visitedChurches, visitaProgress, setVisitaProgress, visitaChurches, setVisitaChurches, onVisitChurch, onChurchClick, setHideNav, addToast }) {
     const { location, getLocation, loading: geoLoading } = useGeolocation();
-    const [isSelecting, setIsSelecting] = useState(false);
-    const [currentStep, setCurrentStep] = useState(0);
-    const [tempChurches, setTempChurches] = useState([]);
+    const [isSelecting, setIsSelecting] = useLocalStorage('visita_isSelecting', false);
+    const [currentStep, setCurrentStep] = useLocalStorage('visita_currentStep', 0);
+    const [tempChurches, setTempChurches] = useLocalStorage('visita_tempChurches', []);
     const [searchTerm, setSearchTerm] = useState('');
-    const [isReviewing, setIsReviewing] = useState(false);
+    const [isReviewing, setIsReviewing] = useLocalStorage('visita_isReviewing', false);
     const sortableRef = useRef(null);
 
     // Sync hideNav with parent - only hide during final review
@@ -58,6 +58,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
         setVisitaChurches(tempChurches);
         setIsSelecting(false);
         setIsReviewing(false);
+        setTempChurches([]); // Clear temp storage after confirming
     };
 
     const editStep = (idx) => {

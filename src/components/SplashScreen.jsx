@@ -17,7 +17,7 @@ export default function SplashScreen() {
                 <div className="w-12 h-1 bg-gray-100 rounded-full overflow-hidden">
                     <div className="h-full bg-blue-600 w-1/2 rounded-full animate-[loading_2s_infinite]"></div>
                 </div>
-                <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest">Loading Records...</p>
+                <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest">Loading...</p>
             </div>
 
             <style>{`

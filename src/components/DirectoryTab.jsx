@@ -165,7 +165,7 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick 
                                                     <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Sunday Mass</p>
                                                     <p className="text-[10px] font-semibold text-gray-700 flex items-center gap-1.5">
                                                         <i className={`fas fa-clock ${isTagbilaran ? 'text-blue-400' : 'text-amber-400'}`}></i>
-                                                        <span className="truncate">{church.Schedules && church.Schedules.Sunday ? church.Schedules.Sunday : "Schedule Varies"}</span>
+                                                        <span className="truncate">{church.Mass || "Schedule Varies"}</span>
                                                     </p>
                                                 </div>
                                             </div>
