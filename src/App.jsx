@@ -20,6 +20,7 @@ function App() {
     const [isSheetOpen, setIsSheetOpen] = useState(false);
     const [specialHeader, setSpecialHeader] = useState(null);
     const [visitaProgress, setVisitaProgress] = useLocalStorage('visitaProgress', []);
+    const [showCompletion, setShowCompletion] = useState(false);
     const { toasts, addToast, removeToast } = useToast();
 
     // Data Loading with identical timing to HTML
@@ -129,11 +130,56 @@ function App() {
                 onToggleVisited={() => selectedChurch && toggleVisited(selectedChurch.id)}
                 onVisitaComplete={(idx) => {
                     if (!visitaProgress.includes(idx)) {
-                        setVisitaProgress(prev => [...prev, idx]);
+                        const newProgress = [...visitaProgress, idx];
+                        setVisitaProgress(newProgress);
+
+                        // Check if 7 churches completed (indices 1-7)
+                        const completedCount = newProgress.filter(p => p >= 1 && p <= 7).length;
+                        if (completedCount === 7 && idx >= 1 && idx <= 7) {
+                            setShowCompletion(true);
+                        }
                     }
                     closeSheet();
                 }}
             />
+            {showCompletion && (
+                <div id="completion-fullscreen-modal" className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-md transition-all duration-300">
+                    <div className="bg-white rounded-[40px] p-2 shadow-2xl w-full max-w-sm animate-scale-in relative border border-white">
+                        <button onClick={() => setShowCompletion(false)} className="absolute top-6 right-6 w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 active:scale-90 transition-transform z-10">
+                            <i className="fas fa-times text-lg"></i>
+                        </button>
+
+                        <div className="bg-white rounded-[38px] p-8 text-center relative overflow-hidden">
+                            <div className="w-24 h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-blue-100 ring-8 ring-blue-50 relative z-10">
+                                <i className="fas fa-check text-white text-4xl"></i>
+                            </div>
+
+                            <h2 className="text-3xl font-black text-gray-900 mb-2 leading-tight relative z-10">Complete!</h2>
+                            <p className="text-gray-400 font-bold mb-8 text-sm px-4 leading-relaxed relative z-10">You have successfully visited the 7 churches of your pilgrimage.</p>
+
+                            {/* Church List Card */}
+                            <div className="bg-gray-50/50 rounded-3xl p-6 border border-gray-100 relative z-10 text-left mb-6">
+                                <p className="text-[9px] uppercase font-black text-gray-400 tracking-[0.1em] mb-4">Pilgrimage Stations</p>
+                                <div className="space-y-1">
+                                    {(JSON.parse(localStorage.getItem('visitaChurches')) || []).map((id, i) => {
+                                        const church = churches.find(c => c.id === id);
+                                        return (
+                                            <div key={i} className="flex items-center gap-3 py-1.5 border-b border-gray-100/50 last:border-0">
+                                                <i className="fas fa-check text-blue-500 text-xs w-4"></i>
+                                                <span className="font-bold text-gray-800 text-[11px] truncate">{church?.Name || 'Unknown Site'}</span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            <button onClick={() => setShowCompletion(false)} className="w-full bg-blue-600 text-white py-4 rounded-2xl font-black text-lg active:scale-95 transition-all shadow-xl shadow-blue-200 flex items-center justify-center gap-2 relative z-10">
+                                <span>Done</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             <ToastContainer toasts={toasts} onRemove={removeToast} />
         </div>
     );

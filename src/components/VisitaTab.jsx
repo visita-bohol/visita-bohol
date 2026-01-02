@@ -373,17 +373,15 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
             </div>
 
             <div className="px-0 space-y-4 pt-0">
-                {/* 1. Opening Prayer */}
+                {/* 1. Opening Guide */}
                 <div className="mb-6 bg-blue-600 rounded-[32px] p-6 text-white shadow-xl shadow-blue-100 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 p-4 opacity-10"><i className="fas fa-cross text-6xl"></i></div>
+                    <div className="absolute top-0 right-0 p-4 opacity-10"><i className="fas fa-info-circle text-6xl"></i></div>
                     <h3 className="font-black text-xl mb-2 leading-tight">Begin Your Pilgrimage</h3>
                     <p className="text-blue-100 text-xs mb-8">Follow these tips and guides for a meaningful visiting experience.</p>
 
                     <button
                         onClick={() => {
-                            const p = prayers[0];
-                            onChurchClick({ Name: p.title, History: p.prayer, id: 'opening', Coords: [9.85, 124.1], Diocese: 'Instruction' }, { text: 'VISITA IGLESIA', icon: 'fas fa-cross', color: 'text-blue-600' });
-                            if (!visitaProgress.includes(0)) setVisitaProgress(prev => [...prev, 0]);
+                            onChurchClick({ Name: 'Begin Your Pilgrimage', id: 'opening', Coords: [9.85, 124.1], Diocese: 'Instruction' }, { text: 'VISITA IGLESIA', icon: 'fas fa-info-circle', color: 'text-blue-600' });
                         }}
                         className="w-full bg-white text-blue-600 py-4 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2"
                     >
@@ -490,26 +488,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                     );
                 })}
 
-                {/* 3. Closing Prayer */}
-                {completedCount === 7 && (
-                    <div className="px-4 mb-10">
-                        <div className="bg-amber-500 rounded-[32px] p-6 text-white shadow-xl shadow-amber-100 relative overflow-hidden group">
-                            <div className="absolute top-0 right-0 p-4 opacity-10"><i className="fas fa-crown text-6xl"></i></div>
-                            <h3 className="font-black text-xl mb-1 leading-tight uppercase">Final Step</h3>
-                            <p className="text-amber-100 text-[10px] font-bold uppercase tracking-widest mb-6 leading-tight">Closing Prayer</p>
-                            <button
-                                onClick={() => {
-                                    const p = prayers[8];
-                                    onChurchClick({ Name: p.title, History: p.prayer, id: 'closing', Coords: [9.85, 124.1], Diocese: 'Final' }, { text: 'PILGRIMAGE COMPLETE', icon: 'fas fa-crown', color: 'text-amber-500' });
-                                    if (!visitaProgress.includes(8)) setVisitaProgress(prev => [...prev, 8]);
-                                }}
-                                className="w-full bg-white text-amber-600 py-4 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2 uppercase tracking-wider"
-                            >
-                                <i className="fas fa-book-open"></i> {visitaProgress.includes(8) ? 'Read Again' : 'Confirm Completion'}
-                            </button>
-                        </div>
-                    </div>
-                )}
+                {/* No more closing prayer block here - handled by completion modal in App.jsx */}
             </div>
         </div>
     );
