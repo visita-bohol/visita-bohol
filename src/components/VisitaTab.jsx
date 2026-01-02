@@ -197,19 +197,19 @@ export default function VisitaTab({ churches, prayers, visitedChurches, onVisitC
     // --- MAIN VISITA UI ---
     if (visitaChurches.length === 0) {
         return (
-            <div className="h-full flex flex-col items-center justify-center p-8 text-center bg-gray-50">
-                <div className="w-24 h-24 bg-blue-600 rounded-[35px] flex items-center justify-center mb-8 shadow-2xl rotate-3">
-                    <i className="fas fa-cross text-white text-4xl"></i>
+            <div className="flex flex-col items-center justify-center min-h-[75vh] text-center py-10 px-4">
+                <div className="w-20 h-20 bg-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-blue-200">
+                    <i className="fas fa-cross text-white text-3xl"></i>
                 </div>
-                <h1 className="text-3xl font-black text-gray-900 mb-4 italic">Visita Iglesia</h1>
-                <p className="text-gray-500 text-sm mb-12 font-bold max-w-xs leading-relaxed uppercase tracking-widest px-4">
-                    Select 7 churches to begin your holy week pilgrimage.
+                <h1 className="text-3xl font-black text-gray-900 mb-3">Visita Iglesia</h1>
+                <p className="text-sm text-gray-600 mb-8 max-w-sm mx-auto leading-relaxed">
+                    Select 7 churches for your Visita Iglesia journey. Pray at each station and track your pilgrimage progress.
                 </p>
                 <button
                     onClick={startSelection}
-                    className="w-full max-w-xs bg-blue-600 text-white py-5 rounded-[28px] font-black text-lg shadow-2xl active:scale-95 transition-all uppercase tracking-widest"
+                    className="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold shadow-xl shadow-blue-200 active:scale-95 transition-transform"
                 >
-                    Choose Churches
+                    <i className="fas fa-plus-circle mr-2"></i> Select 7 Churches
                 </button>
             </div>
         );

@@ -95,17 +95,44 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick 
             <div className="px-4 pb-32 max-w-[1400px] mx-auto">
                 {/* Fiestas this Month Section */}
                 {currentMonthChurches.length > 0 && (
-                    <div className="mb-8 relative overflow-hidden px-1">
-                        <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-[11px] font-black uppercase tracking-[0.2em] text-blue-600/60 flex items-center gap-2">
+                    <div className="mb-6 relative z-10 overflow-hidden">
+                        <div className="flex items-center justify-between mb-4 px-1">
+                            <h2 className="text-[11px] font-black uppercase tracking-widest text-blue-600 flex items-center gap-2">
                                 <i className="fas fa-star text-amber-500"></i> Fiestas this Month
                             </h2>
-                            <span className="bg-blue-50 text-blue-600 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">
+                            <span className="bg-blue-100 text-blue-700 text-[9px] font-black px-2 py-1 rounded-md uppercase tracking-tighter ring-1 ring-blue-200">
                                 {MONTHS[currentMonth]}
                             </span>
                         </div>
 
-                        <div id="fiesta-container" className="flex overflow-x-auto gap-4 pb-4 -mx-4 px-4 snap-x no-scrollbar scroll-smooth">
+                        <div className="hidden md:flex gap-2 absolute top-0 right-14 z-20">
+                            <button
+                                onClick={() => {
+                                    if (fiestaContainerRef.current) {
+                                        fiestaContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+                                    }
+                                }}
+                                className="w-7 h-7 rounded-full bg-white/80 border border-blue-200 shadow-sm flex items-center justify-center text-blue-600 hover:bg-blue-50 transition-colors backdrop-blur-sm"
+                            >
+                                <i className="fas fa-chevron-left text-[10px]"></i>
+                            </button>
+                            <button
+                                onClick={() => {
+                                    if (fiestaContainerRef.current) {
+                                        fiestaContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+                                    }
+                                }}
+                                className="w-7 h-7 rounded-full bg-white/80 border border-blue-200 shadow-sm flex items-center justify-center text-blue-600 hover:bg-blue-50 transition-colors backdrop-blur-sm"
+                            >
+                                <i className="fas fa-chevron-right text-[10px]"></i>
+                            </button>
+                        </div>
+
+                        <div
+                            ref={fiestaContainerRef}
+                            id="fiesta-container"
+                            className="flex overflow-x-auto gap-4 pb-4 -mx-4 px-4 snap-x no-scrollbar scroll-smooth"
+                        >
                             {currentMonthChurches.map(church => {
                                 const isTagbilaran = church.Diocese === 'Tagbilaran';
                                 const iconBg = isTagbilaran ? 'bg-blue-600' : 'bg-amber-500';
@@ -118,13 +145,13 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick 
                                         onClick={() => onChurchClick(church)}
                                     >
                                         <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm -z-10"></div>
-                                        <div className="flex items-start gap-3">
+                                        <div className="flex items-start gap-4">
                                             <div className={`w-12 h-12 ${iconBg} text-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg ${iconShadow}`}>
                                                 <i className="fas fa-church text-xl"></i>
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <h3 className="font-black text-gray-900 text-base leading-tight truncate mb-1 lowercase first-letter:uppercase">
-                                                    <span className="uppercase">{church.Name}</span>
+                                                <h3 className="font-black text-gray-900 text-base leading-tight truncate mb-1">
+                                                    {church.Name}
                                                 </h3>
                                                 <p className="text-[10px] font-semibold text-gray-500 truncate flex items-center gap-2 mb-2">
                                                     <span><i className={`fas fa-location-dot ${isTagbilaran ? 'text-blue-500' : 'text-amber-500'}`}></i> {church.Location}</span>
@@ -151,8 +178,8 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick 
                 )}
 
                 {/* Discovery Section */}
-                <div className="mb-4 px-2">
-                    <h2 className="text-[11px] font-black uppercase tracking-[0.2em] text-gray-300">Discover All Churches</h2>
+                <div className="mb-4 px-1">
+                    <h2 className="text-[11px] font-black uppercase tracking-widest text-gray-400">Discover All Churches</h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-8">
                     {filteredChurches.map(church => (

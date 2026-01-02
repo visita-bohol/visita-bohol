@@ -76,7 +76,7 @@
   }
 
   .diocese-pill {
-    @apply px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-tighter whitespace-nowrap transition-all bg-gray-100 text-gray-500 border-none flex-shrink-0;
+    @apply px-4 py-1.5 rounded-xl text-[11px] font-bold whitespace-nowrap transition-all bg-gray-100/80 text-gray-500 border-none flex-shrink-0;
   }
 
   .diocese-pill.active {
@@ -84,7 +84,7 @@
   }
 
   .diocese-filter-container {
-    @apply flex gap-2 overflow-x-auto no-scrollbar pt-3 pb-1;
+    @apply flex gap-2 overflow-x-auto no-scrollbar pt-1 pb-1;
   }
 
   .fiesta-card-horizontal {

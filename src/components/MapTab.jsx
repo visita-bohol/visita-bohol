@@ -124,14 +124,14 @@ export default function MapTab({ churches, visitedChurches, onChurchClick }) {
             </MapContainer>
 
             {/* Map Legend */}
-            <div className="absolute bottom-6 right-4 bg-white/95 backdrop-blur-md p-4 rounded-[24px] shadow-2xl border border-gray-100 z-[400] text-[10px] font-black space-y-3 min-w-[170px]">
+            <div className="absolute bottom-6 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-lg border border-gray-100 z-[400] text-[10px] font-bold space-y-2">
                 <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-blue-600 ring-4 ring-blue-50"></span>
-                    <span className="text-gray-900 uppercase tracking-tighter">Diocese of Tagbilaran</span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-blue-600 ring-2 ring-white shadow-sm"></span>
+                    <span className="text-blue-700">Diocese of Tagbilaran</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-amber-500 ring-4 ring-amber-50"></span>
-                    <span className="text-gray-900 uppercase tracking-tighter">Diocese of Talibon</span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500 ring-2 ring-white shadow-sm"></span>
+                    <span className="text-amber-700">Diocese of Talibon</span>
                 </div>
             </div>
         </div>
