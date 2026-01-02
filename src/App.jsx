@@ -19,6 +19,7 @@ function App() {
     const [selectedChurch, setSelectedChurch] = useState(null);
     const [isSheetOpen, setIsSheetOpen] = useState(false);
     const [specialHeader, setSpecialHeader] = useState(null);
+    const [visitaProgress, setVisitaProgress] = useLocalStorage('visitaProgress', []);
     const { toasts, addToast, removeToast } = useToast();
 
     // Data Loading with identical timing to HTML
@@ -107,6 +108,8 @@ function App() {
                         churches={churches}
                         prayers={prayers}
                         visitedChurches={visitedChurches}
+                        visitaProgress={visitaProgress}
+                        setVisitaProgress={setVisitaProgress}
                         onVisitChurch={toggleVisited}
                         onChurchClick={(c, h) => openSheet(c, h, false)}
                         setHideNav={setHideNav}
@@ -124,6 +127,12 @@ function App() {
                 onClose={closeSheet}
                 SpecialHeader={specialHeader}
                 onToggleVisited={() => selectedChurch && toggleVisited(selectedChurch.id)}
+                onVisitaComplete={(idx) => {
+                    if (!visitaProgress.includes(idx)) {
+                        setVisitaProgress(prev => [...prev, idx]);
+                    }
+                    closeSheet();
+                }}
             />
             <ToastContainer toasts={toasts} onRemove={removeToast} />
         </div>
