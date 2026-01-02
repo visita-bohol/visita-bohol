@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { formatMassTimes, getDioceseBadgeClasses } from '../utils/helpers';
 
 export default function BottomSheet({ isOpen, church, isVisited, onClose, SpecialHeader, onToggleVisited, onVisitaComplete, onResetPilgrimage }) {
     const sheetRef = useRef(null);
@@ -28,9 +27,8 @@ export default function BottomSheet({ isOpen, church, isVisited, onClose, Specia
         const currentY = e.touches[0].clientY;
         const deltaY = currentY - touchStart.current;
 
-        // Add resistance when pulling up (deltaY < 0)
         if (deltaY < 0) {
-            setDragOffset(deltaY * 0.2); // 20% resistance
+            setDragOffset(deltaY * 0.15); // Stiff resistance for upward drag
         } else {
             setDragOffset(deltaY);
         }
@@ -71,10 +69,8 @@ export default function BottomSheet({ isOpen, church, isVisited, onClose, Specia
         }
     };
 
-    // Helper to render mass sections correctly like in HTML
     const renderMassTimes = () => {
         if (!church.Mass) return <p className="text-sm text-gray-500">Schedule not available</p>;
-
         const sections = church.Mass.split('|').map(s => s.trim());
         return (
             <div className="flex flex-wrap gap-2">
@@ -83,7 +79,6 @@ export default function BottomSheet({ isOpen, church, isVisited, onClose, Specia
                     if (parts.length === 0) return null;
                     const dayInfo = parts[0].split(':')[0];
                     const firstTime = parts[0].split(':').slice(1).join(':').trim();
-
                     return (
                         <div key={sIdx} className="contents">
                             <div className="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase">{dayInfo}</div>
@@ -112,7 +107,7 @@ export default function BottomSheet({ isOpen, church, isVisited, onClose, Specia
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
-                className={`fixed bottom-0 left-0 right-0 bg-white z-[2000] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex flex-col ${isOpen ? 'translate-y-0' : 'translate-y-full'}`}
+                className={`fixed bottom-0 left-0 right-0 bg-white z-[2000] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex flex-col max-h-[85vh]`}
                 style={{
                     borderTopLeftRadius: '24px',
                     borderTopRightRadius: '24px',
@@ -120,15 +115,15 @@ export default function BottomSheet({ isOpen, church, isVisited, onClose, Specia
                     transition: isDragging ? 'none' : 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
                 }}
             >
-                {/* Handle Container */}
-                <div onClick={onClose} className="p-4 cursor-pointer flex-shrink-0">
+                {/* Fixed Header/Handle */}
+                <div onClick={onClose} className="pt-3 pb-2 cursor-pointer flex-shrink-0">
                     <div className="w-12 h-1.5 bg-gray-200/80 rounded-full mx-auto"></div>
                 </div>
 
-                {/* Content */}
-                <div className="overflow-y-auto flex-1 px-5 pb-10 no-scrollbar">
+                {/* Scrollable Content Area */}
+                <div className="overflow-y-auto flex-1 px-5 no-scrollbar">
                     {isStation || isSpecialPrayer ? (
-                        <div id="sheet-content">
+                        <div className="pt-4 pb-6">
                             {isResetView ? (
                                 <div className="text-center">
                                     <div className="mb-6">
@@ -138,20 +133,10 @@ export default function BottomSheet({ isOpen, church, isVisited, onClose, Specia
                                         <h2 className="text-2xl font-black text-gray-900">Reset Journey?</h2>
                                         <p className="text-xs text-red-600 font-bold uppercase tracking-wider mt-1">Warning: Permanent Action</p>
                                     </div>
-
-                                    <div className="bg-gray-50 border border-gray-100 rounded-2xl p-6 mb-8">
-                                        <p className="text-gray-600 leading-relaxed text-sm text-center">
+                                    <div className="bg-gray-50 border border-gray-100 rounded-2xl p-6 mb-2">
+                                        <p className="text-gray-600 leading-relaxed text-sm text-center font-medium">
                                             This will clear your 7 selected churches and reset all station progress. This action cannot be undone.
                                         </p>
-                                    </div>
-
-                                    <div className="flex gap-3 mb-4">
-                                        <button onClick={onClose} className="flex-1 bg-gray-100 text-gray-600 py-4 rounded-xl font-bold active:scale-95 transition-all text-sm">
-                                            Cancel
-                                        </button>
-                                        <button onClick={onResetPilgrimage} className="flex-1 bg-red-600 text-white py-4 rounded-xl font-bold shadow-lg shadow-red-200 active:scale-95 transition-all text-sm">
-                                            <i className="fas fa-trash-alt mr-2"></i> Reset
-                                        </button>
                                     </div>
                                 </div>
                             ) : (
@@ -168,7 +153,7 @@ export default function BottomSheet({ isOpen, church, isVisited, onClose, Specia
                                                 Prayer {stationNumber} of 7
                                             </p>
                                         )}
-                                        {isSpecialPrayer && (
+                                        {isSpecialPrayer && SpecialHeader.text !== 'Reset Journey' && (
                                             <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-2">
                                                 {SpecialHeader.text === 'VISITA IGLESIA' ? 'Before Visiting the Church' : SpecialHeader.text}
                                             </p>
@@ -176,17 +161,11 @@ export default function BottomSheet({ isOpen, church, isVisited, onClose, Specia
                                     </div>
 
                                     {SpecialHeader?.text === 'VISITA IGLESIA' ? (
-                                        <div className="space-y-6 mb-8">
+                                        <div className="space-y-6 mb-4">
                                             <div>
                                                 <p className="text-[10px] uppercase font-black text-blue-600 tracking-[0.2em] mb-3">Tips</p>
                                                 <ul className="space-y-3">
-                                                    {[
-                                                        'Dress modestly and respectfully.',
-                                                        'Arrive a few minutes early.',
-                                                        'Silence your phone before entering.',
-                                                        'Be respectful of people praying.',
-                                                        'Follow any posted rules or signs.'
-                                                    ].map((tip, idx) => (
+                                                    {['Dress modestly and respectfully.', 'Arrive a few minutes early.', 'Silence your phone.', 'Be respectful of those praying.', 'Follow posted rules.'].map((tip, idx) => (
                                                         <li key={idx} className="flex items-start gap-3 text-xs font-bold text-gray-600">
                                                             <i className="fas fa-check text-[10px] mt-0.5 text-blue-500"></i>
                                                             <span>{tip}</span>
@@ -194,16 +173,10 @@ export default function BottomSheet({ isOpen, church, isVisited, onClose, Specia
                                                     ))}
                                                 </ul>
                                             </div>
-
                                             <div>
                                                 <p className="text-[10px] uppercase font-black text-blue-600 tracking-[0.2em] mb-3">Guides</p>
                                                 <ul className="space-y-3">
-                                                    {[
-                                                        'Check the church schedule (mass times or visiting hours).',
-                                                        'Learn basic church etiquette.',
-                                                        'Ask politely if photos are allowed.',
-                                                        'Sit or stand when others do, if attending a service.'
-                                                    ].map((guide, idx) => (
+                                                    {['Check church schedule.', 'Learn basic church etiquette.', 'Ask politely if photos are allowed.', 'Sit/stand when others do.'].map((guide, idx) => (
                                                         <li key={idx} className="flex items-start gap-3 text-xs font-bold text-gray-600">
                                                             <i className="fas fa-chevron-right text-[10px] mt-0.5 text-blue-500"></i>
                                                             <span>{guide}</span>
@@ -213,102 +186,117 @@ export default function BottomSheet({ isOpen, church, isVisited, onClose, Specia
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="bg-blue-50/50 rounded-3xl p-6 mb-8 border border-blue-50">
+                                        <div className="bg-blue-50/50 rounded-[32px] p-6 mb-4 border border-blue-50/50 shadow-inner">
                                             <p className="text-gray-700 leading-relaxed whitespace-pre-line text-sm font-medium">
                                                 {church.History}
                                             </p>
                                         </div>
                                     )}
-
-                                    <div className="flex gap-3">
-                                        <button onClick={onClose} className="flex-1 bg-gray-100 text-gray-600 py-4 rounded-2xl font-black text-sm active:scale-95 transition-all">
-                                            Close
-                                        </button>
-                                        {isStation && onVisitaComplete && (
-                                            <button
-                                                onClick={() => onVisitaComplete(stationNumber)}
-                                                className="flex-[2] bg-blue-600 text-white py-4 rounded-2xl font-black shadow-xl shadow-blue-200 active:scale-95 transition-all"
-                                            >
-                                                <i className="fas fa-check-circle mr-2"></i> Complete
-                                            </button>
-                                        )}
-                                    </div>
                                 </>
                             )}
                         </div>
                     ) : (
-                        <>
-                            <div className="flex justify-between items-start gap-3 mb-5">
+                        <div className="pt-2 pb-8">
+                            <div className="flex justify-between items-start gap-3 mb-6">
                                 <div className="flex-1 min-w-0">
                                     {SpecialHeader && (
                                         <div className={`text-[10px] font-black ${SpecialHeader.color} mb-1 flex items-center gap-1 uppercase tracking-wider`}>
                                             <i className={SpecialHeader.icon}></i> {SpecialHeader.text}
                                         </div>
                                     )}
-                                    <h2 className="text-xl sm:text-2xl font-black text-gray-900 leading-tight">{church.Name}</h2>
-                                    <div className="flex items-center gap-2 mt-1">
-                                        <p className="text-xs sm:text-sm text-gray-500 font-semibold flex items-center gap-1">
-                                            <i className="fas fa-map-marker-alt text-blue-500"></i> {church.Location}
+                                    <h2 className="text-2xl font-black text-gray-900 leading-tight">{church.Name}</h2>
+                                    <div className="flex items-center gap-2 mt-1.5">
+                                        <p className="text-sm text-gray-500 font-semibold flex items-center gap-1.5">
+                                            <i className="fas fa-map-marker-alt text-blue-500 font-normal"></i> {church.Location}
                                         </p>
-                                        <span className={`text-xs ${dioceseColor} px-2 py-1 rounded-full font-bold`}>{church.Diocese}</span>
+                                        <span className={`text-[10px] ${dioceseColor} px-2 py-0.5 rounded-lg font-bold uppercase tracking-tight`}>{church.Diocese}</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="space-y-5 mb-8">
+                            <div className="space-y-6">
                                 <div>
-                                    <h3 className="text-[10px] uppercase font-black text-gray-400 tracking-widest mb-2">History</h3>
-                                    <p className="text-sm text-gray-600 leading-relaxed font-medium">{church.History}</p>
+                                    <h3 className="text-[10px] uppercase font-black text-gray-400 tracking-[0.2em] mb-3">History</h3>
+                                    <p className="text-sm text-gray-600 leading-relaxed font-medium bg-gray-50/50 p-4 rounded-2xl border border-gray-100/50">{church.History}</p>
                                 </div>
 
                                 {church.Mass ? (
                                     <div>
-                                        <h3 className="text-[10px] uppercase font-black text-gray-400 tracking-widest mb-2.5">Mass Schedule</h3>
+                                        <h3 className="text-[10px] uppercase font-black text-gray-400 tracking-[0.2em] mb-3">Mass Schedule</h3>
                                         {renderMassTimes()}
                                         {church.Facebook && (
-                                            <div className="mt-3 flex items-center gap-2 text-xs text-gray-500">
+                                            <div className="mt-4 flex items-center gap-2 text-[11px] text-gray-400 font-semibold">
                                                 <i className="fab fa-facebook text-blue-600"></i>
-                                                <button onClick={handleFacebookLink} className="text-blue-600 hover:underline font-semibold">{church.Facebook}</button>
-                                                <span className="text-gray-400">• Official Schedule</span>
+                                                <button onClick={handleFacebookLink} className="text-blue-600 hover:underline">{church.Facebook}</button>
+                                                <span>• Verified Schedule</span>
                                             </div>
                                         )}
                                     </div>
                                 ) : church.Facebook ? (
-                                    <div className="bg-blue-50 border border-blue-100 rounded-xl p-4">
-                                        <div className="flex items-start gap-3">
-                                            <i className="fab fa-facebook text-blue-600 text-lg mt-1"></i>
+                                    <div className="bg-blue-50/50 border border-blue-100/50 rounded-2xl p-5">
+                                        <div className="flex items-start gap-4">
+                                            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm flex-shrink-0">
+                                                <i className="fab fa-facebook text-blue-600 text-lg"></i>
+                                            </div>
                                             <div className="flex-1 min-w-0">
-                                                <p className="text-xs font-bold text-gray-700 mb-1">For Mass Schedule</p>
-                                                <button onClick={handleFacebookLink} className="text-sm text-blue-600 hover:underline font-bold break-all text-left">{church.Facebook}</button>
-                                                <p className="text-[10px] text-gray-500 mt-1">Visit Facebook page for current schedule</p>
+                                                <p className="text-xs font-black text-gray-800 mb-1">Check Mass Schedule</p>
+                                                <button onClick={handleFacebookLink} className="text-[13px] text-blue-600 hover:underline font-bold break-all text-left block w-full">{church.Facebook}</button>
                                             </div>
                                         </div>
                                     </div>
                                 ) : null}
 
-                                <div className="flex items-center gap-3 bg-gray-50 p-4 rounded-2xl border border-gray-100">
-                                    <div className="w-9 h-9 bg-white text-gray-600 rounded-xl flex items-center justify-center shadow-sm flex-shrink-0">
-                                        <i className="fas fa-calendar-day text-sm"></i>
+                                <div className="flex items-center gap-4 bg-gray-50/80 p-5 rounded-[24px] border border-gray-100">
+                                    <div className="w-11 h-11 bg-white text-blue-600 rounded-[18px] flex items-center justify-center shadow-sm flex-shrink-0 border border-white">
+                                        <i className="fas fa-calendar-day text-lg"></i>
                                     </div>
                                     <div className="min-w-0">
-                                        <p className="text-[9px] uppercase font-bold text-gray-400 tracking-wider mb-0.5">Patronal Fiesta</p>
-                                        <p className="text-sm text-gray-900 font-bold truncate">{church.Fiesta}</p>
+                                        <p className="text-[10px] uppercase font-black text-gray-400 tracking-[0.2em] mb-1">Patronal Fiesta</p>
+                                        <p className="text-[15px] text-gray-900 font-black">{church.Fiesta}</p>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    )}
+                </div>
 
-                            <div className="space-y-2">
-                                <div className="flex gap-3">
-                                    <button onClick={handleGetDirections} className="flex-1 bg-blue-600 text-white py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 shadow-xl shadow-blue-200 active:scale-95 transition-all">
-                                        <i className="fas fa-directions"></i> Get Directions
-                                    </button>
-                                    <button onClick={handleSuggestEdit} className="px-5 bg-blue-50 text-blue-600 border border-blue-100 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-50 active:scale-95 transition-all">
-                                        <i className="fas fa-pen-to-square"></i> Suggest Edit
-                                    </button>
-                                </div>
-                                <p className="text-[10px] text-gray-400 text-center font-medium">Inaccurate details? Tap suggest edit</p>
+                {/* Fixed Action Footer */}
+                <div className="p-5 pb-8 border-t border-gray-50 bg-white/95 backdrop-blur-md flex-shrink-0">
+                    {isResetView ? (
+                        <div className="flex gap-3">
+                            <button onClick={onClose} className="flex-1 bg-gray-100 text-gray-600 py-4 rounded-2xl font-black active:scale-95 transition-all text-sm">
+                                Cancel
+                            </button>
+                            <button onClick={onResetPilgrimage} className="flex-1 bg-red-600 text-white py-4 rounded-2xl font-black shadow-xl shadow-red-200 active:scale-95 transition-all text-sm">
+                                <i className="fas fa-trash-alt mr-2"></i> Reset
+                            </button>
+                        </div>
+                    ) : isStation || isSpecialPrayer ? (
+                        <div className="flex gap-3">
+                            <button onClick={onClose} className="flex-1 bg-gray-100 text-gray-600 py-4 rounded-2xl font-black text-sm active:scale-95 transition-all">
+                                Close
+                            </button>
+                            {isStation && onVisitaComplete && (
+                                <button
+                                    onClick={() => onVisitaComplete(stationNumber)}
+                                    className="flex-[2] bg-blue-600 text-white py-4 rounded-2xl font-black shadow-xl shadow-blue-200 active:scale-95 transition-all"
+                                >
+                                    <i className="fas fa-check-circle mr-2"></i> Complete
+                                </button>
+                            )}
+                        </div>
+                    ) : (
+                        <div className="space-y-3">
+                            <div className="flex gap-3">
+                                <button onClick={handleGetDirections} className="flex-1 bg-blue-600 text-white py-4 rounded-2xl text-[13px] font-black flex items-center justify-center gap-2 shadow-xl shadow-blue-200 active:scale-95 transition-all">
+                                    <i className="fas fa-directions"></i> Get Directions
+                                </button>
+                                <button onClick={handleSuggestEdit} className="px-6 bg-slate-50 text-slate-600 border border-slate-200/60 py-4 rounded-2xl text-[13px] font-black flex items-center justify-center gap-2 active:scale-95 transition-all">
+                                    <i className="fas fa-pen-to-square text-xs"></i> Suggest
+                                </button>
                             </div>
-                        </>
+                            <p className="text-[10px] text-gray-400 text-center font-bold uppercase tracking-widest">Inaccurate details? Tap suggest</p>
+                        </div>
                     )}
                 </div>
             </div>

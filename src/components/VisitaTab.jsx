@@ -76,7 +76,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
         return (
             <div id="tab-visita" className="tab-content h-full overflow-y-auto px-4 pt-0 pb-20 bg-gray-50 active no-scrollbar">
                 <div id="visita-content">
-                    <div className="sticky top-0 z-40 w-screen -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-4 bg-gradient-to-b from-white/95 to-blue-50/95 backdrop-blur-xl border-b border-white/60 shadow-[0_4px_30px_-10px_rgba(37,99,235,0.1)] transition-all">
+                    <div className="sticky top-0 z-40 w-[100vw] -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-3 bg-gradient-to-b from-white/95 to-blue-50/95 backdrop-blur-md border-b border-white/80 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] transition-all">
                         <div className="flex items-center justify-between mb-4">
                             <button onClick={() => setIsReviewing(false)} className="flex items-center gap-2 text-gray-600 active:text-blue-600 transition-colors group">
                                 <div className="w-8 h-8 rounded-full bg-white border border-gray-200 group-active:border-blue-200 flex items-center justify-center shadow-sm transition-colors">
@@ -180,7 +180,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
         return (
             <div id="tab-visita" className="tab-content h-full overflow-y-auto px-4 pt-0 pb-20 bg-gray-50 active no-scrollbar">
                 <div id="visita-content">
-                    <div className="sticky top-0 z-40 w-screen -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-4 bg-gradient-to-b from-white/95 to-blue-50/95 backdrop-blur-xl border-b border-white/60 shadow-[0_4px_30px_-10px_rgba(37,99,235,0.1)] transition-all">
+                    <div className="sticky top-0 z-40 w-[100vw] -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-3 bg-gradient-to-b from-white/95 to-blue-50/95 backdrop-blur-md border-b border-white/80 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] transition-all">
                         <div className="flex items-center justify-between mb-4">
                             <button onClick={() => setIsSelecting(false)} className="flex items-center gap-2 text-gray-600 active:text-blue-600 transition-colors group">
                                 <div className="w-8 h-8 rounded-full bg-white border border-gray-200 group-active:border-blue-200 flex items-center justify-center shadow-sm transition-colors">
@@ -350,7 +350,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
     return (
         <div id="tab-visita" className="tab-content h-full overflow-y-auto px-4 pt-0 pb-20 bg-gray-50 active no-scrollbar relative">
             {/* Pilgrimage Progress Header */}
-            <div className="sticky top-0 z-40 w-screen -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-4 backdrop-blur-md border-b border-blue-50/50" style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(239, 246, 255, 0.95))' }}>
+            <div className="sticky top-0 z-40 w-[100vw] -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-3 backdrop-blur-md border-b border-white/80 shadow-[0_4px_6px_-10px_rgba(0,0,0,0.02)]" style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(239, 246, 255, 0.95))' }}>
                 <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                         <i className="fas fa-route text-blue-600"></i>
