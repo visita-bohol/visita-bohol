@@ -36,15 +36,18 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
             });
             return () => sortable.destroy();
         }
-    }, [isReviewing, tempChurches]);
+    }, [isReviewing, tempChurches.length]); // Re-init if length changes, though it shouldn't here
 
-    const completedCount = useMemo(() => visitaProgress.filter(p => p >= 1 && p <= 7).length, [visitaProgress]);
+    const completedCount = useMemo(() => {
+        if (!visitaProgress) return 0;
+        return visitaProgress.filter(p => p >= 1 && p <= 7).length;
+    }, [visitaProgress]);
 
     const startSelection = () => {
         setIsSelecting(true);
         setIsReviewing(false);
         setCurrentStep(0);
-        setTempChurches(visitaChurches.length > 0 ? [...visitaChurches] : Array(7).fill(null));
+        setTempChurches(visitaChurches && visitaChurches.length > 0 ? [...visitaChurches] : Array(7).fill(null));
     };
 
     const confirmSelection = () => {
@@ -78,7 +81,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
 
         const startChurchId = tempChurches[firstSelectedIdx];
         const startChurch = churches.find(c => c.id === startChurchId);
-        if (!startChurch) return;
+        if (!startChurch || !startChurch.Coords) return;
 
         let selected = [startChurchId];
         let currentCoords = startChurch.Coords;
@@ -89,7 +92,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
             let minDistance = Infinity;
 
             churches.forEach(church => {
-                if (!selected.includes(church.id)) {
+                if (!selected.includes(church.id) && church.Coords) {
                     const dist = calculateDistance(
                         currentCoords[0], currentCoords[1],
                         church.Coords[0], church.Coords[1]
@@ -115,6 +118,18 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
         setTempChurches(newRoute);
         setCurrentStep(0); // View the whole route
     };
+
+    // --- LOADING / ERROR SAFETY ---
+    if (!churches || churches.length === 0) {
+        return (
+            <div className="h-full flex items-center justify-center p-8 text-center bg-gray-50">
+                <div className="animate-pulse">
+                    <div className="w-16 h-16 bg-gray-200 rounded-2xl mx-auto mb-4"></div>
+                    <div className="h-4 bg-gray-200 rounded w-32 mx-auto"></div>
+                </div>
+            </div>
+        );
+    }
 
     // --- REVIEW UI ---
     if (isReviewing) {
@@ -144,52 +159,33 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                             {tempChurches.map((id, idx) => {
                                 const church = churches.find(c => c.id === id);
                                 return (
-                                    <div
-                                        key={id}
-                                        onClick={() => editStep(idx)}
-                                        className="flex items-center gap-2 bg-white pl-3 pr-4 py-2 rounded-xl border border-blue-100 shadow-sm flex-shrink-0 cursor-pointer hover:border-blue-300 hover:bg-blue-50/60 transition-all"
-                                    >
-                                        <span className="bg-blue-600 text-white text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full shadow-sm">{idx + 1}</span>
-                                        <span className="text-[10px] font-bold text-gray-700 whitespace-nowrap mr-1 max-w-[80px] truncate">{church?.Name || 'Church'}</span>
-                                        <i className="fas fa-pen text-[9px] text-gray-400"></i>
+                                    <div key={idx} className="flex items-center gap-2 bg-white/60 pl-3 pr-4 py-2 rounded-xl border border-blue-100 flex-shrink-0">
+                                        <span className="bg-blue-600 text-white text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{idx + 1}</span>
+                                        <span className="text-[10px] font-bold text-gray-700 whitespace-nowrap">{church?.Name || 'Church'}</span>
                                     </div>
                                 );
                             })}
                         </div>
                     </div>
 
-                    <div
-                        id="itinerary-list"
-                        ref={sortableRef}
-                        className="space-y-4 mb-28 pt-4"
-                    >
+                    <div ref={sortableRef} className="space-y-3 pt-2">
                         {tempChurches.map((id, idx) => {
                             const church = churches.find(c => c.id === id);
-                            if (!church) return null;
-                            const markerColor = church.Diocese === 'Tagbilaran' ? 'bg-blue-600' : 'bg-amber-500';
-
                             return (
-                                <div key={id} className="church-select-item rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group border-blue-600 bg-blue-50/20 shadow-md">
-                                    <div className="flex items-center gap-3 relative z-10">
-                                        <div className="drag-handle text-gray-300 px-1 cursor-grab active:cursor-grabbing hover:text-blue-400">
-                                            <i className="fas fa-grip-vertical text-lg"></i>
-                                        </div>
-
-                                        <div className={`w-10 h-10 rounded-full ${markerColor} text-white flex items-center justify-center flex-shrink-0 font-black text-sm relative z-10 border-2 border-white shadow-sm`}>
-                                            {idx + 1}
-                                        </div>
-                                        <div className="flex-1 min-w-0" onClick={() => editStep(idx)}>
-                                            <div className="flex items-center justify-between gap-2">
-                                                <h3 className="font-bold text-gray-900 text-sm truncate">{church.Name}</h3>
-                                                <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg shadow-sm uppercase flex items-center gap-1">
-                                                    <i className="fas fa-pen text-[8px]"></i> Edit
-                                                </span>
-                                            </div>
-                                            <p className="text-[11px] text-gray-500 mt-0.5 flex items-center gap-1.5">
-                                                <i className={`fas fa-location-dot ${church.Diocese === 'Tagbilaran' ? 'text-blue-500' : 'text-amber-500'} text-[10px]`}></i> {church.Location}
-                                            </p>
-                                        </div>
+                                <div key={idx} className="bg-white p-4 rounded-2xl border border-blue-50 shadow-sm flex items-center gap-4 group active:scale-[0.98] transition-all">
+                                    <div className="drag-handle cursor-grab active:cursor-grabbing w-8 h-8 flex items-center justify-center text-gray-300 hover:text-blue-400 transition-colors">
+                                        <i className="fas fa-grip-vertical"></i>
                                     </div>
+                                    <div className="w-8 h-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center font-black text-xs">
+                                        {idx + 1}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="font-bold text-gray-900 text-sm truncate">{church?.Name}</p>
+                                        <p className="text-[10px] text-gray-400 font-bold uppercase">{church?.Location}</p>
+                                    </div>
+                                    <button onClick={() => editStep(idx)} className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-blue-50 hover:text-blue-600 transition-all">
+                                        <i className="fas fa-pen text-[10px]"></i>
+                                    </button>
                                 </div>
                             );
                         })}
@@ -214,7 +210,9 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
 
     // --- SELECTION UI ---
     if (isSelecting) {
-        const stepName = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th"][currentStep];
+        const stepNames = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th"];
+        const stepName = stepNames[currentStep] || "Church";
+
         const filtered = churches.filter(c =>
             c.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             c.Location.toLowerCase().includes(searchTerm.toLowerCase())
@@ -266,7 +264,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                             className="flex items-center gap-2 bg-white/60 pl-3 pr-4 py-2 rounded-xl border flex-shrink-0 transition-all border-blue-600 shadow-md bg-white cursor-pointer hover:border-blue-300 hover:shadow-sm"
                                         >
                                             <span className="bg-gray-200 text-gray-500 text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{idx + 1}</span>
-                                            <span className="text-[10px] font-bold text-gray-400 whitespace-nowrap mr-1">{id ? (church?.Name ? 'Change' : 'Select') : 'Select'}</span>
+                                            <span className="text-[10px] font-bold text-gray-400 whitespace-nowrap mr-1">{id ? 'Change' : 'Select'}</span>
                                         </div>
                                     );
                                 } else {
@@ -298,10 +296,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                             <button
                                 onClick={autoSelectRoute}
                                 disabled={!tempChurches.some(id => id)}
-                                className={`floating-action-btn !h-12 !w-12 !rounded-xl !shadow-sm !border !border-blue-100/50 active:!scale-95 transition-all relative
-                                    ${tempChurches.some(id => id)
-                                        ? 'bg-blue-600 !text-white !border-blue-600 shadow-blue-100'
-                                        : 'bg-white !text-blue-600 opacity-60'}`}
+                                className={`floating-action-btn !h-12 !w-12 !rounded-xl !shadow-sm !border !border-blue-100/50 active:!scale-95 transition-all relative ${tempChurches.some(id => id) ? 'bg-blue-600 !text-white !border-blue-600 shadow-blue-100' : 'bg-white !text-blue-600 opacity-60'}`}
                                 title="Auto-select nearest route"
                             >
                                 <i className="fas fa-map-marked-alt text-lg"></i>
@@ -324,20 +319,13 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
 
                             if (isPicked && !isCurrentSlot) {
                                 return (
-                                    <div key={church.id} className="church-select-item rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group border-gray-100 opacity-60 bg-gray-50">
-                                        <div className="flex items-start gap-3 relative z-10">
-                                            <div className="w-10 h-10 rounded-full bg-gray-400 text-white flex items-center justify-center flex-shrink-0 font-black text-sm relative z-10 border-2 border-white shadow-sm">
-                                                <i className="fas fa-check"></i>
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <div className="flex items-center justify-between gap-2">
-                                                    <h3 className="font-bold text-gray-900 text-sm truncate text-gray-500">{church.Name}</h3>
-                                                    <span className="text-[10px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded">PICKED</span>
-                                                </div>
-                                                <p className="text-[11px] text-gray-500 mt-0.5 flex items-center gap-1.5">
-                                                    <i className="fas fa-location-dot text-gray-400 text-[10px]"></i> {church.Location}
-                                                </p>
-                                            </div>
+                                    <div key={church.id} className="opacity-40 pointer-events-none p-4 bg-gray-100/50 rounded-2xl border border-gray-200 flex items-center gap-3">
+                                        <div className={`w-10 h-10 rounded-full ${markerColor} text-white flex items-center justify-center flex-shrink-0 grayscale opacity-50`}>
+                                            <i className="fas fa-check text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <h3 className="font-bold text-gray-500 text-sm">{church.Name}</h3>
+                                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">PICKED</p>
                                         </div>
                                     </div>
                                 );
@@ -358,8 +346,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                             setCurrentStep(currentStep + 1);
                                         }
                                     }}
-                                    className={`church-select-item rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:shadow-md hover:border-blue-200 active:scale-[0.98] ${isCurrentSlot ? 'border-blue-600 bg-blue-50/40' : 'border-white bg-white'
-                                        }`}
+                                    className={`church-select-item rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:shadow-md hover:border-blue-200 active:scale-[0.98] ${isCurrentSlot ? 'border-blue-600 bg-blue-50/40' : 'border-white bg-white'}`}
                                 >
                                     <div className="flex items-start gap-3 relative z-10">
                                         <div className={`w-10 h-10 rounded-full ${markerColor} text-white flex items-center justify-center flex-shrink-0 font-black text-sm relative z-10 border-2 border-white shadow-sm ${iconShadow}`}>
@@ -386,7 +373,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
     }
 
     // --- MAIN VISITA UI ---
-    if (visitaChurches.length === 0) {
+    if (!visitaChurches || visitaChurches.length === 0) {
         return (
             <div id="tab-visita" className="tab-content h-full overflow-y-auto px-4 pt-0 pb-20 bg-gray-50 active flex flex-col items-center justify-center p-8">
                 <div className="w-20 h-20 bg-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-blue-200">
@@ -408,7 +395,6 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
 
     return (
         <div id="tab-visita" className="tab-content h-full overflow-y-auto px-4 pt-0 pb-20 bg-gray-50 active no-scrollbar relative">
-            {/* Pilgrimage Progress Header */}
             <div className="sticky top-0 z-40 w-[100vw] -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-3 backdrop-blur-md border-b border-white/80 shadow-[0_4px_6px_-10px_rgba(0,0,0,0.02)]" style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(239, 246, 255, 0.95))' }}>
                 <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
@@ -428,7 +414,6 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
             </div>
 
             <div className="px-0 space-y-4 pt-0">
-                {/* 1. Opening Guide */}
                 <div className="mb-6 bg-blue-600 rounded-[32px] p-6 text-white shadow-xl shadow-blue-100 relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-4 opacity-10"><i className="fas fa-info-circle text-6xl"></i></div>
                     <h3 className="font-black text-xl mb-2 leading-tight">Begin Your Pilgrimage</h3>
@@ -444,79 +429,27 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                     </button>
                 </div>
 
-                {/* 2. Churches */}
                 {visitaChurches.map((id, index) => {
                     const church = churches.find(c => c.id === id);
                     if (!church) return null;
+
+                    const isDone = visitaProgress && visitaProgress.includes(index + 1);
                     const prayerIdx = index + 1;
-                    const isDone = visitaProgress.includes(prayerIdx);
-
-                    // Determine if this is the "Next" station
-                    const firstUndoneIndex = visitaChurches.findIndex((_, idx) => !visitaProgress.includes(idx + 1));
-                    const isNext = index === firstUndoneIndex;
-
-                    if (isDone) {
-                        return (
-                            <div key={id} className="mb-4 relative px-0">
-                                <div className="rounded-2xl p-5 border border-blue-600 bg-blue-50/10 shadow-md shadow-blue-100 active:scale-98 transition-all hover:border-blue-200 relative overflow-hidden">
-                                    <div className="absolute inset-0 bg-gradient-to-br from-blue-100/40 to-blue-600/5 backdrop-blur-sm -z-10"></div>
-                                    <div className="flex items-start gap-4 relative z-10">
-                                        <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 font-black text-lg relative z-10 border-4 border-white shadow-md">
-                                            <i className="fas fa-check"></i>
-                                        </div>
-                                        <div className="flex-1 min-w-0 pt-1">
-                                            <div className="flex items-start justify-between gap-2">
-                                                <div className="flex-1 min-w-0">
-                                                    <h3 className="font-bold text-gray-900 text-lg truncate">{church.Name}</h3>
-                                                    <p className="text-xs text-gray-500 mt-0.5">
-                                                        <i className="fas fa-location-dot text-blue-500"></i> {church.Location}
-                                                    </p>
-                                                </div>
-                                                <span className="bg-blue-600 text-white text-[9px] px-2 py-1 rounded-full font-bold uppercase shadow-sm">Done</span>
-                                            </div>
-
-                                            <div className="mt-4 flex gap-2">
-                                                <button
-                                                    onClick={() => {
-                                                        const p = prayers[prayerIdx];
-                                                        onChurchClick({ ...church, Name: p.title, History: p.prayer }, { text: `STATION ${prayerIdx}`, icon: 'fas fa-book-open', color: 'text-blue-600' });
-                                                    }}
-                                                    className="flex-1 bg-white text-blue-600 py-2.5 rounded-xl text-[11px] font-bold border border-blue-100 active:scale-95 transition-all shadow-sm"
-                                                >
-                                                    <i className="fas fa-book-open mr-1"></i> View Prayer
-                                                </button>
-                                                <button
-                                                    onClick={() => unmarkStation(prayerIdx)}
-                                                    className="px-4 py-2.5 bg-red-50/50 text-red-500 rounded-xl text-[11px] font-bold border border-red-50 active:scale-95 transition-all shadow-sm"
-                                                >
-                                                    <i className="fas fa-undo"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    }
+                    const markerColor = church.Diocese === 'Tagbilaran' ? 'bg-blue-600' : 'bg-amber-500';
 
                     return (
-                        <div key={id} className="mb-4 relative px-0">
-                            <div className={`rounded-2xl p-5 border ${isNext ? 'border-blue-50/50' : 'border-gray-100'} shadow-sm active:scale-98 transition-all hover:border-blue-200 relative overflow-hidden`}>
-                                <div className={`absolute inset-0 bg-gradient-to-br ${isNext ? 'from-blue-50/90 to-white/90' : 'from-white/95 to-blue-50/20'} backdrop-blur-sm -z-10`}></div>
-                                <div className="flex items-start gap-4 relative z-10">
-                                    <div className={`w-12 h-12 rounded-full ${isNext ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-400'} flex items-center justify-center flex-shrink-0 font-black text-lg relative z-10 border-4 border-white shadow-md`}>
-                                        {prayerIdx}
+                        <div key={index} className="bg-white rounded-[32px] border border-blue-50/50 shadow-sm overflow-hidden group">
+                            <div className="p-5">
+                                <div className="flex items-start gap-4">
+                                    <div className={`w-12 h-12 rounded-2xl ${isDone ? 'bg-green-500' : markerColor} text-white flex items-center justify-center text-lg font-black shadow-lg transition-colors`}>
+                                        {isDone ? <i className="fas fa-check"></i> : index + 1}
                                     </div>
-                                    <div className="flex-1 min-w-0 pt-1">
-                                        <div className="flex items-start justify-between gap-2">
-                                            <div className="flex-1 min-w-0">
-                                                <h3 className="font-bold text-gray-900 text-lg truncate">{church.Name}</h3>
-                                                <p className="text-xs text-gray-500 mt-0.5">
-                                                    <i className="fas fa-location-dot text-blue-500"></i> {church.Location}
-                                                </p>
-                                            </div>
-                                            {isNext && <span className="bg-blue-100 text-blue-600 text-[9px] px-2 py-1 rounded-full font-bold uppercase animate-pulse shadow-sm">Next</span>}
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">Station {index + 1}</span>
                                         </div>
+                                        <h4 className="font-black text-gray-900 text-base truncate leading-tight mb-1">{church.Name}</h4>
+                                        <p className="text-xs text-gray-400 font-bold uppercase tracking-wide">{church.Location}</p>
 
                                         <div className="mt-4 flex gap-2">
                                             <button
@@ -527,8 +460,10 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                             </button>
                                             <button
                                                 onClick={() => {
-                                                    const p = prayers[prayerIdx];
-                                                    onChurchClick({ ...church, Name: p.title, History: p.prayer }, { text: `STATION ${prayerIdx}`, icon: 'fas fa-book-open', color: 'text-blue-600' });
+                                                    const p = prayers && prayers[prayerIdx];
+                                                    if (p) {
+                                                        onChurchClick({ ...church, Name: p.title, History: p.prayer }, { text: `STATION ${prayerIdx}`, icon: 'fas fa-book-open', color: 'text-blue-600' });
+                                                    }
                                                 }}
                                                 className="flex-1 bg-blue-600 text-white shadow-lg shadow-blue-200 py-2.5 rounded-xl text-[11px] font-bold active:scale-95 transition-all"
                                             >
@@ -541,8 +476,6 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                         </div>
                     );
                 })}
-
-                {/* No more closing prayer block here - handled by completion modal in App.jsx */}
             </div>
         </div>
     );

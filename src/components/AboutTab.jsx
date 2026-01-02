@@ -41,7 +41,7 @@ export default function AboutTab() {
                     <div className="pt-5 border-t border-gray-50 flex items-center justify-between">
                         <div className="flex items-center gap-2 text-[10px] font-black text-gray-300 uppercase tracking-widest">
                             <i className="fas fa-code"></i>
-                            <span>Developed by Christian Rich Arias</span>
+                            <span>Developed for Bohol Parishes</span>
                         </div>
                         <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center">
                             <i className="fas fa-check text-green-500 text-[10px]"></i>
