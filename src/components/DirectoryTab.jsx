@@ -83,12 +83,6 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
-                    <button onClick={getLocation} id="locate-btn" className="floating-action-btn">
-                        <i className={`fas ${geoLoading ? 'fa-spinner fa-spin' : 'fa-location-arrow'} text-lg`}></i>
-                    </button>
-                    <button onClick={findNearest} id="nearest-btn" className="floating-action-btn" title="Find Nearest Church">
-                        <i className="fas fa-compass text-lg"></i>
-                    </button>
                 </div>
 
                 {/* Diocese Filter Pills */}

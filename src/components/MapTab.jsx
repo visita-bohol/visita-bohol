@@ -164,7 +164,7 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                         <input
                             type="text"
                             id="main-search"
-                            placeholder="Search churches..."
+                            placeholder="Search"
                             autoComplete="off"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
@@ -198,12 +198,12 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                         )}
                     </div>
                     <button onClick={handleLocate} id="locate-btn" className="floating-action-btn">
-                        <i className={`fas ${geoLoading && isLocating ? 'fa-spinner fa-spin' : 'fa-location-arrow'} text-lg`}></i>
+                        <i className={`fas ${geoLoading && isLocating ? 'fa-spinner fa-spin' : 'fa-location-dot'} text-lg`}></i>
                     </button>
                     <button onClick={findNearest} id="nearest-btn" className="floating-action-btn" title="Find Nearest Church">
                         <i className={`fas ${geoLoading && isFindingNearest ? 'fa-spinner fa-spin' : 'fa-compass'} text-lg`}></i>
                     </button>
-                    <button onClick={enableAddMode} id="add-btn" className={`floating-action-btn ${isAddMode ? 'bg-orange-100 text-orange-600 ring-2 ring-orange-400' : 'text-orange-500 bg-white border-orange-200 active:bg-orange-100'}`} title="Add Missing Church">
+                    <button onClick={enableAddMode} id="add-btn" className={`floating-action-btn ${isAddMode ? 'bg-orange-100 text-orange-600' : 'text-orange-500 bg-white border-orange-200 active:bg-orange-100'}`} title="Add Missing Church">
                         <i className="fas fa-map-pin text-lg"></i>
                     </button>
                 </div>
@@ -290,7 +290,7 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                 {/* Button Legend */}
                 <div className="bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-lg border border-gray-100 text-[10px] font-bold space-y-2 pointer-events-auto">
                     <div className="flex items-center gap-2">
-                        <div className="w-4 flex justify-center"><i className="fas fa-location-arrow text-gray-500"></i></div>
+                        <div className="w-4 flex justify-center"><i className="fas fa-location-dot text-gray-500"></i></div>
                         <span className="text-gray-600">My Location</span>
                     </div>
                     <div className="flex items-center gap-2">
