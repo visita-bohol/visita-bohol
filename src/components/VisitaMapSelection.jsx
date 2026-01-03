@@ -164,35 +164,53 @@ export default function VisitaMapSelection({ churches, onSelect, onClose, onBack
                     <i className={`fas ${geoLoading && isLocating ? 'fa-spinner fa-spin' : 'fa-location-dot'} text-lg`}></i>
                 </button>
 
-                {/* Simplified Selection Modal - Bottom Card */}
-                {selectedChurch && (
-                    <div className="absolute bottom-6 left-4 right-4 z-[500] animate-in slide-in-from-bottom-4 fade-in duration-300">
-                        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden p-4">
-                            <div className="flex items-start gap-4 mb-4">
-                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 text-white shadow-md ${selectedChurch.Diocese === 'Tagbilaran' ? 'bg-blue-600 shadow-blue-200' : 'bg-amber-500 shadow-amber-200'}`}>
-                                    <i className="fas fa-church text-xl"></i>
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <h3 className="font-black text-gray-900 text-lg leading-tight mb-1">{selectedChurch.Name}</h3>
-                                    <p className="text-xs text-gray-500 flex items-center gap-1.5 mb-1">
-                                        <i className="fas fa-location-dot text-gray-400"></i> {selectedChurch.Location}
-                                    </p>
-                                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${selectedChurch.Diocese === 'Tagbilaran' ? 'bg-blue-50 text-blue-600 border-blue-100' : 'bg-amber-50 text-amber-600 border-amber-100'}`}>
-                                        {selectedChurch.Diocese === 'Tagbilaran' ? 'Diocese of Tagbilaran' : 'Diocese of Talibon'}
-                                    </span>
-                                </div>
-                            </div>
+                {/* Backdrop for selection */}
+                <div
+                    onClick={() => setSelectedChurch(null)}
+                    className={`absolute inset-0 bg-gray-900/40 backdrop-blur-[2px] z-[450] transition-opacity duration-300 ${selectedChurch ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                />
 
-                            <button
-                                onClick={confirmSelection}
-                                className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold shadow-lg shadow-blue-200 active:scale-95 transition-all flex items-center justify-center gap-2"
-                            >
-                                <span>Select this Church</span>
-                                <i className="fas fa-check-circle"></i>
-                            </button>
-                        </div>
+                {/* Main-Map Style Selection Sheet */}
+                <div
+                    className={`absolute bottom-0 left-0 right-0 bg-white z-[500] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]`}
+                    style={{
+                        borderTopLeftRadius: '24px',
+                        borderTopRightRadius: '24px',
+                        transform: selectedChurch ? 'translateY(0)' : 'translateY(100.1%)'
+                    }}
+                >
+                    {/* Handle */}
+                    <div className="pt-3 pb-2 cursor-pointer flex-shrink-0" onClick={() => setSelectedChurch(null)}>
+                        <div className="w-12 h-1.5 bg-gray-200/80 rounded-full mx-auto"></div>
                     </div>
-                )}
+
+                    <div className="px-5 pt-2 pb-8">
+                        {selectedChurch && (
+                            <div className="space-y-6">
+                                <div>
+                                    <h2 className="text-2xl font-black text-gray-900 leading-tight mb-2">{selectedChurch.Name}</h2>
+                                    <div className="flex items-center gap-2">
+                                        <p className="text-sm text-gray-500 font-semibold flex items-center gap-1.5">
+                                            <i className="fas fa-map-marker-alt text-blue-500"></i> {selectedChurch.Location}
+                                        </p>
+                                        <span className={`text-[10px] px-2 py-0.5 rounded-lg font-bold uppercase tracking-tight ${selectedChurch.Diocese === 'Tagbilaran' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'
+                                            }`}>
+                                            {selectedChurch.Diocese}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <button
+                                    onClick={confirmSelection}
+                                    className="w-full bg-blue-600 text-white py-4 rounded-2xl font-black shadow-xl shadow-blue-200 active:scale-95 transition-all flex items-center justify-center gap-2 text-sm"
+                                >
+                                    <span>Select this Church</span>
+                                    <i className="fas fa-check-circle"></i>
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     );
