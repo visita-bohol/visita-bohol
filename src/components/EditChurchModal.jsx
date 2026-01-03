@@ -11,6 +11,8 @@ export default function EditChurchModal({ isOpen, onClose, church }) {
         history: ''
     });
 
+    const [activeEdits, setActiveEdits] = useState({});
+
     // Bottom Sheet Logic
     const sheetRef = useRef(null);
     const [dragOffset, setDragOffset] = useState(0);
@@ -21,6 +23,7 @@ export default function EditChurchModal({ isOpen, onClose, church }) {
         if (isOpen && church) {
             document.body.style.overflow = 'hidden';
             setDragOffset(0);
+            setActiveEdits({}); // Reset edits on open
             setFormData({
                 name: church.Name || '',
                 location: church.Location || '',
@@ -45,7 +48,7 @@ export default function EditChurchModal({ isOpen, onClose, church }) {
         const currentY = e.touches[0].clientY;
         const deltaY = currentY - touchStart.current;
         if (deltaY < 0) {
-            setDragOffset(deltaY * 0.15); // Resistance
+            setDragOffset(deltaY * 0.15);
         } else {
             setDragOffset(deltaY);
         }
@@ -54,51 +57,41 @@ export default function EditChurchModal({ isOpen, onClose, church }) {
     const handleTouchEnd = () => {
         setIsDragging(false);
         if (dragOffset > 100) {
-            handleAttemptClose();
+            onClose();
         } else {
             setDragOffset(0);
         }
     };
 
-    const hasUnsavedChanges = () => {
-        if (!church) return false;
-        return (
-            formData.name !== (church.Name || '') ||
-            formData.location !== (church.Location || '') ||
-            formData.diocese !== (church.Diocese || 'Tagbilaran') ||
-            formData.massSchedule !== (church.Mass || '') ||
-            formData.fiestaDate !== (church.Fiesta || '') ||
-            formData.fbPage !== (church.Facebook || '') ||
-            formData.history !== (church.History || '')
-        );
+    const toggleEdit = (field) => {
+        setActiveEdits(prev => ({ ...prev, [field]: !prev[field] }));
     };
 
-    const handleAttemptClose = () => {
-        if (hasUnsavedChanges()) {
-            if (window.confirm("You have unsaved changes. Are you sure you want to discard them?")) {
-                onClose();
-            } else {
-                setDragOffset(0); // Reset drag if cancelled
-            }
-        } else {
-            onClose();
-        }
+    const isChanged = (field, originalValue) => {
+        return formData[field] !== (originalValue || '');
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const recipient = "feedback.visitabohol@gmail.com";
         const subject = encodeURIComponent(`Suggested Edit for ${church?.Name || 'Church'}`);
-        const body = encodeURIComponent(`
-Name: ${formData.name}
-Location: ${formData.location}
-Coords: ${church?.Coords ? `${church.Coords[0]}, ${church.Coords[1]}` : 'Not set'}
-Diocese: ${formData.diocese}
-Mass: ${formData.massSchedule}
-Fiesta: ${formData.fiestaDate}
-History: ${formData.history}
 
-Facebook Page: ${formData.fbPage}
+        const getLine = (label, field, orig) => {
+            const val = formData[field];
+            const changed = isChanged(field, orig);
+            return `${label}: ${val} ${changed ? '   <-- [UPDATED]' : ''}`;
+        };
+
+        const body = encodeURIComponent(`
+${getLine('Name', 'name', church.Name)}
+${getLine('Location', 'location', church.Location)}
+Coords: ${church?.Coords ? `${church.Coords[0]}, ${church.Coords[1]}` : 'Not set'}
+${getLine('Diocese', 'diocese', church.Diocese || 'Tagbilaran')}
+${getLine('Mass', 'massSchedule', church.Mass)}
+${getLine('Fiesta', 'fiestaDate', church.Fiesta)}
+${getLine('History', 'history', church.History)}
+
+${getLine('Facebook Page', 'fbPage', church.Facebook)}
         `);
 
         window.open(`mailto:${recipient}?subject=${subject}&body=${body}`);
@@ -107,11 +100,61 @@ Facebook Page: ${formData.fbPage}
 
     if (!isOpen || !church) return null;
 
+    const renderEditableField = (key, label, type = 'text', placeholder = '') => {
+        const isEditing = activeEdits[key];
+        const hasChange = isChanged(key, key === 'diocese' ? (church.Diocese || 'Tagbilaran') : (key === 'massSchedule' ? church.Mass : (key === 'fiestaDate' ? church.Fiesta : (key === 'fbPage' ? church.Facebook : church[key.charAt(0).toUpperCase() + key.slice(1)]))));
+
+        return (
+            <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                        {label}
+                        {hasChange && <span className="text-[9px] bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded uppercase tracking-normal font-bold">Modified</span>}
+                    </label>
+                    <button
+                        type="button"
+                        onClick={() => toggleEdit(key)}
+                        className={`text-[10px] font-bold px-3 py-1.5 rounded-full transition-all active:scale-95 ${isEditing ? 'bg-blue-600 text-white shadow-blue-200 shadow-md' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}
+                    >
+                        {isEditing ? 'Done' : <span className="flex items-center gap-1"><i className="fas fa-pencil-alt"></i> Edit</span>}
+                    </button>
+                </div>
+                {isEditing ? (
+                    type === 'textarea' ? (
+                        <textarea
+                            className="w-full bg-white border-2 border-blue-100 rounded-2xl p-4 text-sm font-bold text-gray-800 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:font-medium placeholder:text-gray-400 min-h-[100px] animate-in fade-in zoom-in-95 duration-200"
+                            value={formData[key]}
+                            onChange={e => setFormData({ ...formData, [key]: e.target.value })}
+                            placeholder={placeholder}
+                            autoFocus
+                        />
+                    ) : (
+                        <input
+                            className="w-full bg-white border-2 border-blue-100 rounded-2xl p-4 text-sm font-bold text-gray-800 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:font-medium placeholder:text-gray-400 animate-in fade-in zoom-in-95 duration-200"
+                            value={formData[key]}
+                            onChange={e => setFormData({ ...formData, [key]: e.target.value })}
+                            placeholder={placeholder}
+                            autoFocus
+                        />
+                    )
+                ) : (
+                    <div className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl p-4 text-sm font-medium text-gray-700 min-h-[50px] flex items-center">
+                        {formData[key] ? (
+                            <span className="break-words line-clamp-4">{formData[key]}</span>
+                        ) : (
+                            <span className="italic text-gray-400">No info provided</span>
+                        )}
+                    </div>
+                )}
+            </div>
+        );
+    };
+
     return (
         <>
             {/* Backdrop */}
             <div
-                onClick={handleAttemptClose}
+                onClick={onClose}
                 className={`fixed inset-0 bg-gray-900/40 backdrop-blur-[2px] z-[5500] transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
             />
 
@@ -130,7 +173,7 @@ Facebook Page: ${formData.fbPage}
                 }}
             >
                 {/* Drag Handle */}
-                <div onClick={handleAttemptClose} className="pt-3 pb-2 cursor-pointer flex-shrink-0">
+                <div onClick={onClose} className="pt-3 pb-2 cursor-pointer flex-shrink-0">
                     <div className="w-12 h-1.5 bg-gray-200/80 rounded-full mx-auto"></div>
                 </div>
 
@@ -145,103 +188,72 @@ Facebook Page: ${formData.fbPage}
                             <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-2">{church.Name}</p>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="space-y-5">
-                            <div className="space-y-1.5">
-                                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">Church Name</label>
-                                <input
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all placeholder:font-medium placeholder:text-gray-400"
-                                    value={formData.name}
-                                    onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                    placeholder="e.g. San Isidro Labrador Parish"
-                                    required
-                                />
-                            </div>
+                        <form onSubmit={handleSubmit} className="space-y-6">
 
-                            <div className="space-y-1.5">
-                                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">Location / Town</label>
-                                <input
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all placeholder:font-medium placeholder:text-gray-400"
-                                    value={formData.location}
-                                    onChange={e => setFormData({ ...formData, location: e.target.value })}
-                                    placeholder="e.g. Tabalong, Dauis"
-                                    required
-                                />
-                            </div>
+                            {renderEditableField('name', 'Church Name', 'text', 'e.g. San Isidro Labrador Parish')}
 
+                            {renderEditableField('location', 'Location / Town', 'text', 'e.g. Tabalong, Dauis')}
+
+                            {/* Diocese Special Handling */}
                             <div className="space-y-1.5">
-                                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">Diocese</label>
-                                <div className="flex flex-col gap-2 bg-gray-50 p-3 rounded-2xl border border-gray-200">
-                                    <label className="flex items-center gap-3 p-2 rounded-xl hover:bg-white transition-colors cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="diocese"
-                                            value="Tagbilaran"
-                                            checked={formData.diocese === 'Tagbilaran'}
-                                            onChange={e => setFormData({ ...formData, diocese: e.target.value })}
-                                            className="w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                        />
-                                        <span className="text-sm font-bold text-gray-700">Diocese of Tagbilaran</span>
+                                <div className="flex items-center justify-between">
+                                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                        Diocese
+                                        {isChanged('diocese', church.Diocese || 'Tagbilaran') && <span className="text-[9px] bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded uppercase tracking-normal font-bold">Modified</span>}
                                     </label>
-                                    <label className="flex items-center gap-3 p-2 rounded-xl hover:bg-white transition-colors cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="diocese"
-                                            value="Talibon"
-                                            checked={formData.diocese === 'Talibon'}
-                                            onChange={e => setFormData({ ...formData, diocese: e.target.value })}
-                                            className="w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                        />
-                                        <span className="text-sm font-bold text-gray-700">Diocese of Talibon</span>
-                                    </label>
+                                    <button
+                                        type="button"
+                                        onClick={() => toggleEdit('diocese')}
+                                        className={`text-[10px] font-bold px-3 py-1.5 rounded-full transition-all active:scale-95 ${activeEdits['diocese'] ? 'bg-blue-600 text-white shadow-blue-200 shadow-md' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}
+                                    >
+                                        {activeEdits['diocese'] ? 'Done' : <span className="flex items-center gap-1"><i className="fas fa-pencil-alt"></i> Edit</span>}
+                                    </button>
                                 </div>
+                                {activeEdits['diocese'] ? (
+                                    <div className="flex flex-col gap-2 bg-white p-3 rounded-2xl border-2 border-blue-100 animate-in fade-in zoom-in-95 duration-200">
+                                        <label className="flex items-center gap-3 p-2 rounded-xl hover:bg-blue-50 transition-colors cursor-pointer">
+                                            <input
+                                                type="radio"
+                                                name="diocese"
+                                                value="Tagbilaran"
+                                                checked={formData.diocese === 'Tagbilaran'}
+                                                onChange={e => setFormData({ ...formData, diocese: e.target.value })}
+                                                className="w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                            />
+                                            <span className="text-sm font-bold text-gray-700">Diocese of Tagbilaran</span>
+                                        </label>
+                                        <label className="flex items-center gap-3 p-2 rounded-xl hover:bg-blue-50 transition-colors cursor-pointer">
+                                            <input
+                                                type="radio"
+                                                name="diocese"
+                                                value="Talibon"
+                                                checked={formData.diocese === 'Talibon'}
+                                                onChange={e => setFormData({ ...formData, diocese: e.target.value })}
+                                                className="w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                            />
+                                            <span className="text-sm font-bold text-gray-700">Diocese of Talibon</span>
+                                        </label>
+                                    </div>
+                                ) : (
+                                    <div className="w-full bg-gray-50/50 border border-gray-100 rounded-2xl p-4 text-sm font-medium text-gray-700">
+                                        Diocese of {formData.diocese}
+                                    </div>
+                                )}
                             </div>
 
-                            <div className="space-y-1.5">
-                                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">Mass Schedule (Optional)</label>
-                                <textarea
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all placeholder:font-medium placeholder:text-gray-400 min-h-[80px]"
-                                    value={formData.massSchedule}
-                                    onChange={e => setFormData({ ...formData, massSchedule: e.target.value })}
-                                    placeholder="e.g. Sun: 6am, 8am, 5pm"
-                                />
-                            </div>
+                            {renderEditableField('massSchedule', 'Mass Schedule', 'textarea', 'e.g. Sun: 6am, 8am, 5pm')}
+
+                            {renderEditableField('fiestaDate', 'Fiesta Date', 'text', 'e.g. May 15')}
+
+                            {renderEditableField('fbPage', 'Facebook Page', 'text', 'e.g. facebook.com/pageName')}
+
+                            {renderEditableField('history', 'History', 'textarea', 'Brief history notes...')}
 
                             <div className="space-y-1.5">
-                                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">Fiesta Date (Optional)</label>
-                                <input
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all placeholder:font-medium placeholder:text-gray-400"
-                                    value={formData.fiestaDate}
-                                    onChange={e => setFormData({ ...formData, fiestaDate: e.target.value })}
-                                    placeholder="e.g. May 15"
-                                />
-                            </div>
-
-                            <div className="space-y-1.5">
-                                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">Facebook Page (Optional)</label>
-                                <input
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all placeholder:font-medium placeholder:text-gray-400"
-                                    value={formData.fbPage}
-                                    onChange={e => setFormData({ ...formData, fbPage: e.target.value })}
-                                    type="text"
-                                    placeholder="e.g. facebook.com/pageName"
-                                />
-                            </div>
-
-                            <div className="space-y-1.5">
-                                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">History (Optional)</label>
-                                <textarea
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all placeholder:font-medium placeholder:text-gray-400 min-h-[80px]"
-                                    value={formData.history}
-                                    onChange={e => setFormData({ ...formData, history: e.target.value })}
-                                    placeholder="Brief history notes..."
-                                />
-                            </div>
-
-                            <div className="space-y-1.5">
-                                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">Coordinates</label>
-                                <div className="relative">
+                                <label className="text-[11px] font-black text-gray-300 uppercase tracking-widest ml-1">Coordinates (Read-only)</label>
+                                <div className="relative opacity-60 grayscale">
                                     <input
-                                        className="w-full bg-gray-100 border border-gray-200 rounded-2xl p-4 pl-10 text-sm font-bold text-gray-600 outline-none"
+                                        className="w-full bg-gray-100 border border-gray-200 rounded-2xl p-4 pl-10 text-sm font-bold text-gray-500 outline-none"
                                         value={church?.Coords ? `${church.Coords[0]}, ${church.Coords[1]}` : ''}
                                         readOnly
                                     />
