@@ -1,4 +1,4 @@
-export default function ChurchCard({ church, isVisited, onClick }) {
+export default function ChurchCard({ church, isVisited, onClick, onViewOnMap }) {
     const isTagbilaran = church.Diocese === 'Tagbilaran';
     const iconBg = isTagbilaran ? 'bg-blue-600' : 'bg-amber-500';
     const SundayMass = church.Mass ? church.Mass.split('|')[0].replace('Sun:', '').trim() : 'Schedule varies';
@@ -48,7 +48,7 @@ export default function ChurchCard({ church, isVisited, onClick }) {
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                onClick();
+                                if (onViewOnMap) onViewOnMap();
                             }}
                             className="flex-1 bg-blue-600 text-white py-2 rounded-xl text-[11px] font-bold shadow-lg shadow-blue-200 active:scale-95 transition-all"
                         >

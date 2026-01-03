@@ -25,6 +25,7 @@ function App() {
     const [visitaProgress, setVisitaProgress] = useLocalStorage('visitaProgress', []);
     const [visitaChurches, setVisitaChurches] = useLocalStorage('visitaChurches', []);
     const [showCompletion, setShowCompletion] = useState(false);
+    const [directorySearchTerm, setDirectorySearchTerm] = useState('');
     const { toasts, addToast, removeToast } = useToast();
 
     // Data Loading with identical timing to HTML
@@ -87,6 +88,17 @@ function App() {
         );
     };
 
+    const handleMapSearchRedirect = (term) => {
+        setDirectorySearchTerm(term);
+        setActiveTab('directory');
+    };
+
+    const handleViewOnMap = (church) => {
+        setActiveTab('map');
+        setSelectedChurch(church);
+        setIsSheetOpen(false); // Ensure modal doesn't pop up
+    };
+
     const [hideNav, setHideNav] = useState(false);
 
     if (loading) return <SplashScreen />;
@@ -100,6 +112,7 @@ function App() {
                         visitedChurches={visitedChurches}
                         onChurchClick={(c, h) => openSheet(c, h, false)}
                         initialFocusChurch={selectedChurch}
+                        onSearchRedirect={handleMapSearchRedirect}
                     />
                 )}
                 {activeTab === 'directory' && (
@@ -107,6 +120,8 @@ function App() {
                         churches={churches}
                         visitedChurches={visitedChurches}
                         onChurchClick={(c, h) => openSheet(c, h, true)}
+                        onViewOnMap={handleViewOnMap}
+                        initialSearchTerm={directorySearchTerm}
                     />
                 )}
                 {activeTab === 'visita' && (

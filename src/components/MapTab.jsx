@@ -33,7 +33,7 @@ const MapClickHandler = ({ isAddMode, onMapClick }) => {
     return null;
 };
 
-export default function MapTab({ churches, visitedChurches, onChurchClick, initialFocusChurch }) {
+export default function MapTab({ churches, visitedChurches, onChurchClick, initialFocusChurch, onSearchRedirect }) {
     const { location, getLocation, loading: geoLoading } = useGeolocation();
     const [searchTerm, setSearchTerm] = useState('');
     const [dioceseFilter, setDioceseFilter] = useState('All');
@@ -161,6 +161,11 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                             autoComplete="off"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' && searchTerm.trim() !== '') {
+                                    onSearchRedirect(searchTerm);
+                                }
+                            }}
                         />
                     </div>
                     <button onClick={handleLocate} id="locate-btn" className="floating-action-btn">
@@ -250,30 +255,35 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                 coordinates={tempCoordinate}
             />
 
-            {/* Map Legend */}
-            <div className="absolute bottom-6 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-lg border border-gray-100 z-[400] text-[10px] font-bold space-y-2">
-                <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-blue-600 ring-2 ring-white shadow-sm"></span>
-                    <span className="text-blue-700">Diocese of Tagbilaran</span>
-                </div>
-                <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500 ring-2 ring-white shadow-sm"></span>
-                    <span className="text-amber-700">Diocese of Talibon</span>
+            {/* Map Legends Container */}
+            <div className="absolute bottom-6 right-4 z-[400] flex flex-col gap-3 items-end pointer-events-none">
+
+                {/* Button Legend */}
+                <div className="bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-lg border border-gray-100 text-[10px] font-bold space-y-2 pointer-events-auto">
+                    <div className="flex items-center gap-2">
+                        <div className="w-4 flex justify-center"><i className="fas fa-location-arrow text-gray-500"></i></div>
+                        <span className="text-gray-600">My Location</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="w-4 flex justify-center"><i className="fas fa-compass text-gray-500"></i></div>
+                        <span className="text-gray-600">Nearby Church</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="w-4 flex justify-center"><i className="fas fa-map-pin text-orange-500"></i></div>
+                        <span className="text-gray-600">Add Missing Church</span>
+                    </div>
                 </div>
 
-                <div className="w-full h-px bg-gray-200 my-1"></div>
-
-                <div className="flex items-center gap-2">
-                    <div className="w-4 flex justify-center"><i className="fas fa-location-arrow text-gray-500"></i></div>
-                    <span className="text-gray-600">My Location</span>
-                </div>
-                <div className="flex items-center gap-2">
-                    <div className="w-4 flex justify-center"><i className="fas fa-compass text-gray-500"></i></div>
-                    <span className="text-gray-600">Nearby Church</span>
-                </div>
-                <div className="flex items-center gap-2">
-                    <div className="w-4 flex justify-center"><i className="fas fa-map-pin text-orange-500"></i></div>
-                    <span className="text-gray-600">Add Missing Church</span>
+                {/* Diocese Legend */}
+                <div className="bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-lg border border-gray-100 text-[10px] font-bold space-y-2 pointer-events-auto min-w-[140px]">
+                    <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-blue-600 ring-2 ring-white shadow-sm"></span>
+                        <span className="text-blue-700">Diocese of Tagbilaran</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-amber-500 ring-2 ring-white shadow-sm"></span>
+                        <span className="text-amber-700">Diocese of Talibon</span>
+                    </div>
                 </div>
             </div>
         </div>

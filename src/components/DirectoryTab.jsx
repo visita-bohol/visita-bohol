@@ -3,11 +3,18 @@ import { useGeolocation } from '../hooks/useGeolocation';
 import { MONTHS, calculateDistance } from '../utils/helpers';
 import ChurchCard from './ChurchCard';
 
-export default function DirectoryTab({ churches, visitedChurches, onChurchClick }) {
-    const [searchTerm, setSearchTerm] = useState('');
+export default function DirectoryTab({ churches, visitedChurches, onChurchClick, initialSearchTerm, onViewOnMap }) {
+    const [searchTerm, setSearchTerm] = useState(initialSearchTerm || '');
     const [dioceseFilter, setDioceseFilter] = useState('All');
     const { location, getLocation, loading: geoLoading } = useGeolocation();
     const fiestaContainerRef = useRef(null);
+
+    // Sync init search term
+    useEffect(() => {
+        if (initialSearchTerm) {
+            setSearchTerm(initialSearchTerm);
+        }
+    }, [initialSearchTerm]);
 
     const now = new Date();
     const currentMonth = now.getMonth();
@@ -188,6 +195,7 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick 
                             church={church}
                             isVisited={visitedChurches.includes(church.id)}
                             onClick={() => onChurchClick(church)}
+                            onViewOnMap={() => onViewOnMap(church)}
                         />
                     ))}
                 </div>
