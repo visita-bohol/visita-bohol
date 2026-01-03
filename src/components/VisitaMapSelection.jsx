@@ -139,8 +139,8 @@ export default function VisitaMapSelection({ churches, onSelect, onClose, onBack
                         // Robust check with string comparison
                         const takenIndex = selectedIds ? selectedIds.findIndex(id => id && String(id) === String(church.id)) : -1;
 
-                        // If taken by another step (not current), show as grey/disabled
-                        const isTaken = takenIndex !== -1 && takenIndex !== currentStep;
+                        // Show as grey if already picked (in any step)
+                        const isTaken = takenIndex !== -1;
 
                         return (
                             <Marker
