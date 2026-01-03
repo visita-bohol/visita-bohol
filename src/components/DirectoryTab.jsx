@@ -68,32 +68,75 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
     };
 
     return (
-        <div id="tab-directory" className="tab-content h-full overflow-y-auto pt-0 pb-20 bg-gray-50 no-scrollbar">
-            {/* EXACT HTML STRUCTURE FROM USER */}
-            <div className="header-ui-container inline-header" id="top-ui" style={{ display: 'flex' }}>
+        <div id="tab-directory" className="tab-content h-full overflow-y-auto px-4 pt-0 pb-20 bg-gray-50 no-scrollbar">
+            {/* Premium Header - Matches Visita Selection Layout */}
+            <div className="sticky top-0 z-40 w-[100vw] -ml-4 -mr-4 mb-[20px] px-4 pt-4 pb-3 bg-gradient-to-b from-white/95 to-blue-50/95 backdrop-blur-md border-b border-white/80 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] transition-all">
+                {/* Top Row: Action & Title */}
+                <div className="flex items-center justify-between mb-4">
+                    <button
+                        onClick={findNearest}
+                        className="flex items-center gap-2 text-gray-600 active:text-blue-600 transition-colors group"
+                    >
+                        <div className="w-8 h-8 rounded-full bg-white border border-gray-200 group-active:border-blue-200 flex items-center justify-center shadow-sm transition-colors">
+                            <i className="fas fa-location-crosshairs text-xs group-active:text-blue-600"></i>
+                        </div>
+                        <span className="text-xs font-bold group-active:text-blue-600">Near Me</span>
+                    </button>
+
+                    <div className="text-center">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-blue-500 block mb-0.5">Browse Parishes</span>
+                        <h2 className="text-base font-black text-gray-900 leading-none">Church Directory</h2>
+                    </div>
+
+                    <div className="w-16 flex justify-end">
+                        <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg shadow-sm">
+                            {filteredChurches.length}
+                        </span>
+                    </div>
+                </div>
+
+                {/* Middle Row: Diocese Filters (Styled like steps) */}
+                <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1 mb-4">
+                    {['All', 'Tagbilaran', 'Talibon'].map((diocese, idx) => {
+                        const isActive = dioceseFilter === diocese;
+                        const label = diocese === 'All' ? 'All Parishes' : `Diocese of ${diocese}`;
+                        return (
+                            <div
+                                key={diocese}
+                                onClick={() => setDioceseFilter(diocese)}
+                                className={`flex items-center gap-2 pl-3 pr-4 py-2 rounded-xl border flex-shrink-0 transition-all cursor-pointer ${isActive
+                                    ? 'border-blue-600 shadow-md bg-white'
+                                    : 'bg-white border-blue-100 shadow-sm hover:border-blue-300 hover:bg-blue-50/60'
+                                    }`}
+                            >
+                                <span className={`${isActive ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'} text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full shadow-sm`}>
+                                    {idx + 1}
+                                </span>
+                                <span className={`text-[10px] font-bold whitespace-nowrap mr-1 ${isActive ? 'text-blue-600' : 'text-gray-700'}`}>
+                                    {label}
+                                </span>
+                                {isActive && <i className="fas fa-check text-[9px] text-blue-600"></i>}
+                            </div>
+                        );
+                    })}
+                </div>
+
+                {/* Bottom Row: Search Bar */}
                 <div className="flex gap-2">
                     <div className="search-input-wrapper flex-1 !h-12 !rounded-xl !shadow-sm !border-blue-100/50 !bg-white">
                         <i className="fas fa-search text-gray-400 text-sm"></i>
                         <input
                             type="text"
-                            id="main-search"
                             placeholder="Search churches..."
-                            autoComplete="off"
+                            className="!ml-3 !text-sm !font-semibold placeholder-gray-400 text-gray-800 bg-transparent w-full outline-none"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
                 </div>
-
-                {/* Diocese Filter Pills */}
-                <div className="diocese-filter-container">
-                    <button onClick={() => setDioceseFilter('All')} className={`diocese-pill ${dioceseFilter === 'All' ? 'active' : ''}`}>All</button>
-                    <button onClick={() => setDioceseFilter('Tagbilaran')} className={`diocese-pill ${dioceseFilter === 'Tagbilaran' ? 'active' : ''}`}>Diocese of Tagbilaran</button>
-                    <button onClick={() => setDioceseFilter('Talibon')} className={`diocese-pill ${dioceseFilter === 'Talibon' ? 'active' : ''}`}>Diocese of Talibon</button>
-                </div>
             </div>
 
-            <div className="px-4 pb-32 mx-auto">
+            <div className="pb-32 mx-auto">
                 {/* Fiestas this Month Section */}
                 {currentMonthChurches.length > 0 && (
                     <div className="mb-6 relative z-10 overflow-hidden">
