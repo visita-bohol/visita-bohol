@@ -156,14 +156,6 @@ export default function VisitaMapSelection({ churches, onSelect, onClose, onBack
                     <MapRefresher center={activeCenter} zoom={activeZoom} />
                 </MapContainer>
 
-                {/* Floating GPS Button */}
-                <button
-                    onClick={handleLocate}
-                    className="absolute top-4 right-4 z-[400] w-12 h-12 bg-white rounded-xl shadow-lg border border-gray-100 flex items-center justify-center text-blue-600 active:scale-95 transition-transform"
-                >
-                    <i className={`fas ${geoLoading && isLocating ? 'fa-spinner fa-spin' : 'fa-location-dot'} text-lg`}></i>
-                </button>
-
                 {/* Backdrop for selection */}
                 <div
                     onClick={() => setSelectedChurch(null)}
@@ -172,7 +164,7 @@ export default function VisitaMapSelection({ churches, onSelect, onClose, onBack
 
                 {/* Main-Map Style Selection Sheet */}
                 <div
-                    className={`absolute bottom-0 left-0 right-0 bg-white z-[500] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]`}
+                    className={`absolute bottom-0 left-0 right-0 bg-white z-[500] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] max-h-[70vh]`}
                     style={{
                         borderTopLeftRadius: '24px',
                         borderTopRightRadius: '24px',
@@ -184,7 +176,7 @@ export default function VisitaMapSelection({ churches, onSelect, onClose, onBack
                         <div className="w-12 h-1.5 bg-gray-200/80 rounded-full mx-auto"></div>
                     </div>
 
-                    <div className="px-5 pt-2 pb-8">
+                    <div className="px-5 pt-2 pb-8 overflow-y-auto no-scrollbar">
                         {selectedChurch && (
                             <div className="space-y-6">
                                 <div>
@@ -198,6 +190,14 @@ export default function VisitaMapSelection({ churches, onSelect, onClose, onBack
                                             {selectedChurch.Diocese}
                                         </span>
                                     </div>
+                                </div>
+
+                                {/* History Section */}
+                                <div>
+                                    <h3 className="text-[10px] uppercase font-black text-gray-400 tracking-[0.2em] mb-3">History</h3>
+                                    <p className="text-sm text-gray-600 leading-relaxed font-medium bg-gray-50/50 p-4 rounded-2xl border border-gray-100/50">
+                                        {selectedChurch.History}
+                                    </p>
                                 </div>
 
                                 <button
