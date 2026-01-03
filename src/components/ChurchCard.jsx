@@ -35,24 +35,15 @@ export default function ChurchCard({ church, isVisited, onClick, onViewOnMap }) 
                         </p>
                     </div>
 
-                    <div className="mt-3 flex gap-2">
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                window.open(`https://www.google.com/maps/dir/?api=1&destination=${church.Coords[0]},${church.Coords[1]}`, '_blank');
-                            }}
-                            className="flex-1 bg-white/80 text-blue-600 py-2.5 rounded-xl text-[11px] font-bold border border-blue-50 active:scale-95 transition-all shadow-sm"
-                        >
-                            <i className="fas fa-location-arrow mr-1"></i> Directions
-                        </button>
+                    <div className="mt-3">
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
                                 if (onViewOnMap) onViewOnMap();
                             }}
-                            className="flex-1 bg-blue-600 text-white py-2 rounded-xl text-[11px] font-bold shadow-lg shadow-blue-200 active:scale-95 transition-all"
+                            className="w-full bg-blue-600 text-white py-3 rounded-xl text-[11px] font-bold shadow-lg shadow-blue-200 active:scale-95 transition-all"
                         >
-                            <i className="fas fa-map-marked-alt mr-1"></i> View Map
+                            <i className="fas fa-map-pin mr-1"></i> View Church Location
                         </button>
                     </div>
                 </div>
