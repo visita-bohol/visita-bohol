@@ -91,7 +91,7 @@ ${getLine('Facebook Page', 'fbPage', church.Facebook)}
         onClose();
     };
 
-    if (!isOpen || !church) return null;
+    // if (!isOpen || !church) return null; // Removed to allow for smooth exit animation
 
     const renderEditableField = (key, label, type = 'text', placeholder = '') => {
         const hasChange = isChanged(key, key === 'diocese' ? (church.Diocese || 'Tagbilaran') : (key === 'massSchedule' ? church.Mass : (key === 'fiestaDate' ? church.Fiesta : (key === 'fbPage' ? church.Facebook : church[key.charAt(0).toUpperCase() + key.slice(1)]))));
@@ -126,18 +126,19 @@ ${getLine('Facebook Page', 'fbPage', church.Facebook)}
             {/* Backdrop */}
             <div
                 onClick={onClose}
-                className={`fixed inset-0 bg-gray-900/40 backdrop-blur-[2px] z-[5500] transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                className={`fixed inset-0 bg-gray-900/40 backdrop-blur-[2px] z-[5500] transition-opacity duration-500 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
             />
 
             {/* Sheet */}
             <div
                 ref={sheetRef}
-                className={`fixed bottom-0 left-0 right-0 bg-white z-[6000] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex flex-col max-h-[85vh] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]`}
+                className={`fixed bottom-0 left-0 right-0 bg-white z-[6000] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex flex-col max-h-[90vh] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]`}
                 style={{
                     borderTopLeftRadius: '24px',
                     borderTopRightRadius: '24px',
-                    transform: isOpen ? `translateY(${dragOffset}px)` : 'translateY(100.1%)',
-                    transition: isDragging ? 'none' : 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
+                    transform: isOpen ? `translateY(${dragOffset}px)` : 'translateY(110%)',
+                    transition: isDragging ? 'none' : 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+                    visibility: isOpen || dragOffset !== 0 ? 'visible' : 'hidden'
                 }}
             >
                 {/* Drag Zone (Handle + Header) */}
@@ -158,7 +159,7 @@ ${getLine('Facebook Page', 'fbPage', church.Facebook)}
                             <i className="fas fa-edit text-white text-2xl"></i>
                         </div>
                         <h2 className="text-2xl font-black text-gray-900 leading-tight pointer-events-none">Suggest Edit</h2>
-                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-2 pointer-events-none">{church.Name}</p>
+                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-2 pointer-events-none">{church?.Name || 'Loading...'}</p>
                     </div>
                 </div>
 

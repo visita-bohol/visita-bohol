@@ -39,11 +39,11 @@ export default function ChurchCard({ church, isVisited, onClick, onViewOnMap }) 
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                if (onViewOnMap) onViewOnMap();
+                                if (onViewOnMap) onViewOnMap(church);
                             }}
-                            className={`w-full ${isTagbilaran ? 'bg-blue-600 shadow-blue-200' : 'bg-amber-500 shadow-amber-200'} text-white py-3 rounded-xl text-[11px] font-bold shadow-lg active:scale-95 transition-all`}
+                            className={`w-full h-[52px] ${isTagbilaran ? 'bg-blue-600 shadow-blue-200' : 'bg-amber-500 shadow-amber-200'} text-white rounded-xl text-xs font-black shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2`}
                         >
-                            <i className="fas fa-map-pin mr-1"></i> View Church Location
+                            <i className="fas fa-map-pin"></i> View Location
                         </button>
                     </div>
                 </div>

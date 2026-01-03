@@ -46,7 +46,23 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
             });
     }, [filteredChurches, currentMonth, today]);
 
+    const [isLocating, setIsLocating] = useState(false);
+    const [isFindingNearest, setIsFindingNearest] = useState(false);
+
+    const handleLocate = () => {
+        setIsLocating(true);
+        getLocation();
+    };
+
+    useEffect(() => {
+        if (location && isLocating) {
+            setIsLocating(false);
+            // In directory, we just clear the loading since location is updated
+        }
+    }, [location, isLocating]);
+
     const findNearest = () => {
+        setIsFindingNearest(true);
         if (!location) {
             getLocation();
             return;
@@ -60,6 +76,7 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
         const nearest = churchesWithDistance.sort((a, b) => a.distance - b.distance).slice(0, 3);
         const nearestChurch = nearest[0];
 
+        setIsFindingNearest(false);
         onChurchClick(nearestChurch, {
             text: `Nearest Church · ${nearestChurch.distance.toFixed(1)} km away`,
             icon: 'fas fa-compass',
@@ -67,22 +84,35 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
         });
     };
 
+    useEffect(() => {
+        if (location && isFindingNearest) {
+            findNearest();
+        }
+    }, [location, isFindingNearest]);
+
     return (
         <div id="tab-directory" className="tab-content h-full overflow-y-auto pt-0 pb-20 bg-gray-50 no-scrollbar">
             {/* EXACT HTML STRUCTURE FROM USER */}
             <div className="header-ui-container inline-header" id="top-ui" style={{ display: 'flex' }}>
                 <div className="flex gap-2">
-                    <div className="search-input-wrapper flex-1 !h-12 !rounded-xl !shadow-sm !border-blue-100/50 !bg-white">
+                    <div className="search-input-wrapper flex-1 min-w-0 !h-[52px] !rounded-2xl !shadow-sm !border-gray-100 !bg-white">
                         <i className="fas fa-search text-gray-400 text-sm"></i>
                         <input
                             type="text"
                             id="main-search"
                             placeholder="Search churches..."
                             autoComplete="off"
+                            className="!ml-2 !text-sm !font-bold"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
+                    <button onClick={handleLocate} className="floating-action-btn h-[52px] w-[52px] !rounded-2xl">
+                        <i className={`fas ${geoLoading && isLocating ? 'fa-spinner fa-spin' : 'fa-location-dot'} text-lg`}></i>
+                    </button>
+                    <button onClick={findNearest} className="floating-action-btn h-[52px] w-[52px] !rounded-2xl">
+                        <i className={`fas ${geoLoading && isFindingNearest ? 'fa-spinner fa-spin' : 'fa-compass'} text-lg`}></i>
+                    </button>
                 </div>
 
                 {/* Diocese Filter Pills */}

@@ -80,24 +80,24 @@ Facebook Page: ${formData.fbPage}
         onClose();
     };
 
-    if (!isOpen) return null;
+    // if (!isOpen) return null; // Removed to allow for smooth exit animation
 
     return (
         <>
             {/* Backdrop */}
             <div
                 onClick={onClose}
-                className={`fixed inset-0 bg-gray-900/40 backdrop-blur-[2px] z-[5500] transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                className={`fixed inset-0 bg-gray-900/40 backdrop-blur-[2px] z-[5500] transition-opacity duration-500 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
             />
 
             {/* Sheet */}
             <div
                 ref={sheetRef}
-                className={`fixed bottom-0 left-0 right-0 bg-white z-[6000] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex flex-col max-h-[85vh] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]`}
+                className={`fixed bottom-0 left-0 right-0 bg-white z-[6000] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex flex-col max-h-[90vh] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]`}
                 style={{
                     borderTopLeftRadius: '24px',
                     borderTopRightRadius: '24px',
-                    transform: isOpen ? `translateY(${dragOffset}px)` : 'translateY(100.1%)',
+                    transform: isOpen ? `translateY(${dragOffset}px)` : 'translateY(110%)',
                     transition: isDragging ? 'none' : 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
                 }}
             >

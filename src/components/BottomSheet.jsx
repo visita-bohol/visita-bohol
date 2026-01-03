@@ -60,9 +60,9 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
         }
     };
 
-    if (!activeChurch && !isOpen) return null;
+    // if (!activeChurch && !isOpen) return null; // Removed to allow for smooth exit animation
     const currentChurch = activeChurch || church;
-    if (!currentChurch) return null;
+    // if (!currentChurch) return null; // Protect internal renders instead
 
     const stationMatch = isStation ? SpecialHeader.text.match(/STATION (\d+)/) : null;
     const stationNumber = stationMatch ? parseInt(stationMatch[1]) : null;
@@ -106,7 +106,7 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
             {/* Backdrop */}
             <div
                 onClick={onClose}
-                className={`fixed inset-0 bg-gray-900/40 backdrop-blur-[2px] z-[1500] transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                className={`fixed inset-0 bg-gray-900/40 backdrop-blur-[2px] z-[1500] transition-opacity duration-500 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
             />
 
             {/* Sheet */}
@@ -115,11 +115,11 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
-                className={`fixed bottom-0 left-0 right-0 bg-white z-[2000] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex flex-col max-h-[85vh] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]`}
+                className={`fixed bottom-0 left-0 right-0 bg-white z-[2000] shadow-[0_-10px_40px_rgba(0,0,0,0.15)] flex flex-col max-h-[90vh] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]`}
                 style={{
                     borderTopLeftRadius: '24px',
                     borderTopRightRadius: '24px',
-                    transform: isOpen ? `translateY(${dragOffset}px)` : 'translateY(100.1%)',
+                    transform: isOpen ? `translateY(${dragOffset}px)` : 'translateY(110%)',
                     transition: isDragging ? 'none' : 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
                 }}
             >
@@ -300,14 +300,14 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
                     ) : (
                         <div className="space-y-3">
                             <div className="flex gap-3">
-                                <button onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentChurch.Coords[0]},${currentChurch.Coords[1]}`, '_blank')} className="flex-1 bg-blue-600 text-white py-4 rounded-2xl text-[13px] font-black flex items-center justify-center gap-2 shadow-xl shadow-blue-200 active:scale-95 transition-all">
+                                <button onClick={() => currentChurch && window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentChurch.Coords[0]},${currentChurch.Coords[1]}`, '_blank')} className="flex-1 h-[52px] bg-blue-600 text-white rounded-2xl text-[13px] font-black flex items-center justify-center gap-2 shadow-xl shadow-blue-200 active:scale-95 transition-all">
                                     <i className="fas fa-directions"></i> Get Directions
                                 </button>
                                 <button
                                     onClick={onEdit}
-                                    className="px-5 bg-blue-50 text-blue-600 border border-blue-100 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-50 active:scale-95 transition-all"
+                                    className="px-5 h-[52px] bg-blue-50 text-blue-600 border border-blue-100 rounded-2xl text-[13px] font-black flex items-center justify-center gap-2 shadow-lg shadow-blue-50 active:scale-95 transition-all"
                                 >
-                                    <i className="fas fa-pen-to-square"></i> Suggest Edit
+                                    <i className="fas fa-pen-to-square"></i> Suggest
                                 </button>
                             </div>
                             <p className="text-[10px] text-gray-400 text-center font-bold uppercase tracking-widest">Inaccurate details? Tap suggest</p>
