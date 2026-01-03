@@ -159,7 +159,7 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
             {/* MATCHING EXACT HTML STRUCTURE */}
             <div className="header-ui-container floating-header" id="top-ui" style={{ display: 'flex' }}>
                 <div className="flex gap-2">
-                    <div className="search-input-wrapper flex-1 min-w-0 relative">
+                    <div className="search-input-wrapper flex-1 min-w-0 relative !h-12 !rounded-xl !shadow-sm !border-blue-100/50 !bg-white">
                         <i className="fas fa-search text-gray-400 text-sm"></i>
                         <input
                             type="text"
