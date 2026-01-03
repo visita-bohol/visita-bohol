@@ -160,7 +160,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
         return (
             <div id="tab-visita" className="tab-content h-full overflow-y-auto px-4 pt-0 pb-20 bg-gray-50 active no-scrollbar">
                 <div id="visita-content">
-                    <div className="sticky top-0 z-40 w-[100vw] -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-3 bg-gradient-to-b from-white to-blue-50 border-b border-white shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] transition-all">
+                    <div className="sticky top-0 z-40 w-[100vw] -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-3 bg-gradient-to-b from-white/95 to-blue-50/95 backdrop-blur-md border-b border-white/80 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] transition-all">
                         <div className="flex items-center justify-between mb-4">
                             <button onClick={() => setIsReviewing(false)} className="flex items-center gap-2 text-gray-600 active:text-blue-600 transition-colors group">
                                 <div className="w-8 h-8 rounded-full bg-white border border-gray-200 group-active:border-blue-200 flex items-center justify-center shadow-sm transition-colors">
@@ -234,7 +234,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                         })}
                     </div>
 
-                    <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 z-50 flex flex-col gap-3">
+                    <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 z-50 flex flex-col gap-3 backdrop-blur-xl bg-white/90">
                         <button
                             onClick={finalConfirm}
                             className="w-full bg-blue-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-blue-200 active:scale-95 transition-transform flex items-center justify-center gap-2"
@@ -304,7 +304,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                     />
                 )}
                 <div id="visita-content">
-                    <div className="sticky top-0 z-40 w-[100vw] -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-3 bg-gradient-to-b from-white to-blue-50 border-b border-white shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] transition-all">
+                    <div className="sticky top-0 z-40 w-[100vw] -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-3 bg-gradient-to-b from-white/95 to-blue-50/95 backdrop-blur-md border-b border-white/80 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] transition-all">
                         <div className="flex items-center justify-between mb-4">
                             <button onClick={() => {
                                 if (currentStep > 0) {
@@ -501,7 +501,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
     return (
         <div id="tab-visita" className="tab-content h-full overflow-y-auto px-4 pt-0 pb-20 bg-gray-50 active no-scrollbar relative">
             {/* Pilgrimage Progress Header */}
-            <div className="sticky top-0 z-40 w-[100vw] -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-3 border-b border-gray-100 shadow-sm bg-blue-50">
+            <div className="sticky top-0 z-40 w-[100vw] -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-3 backdrop-blur-md border-b border-white/80 shadow-[0_4px_6px_-10px_rgba(0,0,0,0.02)]" style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(239, 246, 255, 0.95))' }}>
                 <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                         <i className="fas fa-route text-blue-600"></i>
@@ -551,7 +551,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                         return (
                             <div key={id} className="mb-4 relative px-0">
                                 <div className="rounded-2xl p-5 border border-blue-600 bg-blue-50/10 shadow-md shadow-blue-100 active:scale-98 transition-all hover:border-blue-200 relative overflow-hidden">
-                                    <div className="absolute inset-0 bg-blue-50/20 -z-10"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-br from-blue-100/40 to-blue-600/5 backdrop-blur-sm -z-10"></div>
                                     <div className="flex items-start gap-4 relative z-10">
                                         <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 font-black text-lg relative z-10 border-4 border-white shadow-md">
                                             <i className="fas fa-check"></i>
@@ -594,7 +594,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                     return (
                         <div key={id} className="mb-4 relative px-0">
                             <div className={`rounded-2xl p-5 border ${isNext ? 'border-blue-50/50' : 'border-gray-100'} shadow-sm active:scale-98 transition-all hover:border-blue-200 relative overflow-hidden`}>
-                                <div className={`absolute inset-0 ${isNext ? 'bg-blue-50' : 'bg-white'} -z-10`}></div>
+                                <div className={`absolute inset-0 bg-gradient-to-br ${isNext ? 'from-blue-50/90 to-white/90' : 'from-white/95 to-blue-50/20'} backdrop-blur-sm -z-10`}></div>
                                 <div className="flex items-start gap-4 relative z-10">
                                     <div className={`w-12 h-12 rounded-full ${isNext ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-400'} flex items-center justify-center flex-shrink-0 font-black text-lg relative z-10 border-4 border-white shadow-md`}>
                                         {prayerIdx}

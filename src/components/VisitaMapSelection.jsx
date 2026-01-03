@@ -86,27 +86,10 @@ export default function VisitaMapSelection({ churches, onSelect, onClose, onBack
         }
     };
 
-    // Correctly memoize markers at top level
-    const churchMarkers = useMemo(() => churches.map(church => {
-        // Check if this church is already picked (in any step)
-        const isPicked = selectedIds && selectedIds.some(id => id && String(id) === String(church.id));
-
-        return (
-            <Marker
-                key={church.id}
-                position={church.Coords}
-                icon={createChurchIcon(church, selectedChurch?.id === church.id, isPicked)}
-                eventHandlers={{
-                    click: () => handleChurchClick(church)
-                }}
-            />
-        );
-    }), [churches, selectedIds, selectedChurch, currentStep]);
-
     return (
         <div className="fixed inset-0 z-[6000] bg-white flex flex-col">
             {/* Header */}
-            <div className="sticky top-0 z-40 w-full px-4 pt-4 pb-3 bg-gradient-to-b from-white to-blue-50 border-b border-white shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] transition-all">
+            <div className="sticky top-0 z-40 w-full px-4 pt-4 pb-3 bg-gradient-to-b from-white/95 to-blue-50/95 backdrop-blur-md border-b border-white/80 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] transition-all">
                 <div className="flex items-center justify-between mb-4">
                     <button
                         onClick={onBack || onClose}
@@ -154,7 +137,21 @@ export default function VisitaMapSelection({ churches, onSelect, onClose, onBack
                         />
                     )}
 
-                    {churchMarkers}
+                    {churches.map(church => {
+                        // Check if this church is already picked (in any step)
+                        const isPicked = selectedIds && selectedIds.some(id => id && String(id) === String(church.id));
+
+                        return (
+                            <Marker
+                                key={church.id}
+                                position={church.Coords}
+                                icon={createChurchIcon(church, selectedChurch?.id === church.id, isPicked)}
+                                eventHandlers={{
+                                    click: () => handleChurchClick(church)
+                                }}
+                            />
+                        );
+                    })}
 
                     <MapRefresher center={activeCenter} zoom={activeZoom} />
                 </MapContainer>
@@ -162,7 +159,7 @@ export default function VisitaMapSelection({ churches, onSelect, onClose, onBack
                 {/* Backdrop for selection */}
                 <div
                     onClick={() => setSelectedChurch(null)}
-                    className={`absolute inset-0 bg-gray-900/40 z-[450] transition-opacity duration-300 ${selectedChurch ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                    className={`absolute inset-0 bg-gray-900/40 backdrop-blur-[2px] z-[450] transition-opacity duration-300 ${selectedChurch ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                 />
 
                 {/* Main-Map Style Selection Sheet */}

@@ -188,7 +188,7 @@ function App() {
                 church={churchToEdit}
             />
             {showCompletion && (
-                <div id="completion-fullscreen-modal" className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-gray-900/60 transition-all duration-500 animate-in fade-in">
+                <div id="completion-fullscreen-modal" className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-md transition-all duration-500 animate-in fade-in">
                     <div className="bg-white rounded-[40px] p-2 shadow-2xl w-full max-w-sm animate-scale-in relative border border-white">
                         <button onClick={() => setShowCompletion(false)} className="absolute top-6 right-6 w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 active:scale-90 transition-transform z-10">
                             <i className="fas fa-times text-lg"></i>
