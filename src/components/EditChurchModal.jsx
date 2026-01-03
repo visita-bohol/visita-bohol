@@ -54,9 +54,34 @@ export default function EditChurchModal({ isOpen, onClose, church }) {
     const handleTouchEnd = () => {
         setIsDragging(false);
         if (dragOffset > 100) {
-            onClose();
+            handleAttemptClose();
         } else {
             setDragOffset(0);
+        }
+    };
+
+    const hasUnsavedChanges = () => {
+        if (!church) return false;
+        return (
+            formData.name !== (church.Name || '') ||
+            formData.location !== (church.Location || '') ||
+            formData.diocese !== (church.Diocese || 'Tagbilaran') ||
+            formData.massSchedule !== (church.Mass || '') ||
+            formData.fiestaDate !== (church.Fiesta || '') ||
+            formData.fbPage !== (church.Facebook || '') ||
+            formData.history !== (church.History || '')
+        );
+    };
+
+    const handleAttemptClose = () => {
+        if (hasUnsavedChanges()) {
+            if (window.confirm("You have unsaved changes. Are you sure you want to discard them?")) {
+                onClose();
+            } else {
+                setDragOffset(0); // Reset drag if cancelled
+            }
+        } else {
+            onClose();
         }
     };
 
@@ -86,7 +111,7 @@ Facebook Page: ${formData.fbPage}
         <>
             {/* Backdrop */}
             <div
-                onClick={onClose}
+                onClick={handleAttemptClose}
                 className={`fixed inset-0 bg-gray-900/40 backdrop-blur-[2px] z-[5500] transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
             />
 
@@ -105,7 +130,7 @@ Facebook Page: ${formData.fbPage}
                 }}
             >
                 {/* Drag Handle */}
-                <div onClick={onClose} className="pt-3 pb-2 cursor-pointer flex-shrink-0">
+                <div onClick={handleAttemptClose} className="pt-3 pb-2 cursor-pointer flex-shrink-0">
                     <div className="w-12 h-1.5 bg-gray-200/80 rounded-full mx-auto"></div>
                 </div>
 
