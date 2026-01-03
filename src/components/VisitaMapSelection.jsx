@@ -87,7 +87,7 @@ export default function VisitaMapSelection({ churches, onSelect, onClose, onBack
     return (
         <div className="fixed inset-0 z-[6000] bg-white flex flex-col">
             {/* Header */}
-            <div className="px-4 py-3 bg-white border-b border-gray-100 shadow-sm z-10">
+            <div className="sticky top-0 z-40 w-full px-4 pt-4 pb-3 bg-gradient-to-b from-white/95 to-blue-50/95 backdrop-blur-md border-b border-white/80 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] transition-all">
                 <div className="flex items-center justify-between mb-4">
                     <button
                         onClick={onBack || onClose}
