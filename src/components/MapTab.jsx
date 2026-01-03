@@ -130,9 +130,11 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
 
     const createTempIcon = () => L.divIcon({
         className: 'custom-div-icon',
-        html: `<div style="font-size: 36px; color: #f59e0b; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); transform: translate(-50%, -100%);"><i class="fas fa-map-pin"></i></div>`,
-        iconSize: [0, 0], // Handled by html transform
-        iconAnchor: [0, 0]
+        html: `<div class="flex items-center justify-center w-8 h-8 rounded-full bg-amber-500 animate-bounce" style="border: 2px solid white; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.4);">
+                            <i class="fas fa-map-pin text-sm"></i>
+                        </div>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 32]
     });
 
     const findNearest = () => {
@@ -180,13 +182,13 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                 </div>
             </div>
 
-            {/* Instruction Overlay */}
+            {/* Instruction Overlay (Styled like Toast) */}
             {isAddMode && (
-                <div className="absolute top-28 left-1/2 -translate-x-1/2 z-[3000] animate-in fade-in slide-in-from-top-4">
-                    <div className="bg-amber-500 text-white px-6 py-3 rounded-full font-bold shadow-xl flex items-center gap-3">
-                        <i className="fas fa-map-pin animate-bounce"></i>
-                        <span className="text-sm">Tap location on map</span>
-                        <button onClick={() => setIsAddMode(false)} className="ml-1 w-6 h-6 rounded-full bg-black/20 flex items-center justify-center hover:bg-black/30">
+                <div className="fixed top-28 left-1/2 transform -translate-x-1/2 z-[3000] pointer-events-none flex flex-col gap-2 items-center w-full max-w-[90%] animate-in fade-in slide-in-from-top-4">
+                    <div className="bg-gray-900/95 text-white px-6 py-3 rounded-full text-sm font-semibold shadow-xl backdrop-blur-sm flex items-center gap-2 border border-white/10 pointer-events-auto">
+                        <i className="fas fa-map-pin text-amber-400 animate-bounce"></i>
+                        <span>Tap location on map</span>
+                        <button onClick={() => setIsAddMode(false)} className="ml-2 w-6 h-6 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20">
                             <i className="fas fa-times text-xs"></i>
                         </button>
                     </div>
