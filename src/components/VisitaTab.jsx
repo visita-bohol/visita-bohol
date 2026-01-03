@@ -271,8 +271,18 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
             const isComplete = newTemp.filter(id => id).length === 7;
             if (isComplete) {
                 setIsReviewing(true);
-            } else if (currentStep < 6) {
-                setCurrentStep(currentStep + 1);
+            } else {
+                // Find next empty step
+                const nextEmptyStep = newTemp.findIndex((id, idx) => !id && idx > currentStep);
+                if (nextEmptyStep !== -1) {
+                    setCurrentStep(nextEmptyStep);
+                } else {
+                    // No empty steps after current, find first empty from beginning
+                    const firstEmpty = newTemp.findIndex(id => !id);
+                    if (firstEmpty !== -1) {
+                        setCurrentStep(firstEmpty);
+                    }
+                }
             }
         };
 
@@ -426,8 +436,18 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                         const isComplete = newTemp.filter(id => id).length === 7;
                                         if (isComplete) {
                                             setIsReviewing(true);
-                                        } else if (currentStep < 6) {
-                                            setCurrentStep(currentStep + 1);
+                                        } else {
+                                            // Find next empty step
+                                            const nextEmptyStep = newTemp.findIndex((id, idx) => !id && idx > currentStep);
+                                            if (nextEmptyStep !== -1) {
+                                                setCurrentStep(nextEmptyStep);
+                                            } else {
+                                                // No empty steps after current, find first empty from beginning
+                                                const firstEmpty = newTemp.findIndex(id => !id);
+                                                if (firstEmpty !== -1) {
+                                                    setCurrentStep(firstEmpty);
+                                                }
+                                            }
                                         }
                                     }}
                                     className={`church-select-item rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:shadow-md hover:border-blue-200 active:scale-[0.98] ${isCurrentSlot ? 'border-blue-600 bg-blue-50/40' : 'border-white bg-white'
