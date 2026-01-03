@@ -7,6 +7,7 @@ import VisitaTab from './components/VisitaTab';
 import AboutTab from './components/AboutTab';
 import BottomSheet from './components/BottomSheet';
 import ToastContainer from './components/ToastContainer';
+import EditChurchModal from './components/EditChurchModal';
 import { useToast } from './hooks/useToast';
 import { useLocalStorage } from './hooks/useLocalStorage';
 
@@ -18,6 +19,7 @@ function App() {
     const [visitedChurches, setVisitedChurches] = useLocalStorage('visitedChurches', []);
     const [selectedChurch, setSelectedChurch] = useState(null);
     const [isSheetOpen, setIsSheetOpen] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
     const [specialHeader, setSpecialHeader] = useState(null);
     const [visitaProgress, setVisitaProgress] = useLocalStorage('visitaProgress', []);
     const [visitaChurches, setVisitaChurches] = useLocalStorage('visitaChurches', []);
@@ -133,6 +135,11 @@ function App() {
                 onClose={closeSheet}
                 SpecialHeader={specialHeader}
                 onToggleVisited={() => selectedChurch && toggleVisited(selectedChurch.id)}
+                onEdit={() => {
+                    closeSheet();
+                    // Small delay to allow sheet to close before opening edit modal
+                    setTimeout(() => setShowEditModal(true), 300);
+                }}
                 onResetPilgrimage={() => {
                     setVisitaChurches([]);
                     setVisitaProgress([]);
@@ -151,6 +158,12 @@ function App() {
                     }
                     closeSheet();
                 }}
+            />
+
+            <EditChurchModal
+                isOpen={showEditModal}
+                onClose={() => setShowEditModal(false)}
+                church={selectedChurch}
             />
             {showCompletion && (
                 <div id="completion-fullscreen-modal" className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-md transition-all duration-500 animate-in fade-in">

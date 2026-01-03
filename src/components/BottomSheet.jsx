@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function BottomSheet({ isOpen, church, isVisited, onClose, SpecialHeader, onToggleVisited, onVisitaComplete, onResetPilgrimage }) {
+export default function BottomSheet({ isOpen, church, isVisited, onClose, SpecialHeader, onToggleVisited, onVisitaComplete, onResetPilgrimage, onEdit }) {
     const sheetRef = useRef(null);
     const [dragOffset, setDragOffset] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
@@ -303,12 +303,12 @@ export default function BottomSheet({ isOpen, church, isVisited, onClose, Specia
                                 <button onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentChurch.Coords[0]},${currentChurch.Coords[1]}`, '_blank')} className="flex-1 bg-blue-600 text-white py-4 rounded-2xl text-[13px] font-black flex items-center justify-center gap-2 shadow-xl shadow-blue-200 active:scale-95 transition-all">
                                     <i className="fas fa-directions"></i> Get Directions
                                 </button>
-                                <a
-                                    href={`mailto:feedback.visitabohol@gmail.com?subject=Suggested%20Edit%20for%20${encodeURIComponent(currentChurch.Name)}`}
+                                <button
+                                    onClick={onEdit}
                                     className="px-5 bg-blue-50 text-blue-600 border border-blue-100 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-50 active:scale-95 transition-all"
                                 >
                                     <i className="fas fa-pen-to-square"></i> Suggest Edit
-                                </a>
+                                </button>
                             </div>
                             <p className="text-[10px] text-gray-400 text-center font-bold uppercase tracking-widest">Inaccurate details? Tap suggest</p>
                         </div>
