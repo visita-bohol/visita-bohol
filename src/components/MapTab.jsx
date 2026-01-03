@@ -205,9 +205,6 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                     <button onClick={findNearest} id="nearest-btn" className="floating-action-btn" title="Find Nearest Church">
                         <i className={`fas ${geoLoading && isFindingNearest ? 'fa-spinner fa-spin' : 'fa-compass'} text-lg`}></i>
                     </button>
-                    <button onClick={enableAddMode} id="add-btn" className={`floating-action-btn ${isAddMode ? 'bg-orange-100 text-orange-600' : 'text-orange-500 bg-white active:bg-orange-100'}`} title="Add Missing Church">
-                        <i className="fas fa-map-pin text-lg"></i>
-                    </button>
                 </div>
 
                 {/* Diocese Filter Pills */}
@@ -288,6 +285,16 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
 
             {/* Map Legends Container */}
             <div className="absolute bottom-6 right-4 z-[400] flex flex-col gap-3 items-end pointer-events-none">
+
+                {/* Add Missing Church Floating Button */}
+                <button
+                    onClick={enableAddMode}
+                    id="add-btn"
+                    className={`h-12 w-12 rounded-xl shadow-lg border border-gray-100 flex items-center justify-center transition-all pointer-events-auto ${isAddMode ? 'bg-orange-100 text-orange-600 scale-95' : 'text-orange-500 bg-white active:scale-95 active:bg-orange-100'}`}
+                    title="Add Missing Church"
+                >
+                    <i className="fas fa-map-pin text-lg"></i>
+                </button>
 
                 {/* Button Legend */}
                 <div className="bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-lg border border-gray-100 text-[10px] font-bold space-y-2 pointer-events-auto">
