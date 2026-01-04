@@ -123,7 +123,7 @@ function App() {
                     <DirectoryTab
                         churches={churches}
                         visitedChurches={visitedChurches}
-                        onChurchClick={(c, h) => openSheet(c, h, true)}
+                        onChurchClick={handleViewOnMap}
                         onViewOnMap={handleViewOnMap}
                         initialSearchTerm={directorySearchTerm}
                     />

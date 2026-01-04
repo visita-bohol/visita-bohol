@@ -8,7 +8,7 @@ export default function ChurchCard({ church, isVisited, onClick, onViewOnMap }) 
 
     return (
         <div
-            className="rounded-2xl p-5 border border-blue-50/50 shadow-sm active:scale-98 transition-all hover:border-blue-200 relative overflow-hidden group cursor-pointer"
+            className="church-select-item rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:shadow-md hover:border-blue-200 active:scale-[0.98] border-white bg-white"
             onClick={onClick}
         >
             <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-blue-50/30 backdrop-blur-sm -z-10"></div>
@@ -44,10 +44,6 @@ export default function ChurchCard({ church, isVisited, onClick, onViewOnMap }) 
                                 <i className={`fas fa-clock ${isTagbilaran ? 'text-blue-400' : 'text-amber-400'}`}></i>
                                 <span className="truncate">{SundayMass}</span>
                             </p>
-                        </div>
-                        <div className="bg-gray-50 text-gray-400 px-3 py-1.5 rounded-full text-[10px] font-bold flex items-center gap-1.5 border border-gray-100 group-hover:bg-blue-50 group-hover:text-blue-600 group-hover:border-blue-100 transition-colors">
-                            <i className="fas fa-eye text-[11px]"></i>
-                            <span>View</span>
                         </div>
                     </div>
 
