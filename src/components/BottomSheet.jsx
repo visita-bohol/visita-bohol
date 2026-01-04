@@ -317,13 +317,16 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
                                     <h3 className="text-[10px] uppercase font-black text-gray-400 tracking-[0.2em] mb-4">Other Nearby Churches</h3>
                                     <div className="space-y-2">
                                         {nearbyChurches.map(c => (
-                                            <div key={c.id} className="border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 border-blue-100 bg-white flex items-center justify-between p-4 rounded-2xl">
-                                                <div className="min-w-0 pr-4">
-                                                    <h4 className="font-bold text-gray-800 text-xs truncate mb-0.5">{c.Name}</h4>
-                                                    <p className="text-[10px] text-gray-500 font-medium truncate">{c.Location}</p>
-                                                </div>
-                                                <div className="flex-shrink-0 text-blue-600 font-bold text-xs">
-                                                    {c.distance.toFixed(1)} km
+                                            <div key={c.id} className="border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:scale-[0.98] border-white bg-white p-4 rounded-2xl">
+                                                <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 transition-opacity opacity-0 group-hover:opacity-100"></div>
+                                                <div className="flex items-center justify-between relative z-10">
+                                                    <div className="min-w-0 pr-4">
+                                                        <h4 className="font-bold text-gray-800 text-xs truncate mb-0.5">{c.Name}</h4>
+                                                        <p className="text-[10px] text-gray-500 font-medium truncate">{c.Location}</p>
+                                                    </div>
+                                                    <div className="flex-shrink-0 text-blue-600 font-bold text-xs">
+                                                        {c.distance.toFixed(1)} km
+                                                    </div>
                                                 </div>
                                             </div>
                                         ))}

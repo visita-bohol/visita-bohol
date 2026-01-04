@@ -112,8 +112,8 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
                                 key={diocese}
                                 onClick={() => setDioceseFilter(diocese)}
                                 className={`flex items-center gap-2 px-4 py-2 rounded-xl border flex-shrink-0 transition-all cursor-pointer ${isActive
-                                    ? 'border-blue-600 shadow-md bg-white'
-                                    : 'bg-white border-blue-100 shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10'
+                                    ? 'border-blue-600 shadow-md !bg-white'
+                                    : '!bg-white border-blue-100 shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10'
                                     }`}
                             >
                                 <span className={`text-[10px] font-bold whitespace-nowrap mr-1 ${isActive ? 'text-blue-600' : 'text-gray-700'}`}>
@@ -190,11 +190,11 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
                                 return (
                                     <div
                                         key={church.id}
-                                        className="fiesta-card-horizontal border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 border-blue-100 bg-white flex-shrink-0 snap-start rounded-2xl p-4"
+                                        className="fiesta-card-horizontal border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:scale-[0.98] border-white flex-shrink-0 snap-start rounded-2xl p-4"
                                         onClick={() => onChurchClick(church)}
                                     >
-                                        <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm -z-10"></div>
-                                        <div className="flex items-start gap-4">
+                                        <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
+                                        <div className="flex items-start gap-4 relative z-10">
                                             <div className={`w-12 h-12 rounded-full ${iconBg} text-white flex items-center justify-center flex-shrink-0 font-black text-lg relative z-10 border-4 border-white shadow-md ${iconShadow}`}>
                                                 <i className="fas fa-church text-base"></i>
                                             </div>

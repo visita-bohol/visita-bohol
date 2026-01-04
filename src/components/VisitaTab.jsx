@@ -450,9 +450,10 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                             }
                                         }
                                     }}
-                                    className={`rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 ${isCurrentSlot ? 'border-blue-600 bg-blue-50/20' : 'border-blue-100 bg-white'
+                                    className={`rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:scale-[0.98] ${isCurrentSlot ? 'border-blue-600 bg-blue-50/20' : 'border-white bg-white'
                                         }`}
                                 >
+                                    <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 transition-opacity opacity-0 group-hover:opacity-100"></div>
                                     <div className="flex items-start gap-3 relative z-10">
                                         <div className={`w-10 h-10 rounded-full ${markerColor} text-white flex items-center justify-center flex-shrink-0 font-black text-sm relative z-10 border-2 border-white shadow-sm ${iconShadow}`}>
                                             <i className="fas fa-church"></i>
@@ -594,8 +595,9 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                     return (
                         <div key={id} className="mb-4 relative px-0">
                             <div
-                                className="border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 border-blue-100 bg-white p-5 rounded-2xl"
+                                className="border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:scale-[0.98] border-white bg-white p-5 rounded-2xl"
                             >
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 transition-opacity opacity-0 group-hover:opacity-100 backdrop-blur-sm"></div>
                                 <div className={`absolute inset-0 bg-gradient-to-br ${isNext ? 'from-blue-50/90 to-white/90' : 'from-white/95 to-blue-50/20'} backdrop-blur-sm -z-10`}></div>
                                 <div className="flex items-start gap-4 relative z-10">
                                     <div className={`w-12 h-12 rounded-full ${isNext ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-400'} flex items-center justify-center flex-shrink-0 font-black text-lg relative z-10 border-4 border-white shadow-md`}>

@@ -199,10 +199,10 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                             </div>
                         )}
                     </div>
-                    <button onClick={handleLocate} id="locate-btn" className="floating-action-btn !h-12 !w-12 !rounded-xl !shadow-sm !border !border-blue-100 !text-blue-600 bg-white transition-all hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 active:!scale-95">
+                    <button onClick={handleLocate} id="locate-btn" className="floating-action-btn !h-12 !w-12 !rounded-xl !shadow-sm !border !border-blue-100 !text-blue-600 !bg-white transition-all hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 active:!scale-95">
                         <i className={`fas ${geoLoading && isLocating ? 'fa-spinner fa-spin' : 'fa-location-dot'} text-lg`}></i>
                     </button>
-                    <button onClick={findNearest} id="nearest-btn" className="floating-action-btn !h-12 !w-12 !rounded-xl !shadow-sm !border !border-blue-100 !text-blue-600 bg-white transition-all hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 active:!scale-95" title="Find Nearest Church">
+                    <button onClick={findNearest} id="nearest-btn" className="floating-action-btn !h-12 !w-12 !rounded-xl !shadow-sm !border !border-blue-100 !text-blue-600 !bg-white transition-all hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 active:!scale-95" title="Find Nearest Church">
                         <i className={`fas ${geoLoading && isFindingNearest ? 'fa-spinner fa-spin' : 'fa-compass'} text-lg`}></i>
                     </button>
                 </div>
@@ -217,8 +217,8 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                                 key={diocese}
                                 onClick={() => setDioceseFilter(diocese)}
                                 className={`flex items-center gap-2 px-4 py-2 rounded-xl border flex-shrink-0 transition-all cursor-pointer ${isActive
-                                    ? 'border-blue-600 shadow-md bg-white'
-                                    : 'bg-white border-blue-100 shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10'
+                                    ? 'border-blue-600 shadow-md !bg-white'
+                                    : '!bg-white border-blue-100 shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10'
                                     }`}
                             >
                                 <span className={`text-[10px] font-bold whitespace-nowrap mr-1 ${isActive ? 'text-blue-600' : 'text-gray-700'}`}>
@@ -308,7 +308,7 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                     id="add-btn"
                     className={`h-12 w-12 rounded-xl shadow-lg border transition-all pointer-events-auto ${isAddMode
                         ? 'bg-orange-100 text-orange-600 border-orange-400 scale-95 shadow-orange-100'
-                        : 'text-orange-500 bg-white border-blue-100 hover:border-orange-500 hover:bg-orange-50/10 hover:shadow-orange-100 active:scale-95 shadow-sm'}`}
+                        : 'text-orange-500 !bg-white border-blue-100 hover:border-orange-500 hover:bg-orange-50/10 hover:shadow-orange-100 active:scale-95 shadow-sm'}`}
                     title="Add Missing Church"
                 >
                     <i className="fas fa-map-pin text-lg"></i>
