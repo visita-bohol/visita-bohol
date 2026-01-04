@@ -523,18 +523,17 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
 
             <div className="px-0 space-y-4 pt-0">
                 {/* 1. Opening Guide */}
-                <div className="mb-6 bg-white rounded-[32px] p-6 text-gray-900 shadow-xl shadow-blue-100 relative overflow-hidden border border-blue-50">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
-                    <div className="absolute top-0 right-0 p-4 opacity-10 text-blue-600"><i className="fas fa-info-circle text-6xl"></i></div>
+                <div className="mb-6 bg-blue-600 rounded-[32px] p-6 text-white shadow-xl shadow-blue-100 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-4 opacity-10"><i className="fas fa-info-circle text-6xl"></i></div>
                     <div className="relative z-10">
                         <h3 className="font-black text-xl mb-2 leading-tight">Begin Your Pilgrimage</h3>
-                        <p className="text-gray-500 text-xs mb-8">Follow these tips and guides for a meaningful visiting experience.</p>
+                        <p className="text-blue-100 text-xs mb-8">Follow these tips and guides for a meaningful visiting experience.</p>
 
                         <button
                             onClick={() => {
                                 onChurchClick({ Name: 'Begin Your Pilgrimage', id: 'opening', Coords: [9.85, 124.1], Diocese: 'Instruction' }, { text: 'VISITA IGLESIA', icon: 'fas fa-info-circle', color: 'text-blue-600' });
                             }}
-                            className="w-full bg-blue-600 text-white py-4 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2"
+                            className="w-full bg-white text-blue-600 py-4 rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2"
                         >
                             <span>View</span>
                         </button>
