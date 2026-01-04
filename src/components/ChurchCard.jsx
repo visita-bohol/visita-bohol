@@ -4,7 +4,6 @@ export default function ChurchCard({ church, isVisited, onClick, onViewOnMap }) 
     const isTagbilaran = church.Diocese === 'Tagbilaran';
     const iconBg = isTagbilaran ? 'bg-blue-600' : 'bg-amber-500';
     const SundayMass = church.Mass ? church.Mass.split('|')[0].replace('Sun:', '').trim() : 'Schedule varies';
-    const dioceseBadgeColor = isTagbilaran ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800';
 
     return (
         <div
@@ -23,7 +22,6 @@ export default function ChurchCard({ church, isVisited, onClick, onViewOnMap }) 
                         <div className="flex-1 min-w-0">
                             <h3 className="font-bold text-gray-900 text-lg truncate">{church.Name}</h3>
                             <div className="flex items-center gap-2 mt-0.5">
-                                <span className={`text-[9px] ${dioceseBadgeColor} px-2 py-0.5 rounded-full font-bold uppercase tracking-tight`}>{church.Diocese}</span>
                                 <span className="text-xs text-gray-500 truncate flex items-center gap-1.5">
                                     <i className={`fas fa-location-dot ${isTagbilaran ? 'text-blue-500' : 'text-amber-500'}`}></i> {church.Location}
                                 </span>
