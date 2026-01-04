@@ -304,7 +304,7 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
             />
 
             {/* Map Legends Container */}
-            <div className="absolute bottom-6 right-4 z-[400] flex flex-col gap-3 items-end pointer-events-none">
+            <div className="absolute bottom-6 right-4 z-[400] flex flex-col gap-2 items-end pointer-events-none">
 
                 {/* Add Missing Church Floating Button */}
                 <button
@@ -318,45 +318,49 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                     <i className="fas fa-map-pin text-lg"></i>
                 </button>
 
-                {/* Button Legend */}
-                <div className="bg-white/95 p-3.5 rounded-2xl shadow-xl border border-white text-[10px] font-bold space-y-2.5 pointer-events-auto min-w-[150px] relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
-                    <div className="relative z-10 space-y-2.5">
-                        <div className="flex items-center gap-2.5">
-                            <div className="w-5 flex justify-center text-blue-600">
-                                <i className="fas fa-location-dot text-[13px]"></i>
-                            </div>
+                {/* Individual Legend Pills */}
+                <div className="flex flex-col gap-2 items-end pointer-events-none">
+                    {/* My Location Pill */}
+                    <div className="bg-white/95 px-3 py-2 rounded-full shadow-lg border border-white text-[10px] font-bold pointer-events-auto flex items-center gap-2 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
+                        <div className="relative z-10 flex items-center gap-2">
+                            <i className="fas fa-location-dot text-blue-600 text-[11px]"></i>
                             <span className="text-gray-500">My Location</span>
                         </div>
-                        <div className="flex items-center gap-2.5">
-                            <div className="w-5 flex justify-center text-blue-600">
-                                <i className="fas fa-compass text-[13px]"></i>
-                            </div>
+                    </div>
+
+                    {/* Nearby Church Pill */}
+                    <div className="bg-white/95 px-3 py-2 rounded-full shadow-lg border border-white text-[10px] font-bold pointer-events-auto flex items-center gap-2 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
+                        <div className="relative z-10 flex items-center gap-2">
+                            <i className="fas fa-compass text-blue-600 text-[11px]"></i>
                             <span className="text-gray-500">Nearby Church</span>
                         </div>
-                        <div className="flex items-center gap-2.5">
-                            <div className="w-5 flex justify-center text-orange-500">
-                                <i className="fas fa-map-pin text-[13px]"></i>
-                            </div>
-                            <span className="text-gray-500">Add Missing Church</span>
+                    </div>
+
+                    {/* Add Missing Church Pill */}
+                    <div className="bg-white/95 px-3 py-2 rounded-full shadow-lg border border-white text-[10px] font-bold pointer-events-auto flex items-center gap-2 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
+                        <div className="relative z-10 flex items-center gap-2">
+                            <i className="fas fa-map-marker-alt text-orange-500 text-[11px]"></i>
+                            <span className="text-gray-500 font-bold">Add Missing Church</span>
                         </div>
                     </div>
-                </div>
 
-                {/* Diocese Legend */}
-                <div className="bg-white/95 p-3.5 rounded-2xl shadow-xl border border-white text-[10px] font-bold space-y-2.5 pointer-events-auto min-w-[150px] relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
-                    <div className="relative z-10 space-y-2.5">
-                        <div className="flex items-center gap-2.5">
-                            <div className="w-5 flex justify-center">
-                                <i className="fas fa-circle text-blue-600 text-[10px]"></i>
-                            </div>
+                    {/* Diocese of Tagbilaran Pill */}
+                    <div className="bg-white/95 px-3 py-2 rounded-full shadow-lg border border-white text-[10px] font-bold pointer-events-auto flex items-center gap-2 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
+                        <div className="relative z-10 flex items-center gap-2">
+                            <i className="fas fa-circle text-blue-600 text-[9px]"></i>
                             <span className="text-gray-500">Diocese of Tagbilaran</span>
                         </div>
-                        <div className="flex items-center gap-2.5">
-                            <div className="w-5 flex justify-center">
-                                <i className="fas fa-circle text-amber-500 text-[10px]"></i>
-                            </div>
+                    </div>
+
+                    {/* Diocese of Talibon Pill */}
+                    <div className="bg-white/95 px-3 py-2 rounded-full shadow-lg border border-white text-[10px] font-bold pointer-events-auto flex items-center gap-2 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
+                        <div className="relative z-10 flex items-center gap-2">
+                            <i className="fas fa-circle text-amber-500 text-[9px]"></i>
                             <span className="text-gray-500">Diocese of Talibon</span>
                         </div>
                     </div>
