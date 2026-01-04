@@ -574,7 +574,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                                         const p = prayers[prayerIdx];
                                                         onChurchClick({ ...church, Name: p.title, History: p.prayer }, { text: `STATION ${prayerIdx}`, icon: 'fas fa-book-open', color: 'text-blue-600' });
                                                     }}
-                                                    className="flex-1 bg-white text-blue-600 py-2.5 rounded-xl text-[11px] font-bold border border-blue-100 active:scale-95 transition-all shadow-sm"
+                                                    className="flex-1 bg-white text-blue-600 py-2.5 rounded-xl text-[11px] font-bold border border-blue-100 transition-all shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:scale-95 active:border-blue-600 active:bg-blue-50/10"
                                                 >
                                                     <i className="fas fa-book-open mr-1"></i> View Prayer
                                                 </button>
@@ -617,7 +617,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                         <div className="mt-4 flex gap-2">
                                             <button
                                                 onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${church.Coords[0]},${church.Coords[1]}`, '_blank')}
-                                                className="flex-1 bg-white/80 text-blue-600 py-2.5 rounded-xl text-[11px] font-bold border border-blue-50 active:scale-95 transition-all shadow-sm"
+                                                className="flex-1 bg-white text-blue-600 py-2.5 rounded-xl text-[11px] font-bold border border-blue-100 transition-all shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:scale-95 active:border-blue-600 active:bg-blue-50/10"
                                             >
                                                 <i className="fas fa-location-arrow mr-1"></i> Directions
                                             </button>

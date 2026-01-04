@@ -285,7 +285,10 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
                         </div>
                     ) : isStation || isSpecialPrayer ? (
                         <div className="flex gap-3">
-                            <button onClick={onClose} className="flex-1 bg-white text-gray-600 border border-blue-100 py-4 rounded-2xl font-black text-sm transition-all shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 mb-0.5">
+                            <button
+                                onClick={onClose}
+                                className="px-5 bg-blue-50 text-blue-600 border border-blue-100 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-50 active:scale-95 transition-all"
+                            >
                                 Close
                             </button>
                             {isStation && onVisitaComplete && (
@@ -305,7 +308,7 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
                                 </button>
                                 <button
                                     onClick={onEdit}
-                                    className="px-5 bg-white text-blue-600 border border-blue-100 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10"
+                                    className="px-5 bg-blue-50 text-blue-600 border border-blue-100 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-50 active:scale-95 transition-all"
                                 >
                                     <i className="fas fa-pen-to-square"></i> Suggest Edit
                                 </button>
