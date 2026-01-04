@@ -337,7 +337,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                         <div
                                             key={idx}
                                             onClick={() => setCurrentStep(idx)}
-                                            className="flex items-center gap-2 bg-white pl-3 pr-4 py-2 rounded-xl border shadow-sm flex-shrink-0 cursor-pointer transition-all border-blue-100 hover:border-blue-300 hover:bg-blue-50/60"
+                                            className="flex items-center gap-2 bg-white pl-3 pr-4 py-2 rounded-xl border shadow-sm flex-shrink-0 cursor-pointer transition-all border-blue-100 hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10"
                                         >
                                             <span className="bg-blue-600 text-white text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full shadow-sm">{idx + 1}</span>
                                             <span className="text-[10px] font-bold text-gray-700 whitespace-nowrap mr-1 max-w-[80px] truncate">{church?.Name || 'Church'}</span>
@@ -348,7 +348,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                     return (
                                         <div
                                             key={idx}
-                                            className="flex items-center gap-2 bg-white/60 pl-3 pr-4 py-2 rounded-xl border flex-shrink-0 transition-all border-blue-600 shadow-md bg-white cursor-pointer hover:border-blue-300 hover:shadow-sm"
+                                            className="flex items-center gap-2 bg-white pl-3 pr-4 py-2 rounded-xl border flex-shrink-0 transition-all border-blue-600 shadow-md cursor-pointer hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600"
                                         >
                                             <span className="bg-gray-200 text-gray-500 text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full">{idx + 1}</span>
                                             <span className="text-[10px] font-bold text-gray-400 whitespace-nowrap mr-1">{id ? (church?.Name ? 'Change' : 'Select') : 'Select'}</span>
