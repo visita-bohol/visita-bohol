@@ -319,7 +319,8 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                 </button>
 
                 {/* Button Legend */}
-                <div className="bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white text-[10px] font-bold space-y-2.5 pointer-events-auto min-w-[150px]">
+                <div className="bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white text-[10px] font-bold space-y-2.5 pointer-events-auto min-w-[150px] relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
                     <div className="flex items-center gap-2.5">
                         <div className="w-5 flex justify-center text-blue-600">
                             <i className="fas fa-location-dot text-[13px]"></i>
@@ -341,7 +342,8 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                 </div>
 
                 {/* Diocese Legend */}
-                <div className="bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white text-[10px] font-bold space-y-2.5 pointer-events-auto min-w-[150px]">
+                <div className="bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-white text-[10px] font-bold space-y-2.5 pointer-events-auto min-w-[150px] relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
                     <div className="flex items-center gap-2.5">
                         <div className="w-5 flex justify-center">
                             <i className="fas fa-circle text-blue-600 text-[10px]"></i>

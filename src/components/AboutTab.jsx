@@ -57,7 +57,8 @@ export default function AboutTab() {
                 )}
 
                 {/* Report Card */}
-                <div className="bg-white rounded-[32px] p-6 shadow-sm border border-blue-50">
+                <div className="bg-white rounded-[32px] p-6 shadow-sm border border-blue-50 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
                     <div className="flex items-center gap-4 mb-5">
                         <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
                             <i className="fas fa-exclamation-triangle"></i>
@@ -77,7 +78,8 @@ export default function AboutTab() {
                 </div>
 
                 {/* Info Card */}
-                <div className="bg-white rounded-[32px] p-6 shadow-sm border border-blue-50">
+                <div className="bg-white rounded-[32px] p-6 shadow-sm border border-blue-50 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
                     <h3 className="font-black text-gray-900 text-[15px] mb-4 uppercase tracking-tight">About</h3>
                     <p className="text-xs text-gray-500 leading-relaxed font-medium mb-6">
                         Visita Bohol is your complete spiritual companion for visiting churches across the island. We provide verified mass schedules, historical insights, and a guided pilgrimage experience for devotees.

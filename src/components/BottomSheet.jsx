@@ -198,8 +198,9 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="bg-blue-50/50 rounded-[32px] p-6 mb-4 border border-blue-50/50 shadow-inner">
-                                            <p className="text-gray-700 leading-relaxed whitespace-pre-line text-sm font-medium">
+                                        <div className="bg-white rounded-[32px] p-6 mb-4 border border-blue-50 shadow-inner relative overflow-hidden">
+                                            <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
+                                            <p className="text-gray-700 leading-relaxed whitespace-pre-line text-sm font-medium relative z-10">
                                                 {currentChurch.History}
                                             </p>
                                         </div>
@@ -229,7 +230,10 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
                             <div className="space-y-6">
                                 <div>
                                     <h3 className="text-[10px] uppercase font-black text-gray-400 tracking-[0.2em] mb-3">History</h3>
-                                    <p className="text-sm text-gray-600 leading-relaxed font-medium bg-gray-50/50 p-4 rounded-2xl border border-gray-100/50">{currentChurch.History}</p>
+                                    <div className="text-sm text-gray-600 leading-relaxed font-medium bg-white p-4 rounded-2xl border border-blue-50 relative overflow-hidden shadow-sm">
+                                        <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
+                                        <p className="relative z-10">{currentChurch.History}</p>
+                                    </div>
                                 </div>
 
                                 {currentChurch.Mass ? (
@@ -258,11 +262,12 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
                                     </div>
                                 ) : null}
 
-                                <div className="flex items-center gap-4 bg-gray-50/80 p-5 rounded-[24px] border border-gray-100">
-                                    <div className="w-11 h-11 bg-white text-blue-600 rounded-[18px] flex items-center justify-center shadow-sm flex-shrink-0 border border-white">
+                                <div className="flex items-center gap-4 bg-white p-5 rounded-[24px] border border-blue-50 relative overflow-hidden shadow-sm">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
+                                    <div className="w-11 h-11 bg-white text-blue-600 rounded-[18px] flex items-center justify-center shadow-sm flex-shrink-0 border border-white relative z-10">
                                         <i className="fas fa-calendar-day text-lg"></i>
                                     </div>
-                                    <div className="min-w-0">
+                                    <div className="min-w-0 relative z-10">
                                         <p className="text-[10px] uppercase font-black text-gray-400 tracking-[0.2em] mb-1">Patronal Fiesta</p>
                                         <p className="text-[15px] text-gray-900 font-black">{currentChurch.Fiesta}</p>
                                     </div>
@@ -321,7 +326,7 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
                                     <div className="space-y-2">
                                         {nearbyChurches.map(c => (
                                             <div key={c.id} className="border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:scale-[0.98] border-white bg-white p-4 rounded-2xl">
-                                                <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 transition-opacity opacity-0 group-hover:opacity-100"></div>
+                                                <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
                                                 <div className="flex items-center justify-between relative z-10">
                                                     <div className="min-w-0 pr-4">
                                                         <h4 className="font-bold text-gray-800 text-xs truncate mb-0.5">{c.Name}</h4>
