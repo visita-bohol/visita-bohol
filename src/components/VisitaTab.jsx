@@ -186,7 +186,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                     <div
                                         key={id}
                                         onClick={() => editStep(idx)}
-                                        className="flex items-center gap-2 bg-white pl-3 pr-4 py-2 rounded-xl border border-blue-100 shadow-sm flex-shrink-0 cursor-pointer hover:border-blue-300 hover:bg-blue-50/60 transition-all"
+                                        className="flex items-center gap-2 bg-white pl-3 pr-4 py-2 rounded-xl border border-blue-100 shadow-sm flex-shrink-0 cursor-pointer transition-all hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10"
                                     >
                                         <span className="bg-blue-600 text-white text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full shadow-sm">{idx + 1}</span>
                                         <span className="text-[10px] font-bold text-gray-700 whitespace-nowrap mr-1 max-w-[80px] truncate">{church?.Name || 'Church'}</span>
@@ -220,7 +220,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                         <div className="flex-1 min-w-0" onClick={() => editStep(idx)}>
                                             <div className="flex items-center justify-between gap-2">
                                                 <h3 className="font-bold text-gray-900 text-sm truncate">{church.Name}</h3>
-                                                <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg shadow-sm uppercase flex items-center gap-1">
+                                                <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg border border-blue-100 shadow-sm uppercase flex items-center gap-1 transition-all hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10">
                                                     <i className="fas fa-pen text-[8px]"></i> Edit
                                                 </span>
                                             </div>
