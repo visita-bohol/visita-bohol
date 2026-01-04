@@ -126,6 +126,7 @@ function App() {
                         onChurchClick={handleViewOnMap}
                         onViewOnMap={handleViewOnMap}
                         initialSearchTerm={directorySearchTerm}
+                        setActiveTab={setActiveTab}
                     />
                 )}
                 {activeTab === 'visita' && (

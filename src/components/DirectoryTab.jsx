@@ -3,7 +3,7 @@ import { useGeolocation } from '../hooks/useGeolocation';
 import { MONTHS, calculateDistance } from '../utils/helpers';
 import ChurchCard from './ChurchCard';
 
-export default function DirectoryTab({ churches, visitedChurches, onChurchClick, initialSearchTerm, onViewOnMap }) {
+export default function DirectoryTab({ churches, visitedChurches, onChurchClick, initialSearchTerm, onViewOnMap, setActiveTab }) {
     const [searchTerm, setSearchTerm] = useState(initialSearchTerm || '');
     const [dioceseFilter, setDioceseFilter] = useState('All');
     const { location, getLocation, loading: geoLoading } = useGeolocation();
@@ -81,13 +81,13 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
                 {/* Top Row: Action & Title */}
                 <div className="flex items-center justify-between mb-4">
                     <button
-                        onClick={findNearest}
+                        onClick={() => setActiveTab('map')}
                         className="flex items-center gap-2 text-gray-600 active:text-blue-600 transition-colors group"
                     >
                         <div className="w-8 h-8 rounded-full bg-white border border-blue-100 group-hover:border-blue-600 group-active:border-blue-600 flex items-center justify-center shadow-sm transition-all">
-                            <i className="fas fa-location-crosshairs text-xs group-hover:text-blue-600 group-active:text-blue-600"></i>
+                            <i className="fas fa-arrow-left text-xs group-hover:text-blue-600 group-active:text-blue-600"></i>
                         </div>
-                        <span className="text-xs font-bold group-hover:text-blue-600 group-active:text-blue-600">Near Me</span>
+                        <span className="text-xs font-bold group-hover:text-blue-600 group-active:text-blue-600">Back</span>
                     </button>
 
                     <div className="text-center">
@@ -202,7 +202,7 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
                                                 <h3 className="font-bold text-gray-900 text-base leading-tight truncate mb-1">
                                                     {church.Name}
                                                 </h3>
-                                                <div className="flex items-start justify-between gap-2 overflow-hidden mb-2">
+                                                <div className="flex flex-col gap-1 overflow-hidden mb-2">
                                                     <span className="text-[10px] font-semibold text-gray-500 truncate flex items-center gap-2">
                                                         <span><i className={`fas fa-location-dot ${isTagbilaran ? 'text-blue-500' : 'text-amber-500'}`}></i> {church.Location}</span>
                                                     </span>
