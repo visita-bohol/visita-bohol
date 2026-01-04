@@ -414,7 +414,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                             <div className="flex-1 min-w-0">
                                                 <div className="flex items-center justify-between gap-2">
                                                     <h3 className="font-bold text-gray-900 text-sm truncate text-gray-500">{church.Name}</h3>
-                                                    <span className="text-[10px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded">PICKED</span>
+                                                    <span className="text-[10px] font-bold text-gray-400 bg-white px-2 py-1 rounded-lg border border-gray-100 shadow-sm uppercase flex items-center gap-1">PICKED</span>
                                                 </div>
                                                 <p className="text-[11px] text-gray-500 mt-0.5 flex items-center gap-1.5">
                                                     <i className="fas fa-location-dot text-gray-400 text-[10px]"></i> {church.Location}
@@ -450,7 +450,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                             }
                                         }
                                     }}
-                                    className={`church-select-item rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:shadow-md hover:border-blue-600 active:border-blue-600 active:scale-[0.98] ${isCurrentSlot ? 'border-blue-600 bg-blue-50/40' : 'border-white bg-white'
+                                    className={`church-select-item rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 ${isCurrentSlot ? 'border-blue-600 bg-blue-50/20' : 'border-blue-100 bg-white'
                                         }`}
                                 >
                                     <div className="flex items-start gap-3 relative z-10">
@@ -460,7 +460,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center justify-between gap-2">
                                                 <h3 className="font-bold text-gray-900 text-sm truncate">{church.Name}</h3>
-                                                {isCurrentSlot && <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">SELECTED</span>}
+                                                {isCurrentSlot && <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg border border-blue-100 shadow-sm uppercase flex items-center gap-1">SELECTED</span>}
                                             </div>
                                             <p className="text-[11px] text-gray-500 mt-0.5 flex items-center gap-1.5">
                                                 <i className={`fas fa-location-dot ${church.Diocese === 'Tagbilaran' ? 'text-blue-500' : 'text-amber-500'} text-[10px]`}></i> {church.Location}
@@ -506,7 +506,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                     <div className="flex items-center gap-2">
                         <i className="fas fa-route text-blue-600"></i>
                         <span className="font-black text-[11px] text-gray-900 uppercase tracking-widest px-1">Pilgrimage Progress</span>
-                        <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg shadow-sm">{completedCount}/7</span>
+                        <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg border border-blue-100 shadow-sm">{completedCount}/7</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <button onClick={resetVisita} className="text-red-600 text-xs font-bold px-2 py-1 flex items-center gap-1 transition-all active:scale-90">
