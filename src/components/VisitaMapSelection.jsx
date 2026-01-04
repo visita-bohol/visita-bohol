@@ -131,10 +131,10 @@ export default function VisitaMapSelection({ churches, onSelect, onClose, onBack
                         onClick={onBack || onClose}
                         className="flex items-center gap-2 text-gray-600 active:text-blue-600 transition-colors group"
                     >
-                        <div className="w-8 h-8 rounded-full bg-white border border-gray-200 group-active:border-blue-200 flex items-center justify-center shadow-sm transition-colors">
-                            <i className="fas fa-arrow-left text-xs group-active:text-blue-600"></i>
+                        <div className="w-8 h-8 rounded-full bg-white border border-blue-100 group-hover:border-blue-600 group-active:border-blue-600 flex items-center justify-center shadow-sm transition-all">
+                            <i className="fas fa-arrow-left text-xs group-hover:text-blue-600 group-active:text-blue-600"></i>
                         </div>
-                        <span className="text-xs font-bold group-active:text-blue-600">Back</span>
+                        <span className="text-xs font-bold group-hover:text-blue-600 group-active:text-blue-600">Back</span>
                     </button>
 
                     <div className="text-center">
@@ -147,7 +147,7 @@ export default function VisitaMapSelection({ churches, onSelect, onClose, onBack
                     </div>
 
                     <div className="w-16 flex justify-end">
-                        <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg shadow-sm">
+                        <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg border border-blue-100 shadow-sm">
                             {selectedIds ? selectedIds.filter(id => id).length : 0}/7
                         </span>
                     </div>

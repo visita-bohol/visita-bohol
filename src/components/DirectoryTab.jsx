@@ -84,10 +84,10 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
                         onClick={findNearest}
                         className="flex items-center gap-2 text-gray-600 active:text-blue-600 transition-colors group"
                     >
-                        <div className="w-8 h-8 rounded-full bg-white border border-gray-200 group-active:border-blue-200 flex items-center justify-center shadow-sm transition-colors">
-                            <i className="fas fa-location-crosshairs text-xs group-active:text-blue-600"></i>
+                        <div className="w-8 h-8 rounded-full bg-white border border-blue-100 group-hover:border-blue-600 group-active:border-blue-600 flex items-center justify-center shadow-sm transition-all">
+                            <i className="fas fa-location-crosshairs text-xs group-hover:text-blue-600 group-active:text-blue-600"></i>
                         </div>
-                        <span className="text-xs font-bold group-active:text-blue-600">Near Me</span>
+                        <span className="text-xs font-bold group-hover:text-blue-600 group-active:text-blue-600">Near Me</span>
                     </button>
 
                     <div className="text-center">
@@ -96,7 +96,7 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
                     </div>
 
                     <div className="w-16 flex justify-end">
-                        <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg shadow-sm">
+                        <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg border border-blue-100 shadow-sm">
                             {filteredChurches.length}
                         </span>
                     </div>
@@ -113,7 +113,7 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
                                 onClick={() => setDioceseFilter(diocese)}
                                 className={`flex items-center gap-2 px-4 py-2 rounded-xl border flex-shrink-0 transition-all cursor-pointer ${isActive
                                     ? 'border-blue-600 shadow-md bg-white'
-                                    : 'bg-white border-blue-100 shadow-sm hover:border-blue-300 hover:bg-blue-50/60'
+                                    : 'bg-white border-blue-100 shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10'
                                     }`}
                             >
                                 <span className={`text-[10px] font-bold whitespace-nowrap mr-1 ${isActive ? 'text-blue-600' : 'text-gray-700'}`}>
@@ -127,7 +127,7 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
 
                 {/* Bottom Row: Search Bar */}
                 <div className="flex gap-2">
-                    <div className="search-input-wrapper flex-1 !h-12 !rounded-xl !shadow-sm !border-blue-100/50 !bg-white">
+                    <div className="search-input-wrapper flex-1 !h-12 !rounded-xl !shadow-sm !border-blue-100 !bg-white">
                         <i className="fas fa-search text-gray-400 text-sm"></i>
                         <input
                             type="text"

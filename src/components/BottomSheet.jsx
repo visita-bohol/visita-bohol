@@ -276,7 +276,7 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
                 <div className="p-5 pb-8 border-t border-gray-50 bg-white/95 backdrop-blur-md flex-shrink-0">
                     {isResetView ? (
                         <div className="flex gap-3">
-                            <button onClick={onClose} className="flex-1 bg-gray-100 text-gray-600 py-4 rounded-2xl font-black active:scale-95 transition-all text-sm">
+                            <button onClick={onClose} className="flex-1 bg-white text-gray-600 border border-blue-100 py-4 rounded-2xl font-black transition-all text-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 mb-0.5">
                                 Cancel
                             </button>
                             <button onClick={onResetPilgrimage} className="flex-1 bg-red-600 text-white py-4 rounded-2xl font-black shadow-xl shadow-red-200 active:scale-95 transition-all text-sm">
@@ -285,7 +285,7 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
                         </div>
                     ) : isStation || isSpecialPrayer ? (
                         <div className="flex gap-3">
-                            <button onClick={onClose} className="flex-1 bg-gray-100 text-gray-600 py-4 rounded-2xl font-black text-sm active:scale-95 transition-all">
+                            <button onClick={onClose} className="flex-1 bg-white text-gray-600 border border-blue-100 py-4 rounded-2xl font-black text-sm transition-all hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 mb-0.5">
                                 Close
                             </button>
                             {isStation && onVisitaComplete && (
@@ -305,7 +305,7 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
                                 </button>
                                 <button
                                     onClick={onEdit}
-                                    className="px-5 bg-blue-50 text-blue-600 border border-blue-100 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-50 active:scale-95 transition-all"
+                                    className="px-5 bg-white text-blue-600 border border-blue-100 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 transition-all hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10"
                                 >
                                     <i className="fas fa-pen-to-square"></i> Suggest Edit
                                 </button>

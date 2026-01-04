@@ -163,10 +163,10 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                     <div className="sticky top-0 z-40 w-[100vw] -ml-4 -mr-4 mb-[10px] px-4 pt-4 pb-3 bg-gradient-to-b from-white/95 to-blue-50/95 backdrop-blur-md border-b border-white/80 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] transition-all">
                         <div className="flex items-center justify-between mb-4">
                             <button onClick={() => setIsReviewing(false)} className="flex items-center gap-2 text-gray-600 active:text-blue-600 transition-colors group">
-                                <div className="w-8 h-8 rounded-full bg-white border border-gray-200 group-active:border-blue-200 flex items-center justify-center shadow-sm transition-colors">
-                                    <i className="fas fa-arrow-left text-xs group-active:text-blue-600"></i>
+                                <div className="w-8 h-8 rounded-full bg-white border border-blue-100 group-hover:border-blue-600 group-active:border-blue-600 flex items-center justify-center shadow-sm transition-all">
+                                    <i className="fas fa-arrow-left text-xs group-hover:text-blue-600 group-active:text-blue-600"></i>
                                 </div>
-                                <span className="text-xs font-bold group-active:text-blue-600">Back</span>
+                                <span className="text-xs font-bold group-hover:text-blue-600 group-active:text-blue-600">Back</span>
                             </button>
 
                             <div className="text-center">
@@ -175,7 +175,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                             </div>
 
                             <div className="w-16 flex justify-end">
-                                <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg shadow-sm">7/7</span>
+                                <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg border border-blue-100 shadow-sm">7/7</span>
                             </div>
                         </div>
 
@@ -242,7 +242,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                             <span>Start Journey</span>
                             <i className="fas fa-chevron-right"></i>
                         </button>
-                        <button onClick={() => setIsReviewing(false)} className="w-full text-gray-500 font-bold text-sm py-2">
+                        <button onClick={() => setIsReviewing(false)} className="w-full text-gray-500 font-bold text-sm py-2 hover:text-blue-600 transition-colors">
                             Back to Selection
                         </button>
                     </div>
@@ -313,10 +313,10 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                     setIsSelecting(false);
                                 }
                             }} className="flex items-center gap-2 text-gray-600 active:text-blue-600 transition-colors group">
-                                <div className="w-8 h-8 rounded-full bg-white border border-gray-200 group-active:border-blue-200 flex items-center justify-center shadow-sm transition-colors">
-                                    <i className="fas fa-arrow-left text-xs group-active:text-blue-600"></i>
+                                <div className="w-8 h-8 rounded-full bg-white border border-blue-100 group-hover:border-blue-600 group-active:border-blue-600 flex items-center justify-center shadow-sm transition-all">
+                                    <i className="fas fa-arrow-left text-xs group-hover:text-blue-600 group-active:text-blue-600"></i>
                                 </div>
-                                <span className="text-xs font-bold group-active:text-blue-600">Back</span>
+                                <span className="text-xs font-bold group-hover:text-blue-600 group-active:text-blue-600">Back</span>
                             </button>
 
                             <div className="text-center">
@@ -325,7 +325,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                             </div>
 
                             <div className="w-16 flex justify-end">
-                                <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg shadow-sm">{filledCount}/7</span>
+                                <span className="text-[10px] font-bold text-blue-600 bg-white px-2 py-1 rounded-lg border border-blue-100 shadow-sm">{filledCount}/7</span>
                             </div>
                         </div>
 
@@ -382,14 +382,14 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
 
                             <button
                                 onClick={handleAutoSelect}
-                                className={`floating-action-btn !h-12 !w-12 !rounded-xl !shadow-sm !border !border-blue-100/50 !text-blue-600 active:!scale-95 bg-white transition-all ${geoLoading ? 'animate-pulse' : ''}`}
+                                className={`floating-action-btn !h-12 !w-12 !rounded-xl !shadow-sm !border !border-blue-100 !text-blue-600 bg-white transition-all hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 ${geoLoading ? 'animate-pulse' : ''}`}
                                 title="Auto-select 7 nearest churches"
                             >
                                 <i className={`${geoLoading ? 'fas fa-spinner fa-spin' : 'fa-solid fa-location-crosshairs'} text-lg`}></i>
                             </button>
                             <button
                                 onClick={() => setShowMapSelection(true)}
-                                className={`floating-action-btn ml-2 !h-12 !w-12 !rounded-xl !shadow-sm !border !border-blue-100/50 !text-blue-600 active:!scale-95 bg-white transition-all`}
+                                className={`floating-action-btn ml-2 !h-12 !w-12 !rounded-xl !shadow-sm !border !border-blue-100 !text-blue-600 bg-white transition-all hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10`}
                                 title="Select via Map"
                             >
                                 <i className="fas fa-map text-lg"></i>
