@@ -8,7 +8,7 @@ export default function ChurchCard({ church, isVisited, onClick, onViewOnMap }) 
 
     return (
         <div
-            className="fiesta-card-horizontal rounded-2xl p-4 border border-blue-100/50 shadow-md shadow-blue-500/5 active:scale-95 transition-all hover:border-blue-300 relative overflow-hidden cursor-pointer"
+            className="church-select-item rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:shadow-md hover:border-blue-200 active:scale-[0.98] border-white bg-white"
             onClick={onClick}
         >
             <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-blue-50/30 backdrop-blur-sm -z-10"></div>
