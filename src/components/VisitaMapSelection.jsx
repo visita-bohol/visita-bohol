@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, useMap, CircleMarker } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useGeolocation } from '../hooks/useGeolocation';
 
 // Reuse helper for icons

@@ -34,9 +34,6 @@ export default function ChurchCard({ church, isVisited, onClick, onViewOnMap }) 
                     <div className="flex items-center justify-between gap-2 mt-2">
                         <div className="flex items-center gap-1.5">
                             <span className={`${isTagbilaran ? 'text-blue-600' : 'text-amber-600'} font-bold text-xs`}><i className="fas fa-calendar-alt text-[10px] mr-1"></i>{church.Fiesta}</span>
-                            <span className="bg-blue-100 text-blue-600 text-[9px] px-2 py-1 rounded-full font-bold uppercase shadow-sm">
-                                {MONTHS[church.FiestaMonth]}
-                            </span>
                         </div>
                     </div>
 
