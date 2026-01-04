@@ -450,7 +450,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                             }
                                         }
                                     }}
-                                    className={`church-select-item rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 ${isCurrentSlot ? 'border-blue-600 bg-blue-50/20' : 'border-blue-100 bg-white'
+                                    className={`border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 ${isCurrentSlot ? 'border-blue-600 bg-blue-50/20' : 'border-blue-100 bg-white'
                                         }`}
                                 >
                                     <div className="flex items-start gap-3 relative z-10">
@@ -594,7 +594,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                     return (
                         <div key={id} className="mb-4 relative px-0">
                             <div
-                                className={`rounded-2xl p-5 border border-blue-100 bg-white shadow-sm transition-all hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 relative overflow-hidden`}
+                                className="border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 border-blue-100 bg-white p-5 rounded-2xl"
                             >
                                 <div className={`absolute inset-0 bg-gradient-to-br ${isNext ? 'from-blue-50/90 to-white/90' : 'from-white/95 to-blue-50/20'} backdrop-blur-sm -z-10`}></div>
                                 <div className="flex items-start gap-4 relative z-10">
