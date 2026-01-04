@@ -593,7 +593,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
 
                     return (
                         <div key={id} className="mb-4 relative px-0">
-                            <div className={`rounded-2xl p-5 border ${isNext ? 'border-blue-50/50' : 'border-gray-100'} shadow-sm active:scale-98 transition-all hover:border-blue-200 relative overflow-hidden`}>
+                            <div className={`rounded-2xl p-5 border ${isNext ? 'border-blue-50/50' : 'border-gray-100'} bg-white shadow-sm active:scale-98 transition-all hover:border-blue-200 relative overflow-hidden`}>
                                 <div className={`absolute inset-0 bg-gradient-to-br ${isNext ? 'from-blue-50/90 to-white/90' : 'from-white/95 to-blue-50/20'} backdrop-blur-sm -z-10`}></div>
                                 <div className="flex items-start gap-4 relative z-10">
                                     <div className={`w-12 h-12 rounded-full ${isNext ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-400'} flex items-center justify-center flex-shrink-0 font-black text-lg relative z-10 border-4 border-white shadow-md`}>
