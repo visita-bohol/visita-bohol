@@ -213,18 +213,12 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
                                                     </div>
                                                 </div>
 
-                                                <div className="pt-2 border-t border-gray-100/50 flex items-center justify-between">
-                                                    <div>
-                                                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Sunday Mass</p>
-                                                        <p className="text-[10px] font-semibold text-gray-700 flex items-center gap-1.5">
-                                                            <i className={`fas fa-clock ${isTagbilaran ? 'text-blue-400' : 'text-amber-400'}`}></i>
-                                                            <span className="truncate">{church.Mass || "Schedule Varies"}</span>
-                                                        </p>
-                                                    </div>
-                                                    <div className="bg-white/50 text-gray-400 px-2 py-1 rounded-full text-[9px] font-bold flex items-center gap-1 border border-white/50 group-hover:bg-blue-50 group-hover:text-blue-600 group-hover:border-blue-100 transition-colors">
-                                                        <i className="fas fa-eye text-[10px]"></i>
-                                                        <span>View</span>
-                                                    </div>
+                                                <div className="pt-2 border-t border-gray-100/50">
+                                                    <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Sunday Mass</p>
+                                                    <p className="text-[10px] font-semibold text-gray-700 flex items-center gap-1.5">
+                                                        <i className={`fas fa-clock ${isTagbilaran ? 'text-blue-400' : 'text-amber-400'}`}></i>
+                                                        <span className="truncate">{church.Mass || "Schedule Varies"}</span>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
