@@ -190,7 +190,7 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
                                 return (
                                     <div
                                         key={church.id}
-                                        className="fiesta-card-horizontal rounded-2xl p-4 border border-blue-600 shadow-md shadow-blue-100 transition-all hover:border-blue-600 active:border-blue-600 relative overflow-hidden flex-shrink-0 snap-start bg-white"
+                                        className="fiesta-card-horizontal rounded-2xl p-4 border border-gray-100 shadow-sm transition-all hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 relative overflow-hidden flex-shrink-0 snap-start bg-white"
                                         onClick={() => onChurchClick(church)}
                                     >
                                         <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm -z-10"></div>
