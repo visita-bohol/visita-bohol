@@ -10,7 +10,7 @@ export default function ChurchCard({ church, isVisited, onClick, onViewOnMap }) 
             className="church-select-item rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:scale-[0.98] border-white bg-white"
             onClick={onClick}
         >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 transition-opacity opacity-0 group-hover:opacity-100 backdrop-blur-sm"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
 
             <div className="flex items-start gap-4 relative z-10">
                 <div className={`w-12 h-12 rounded-full ${iconBg} text-white flex items-center justify-center flex-shrink-0 font-black text-lg relative z-10 border-4 border-white shadow-md`}>

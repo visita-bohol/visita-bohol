@@ -209,6 +209,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
 
                             return (
                                 <div key={id} className="church-select-item rounded-2xl p-3 border transition-all cursor-pointer relative overflow-hidden group border-blue-600 bg-blue-50/20 shadow-md">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
                                     <div className="flex items-center gap-3 relative z-10">
                                         <div className="drag-handle text-gray-300 px-1 cursor-grab active:cursor-grabbing hover:text-blue-400">
                                             <i className="fas fa-grip-vertical text-lg"></i>
@@ -453,7 +454,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                     className={`rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:scale-[0.98] ${isCurrentSlot ? 'border-blue-600 bg-blue-50/20' : 'border-white bg-white'
                                         }`}
                                 >
-                                    <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 transition-opacity opacity-0 group-hover:opacity-100"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
                                     <div className="flex items-start gap-3 relative z-10">
                                         <div className={`w-10 h-10 rounded-full ${markerColor} text-white flex items-center justify-center flex-shrink-0 font-black text-sm relative z-10 border-2 border-white shadow-sm ${iconShadow}`}>
                                             <i className="fas fa-church"></i>
@@ -552,7 +553,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                         return (
                             <div key={id} className="mb-4 relative px-0">
                                 <div className="rounded-2xl p-5 border border-blue-600 bg-blue-50/10 shadow-md shadow-blue-100 transition-all hover:border-blue-600 active:border-blue-600 relative overflow-hidden">
-                                    <div className="absolute inset-0 bg-gradient-to-br from-blue-100/40 to-blue-600/5 backdrop-blur-sm -z-10"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm -z-10"></div>
                                     <div className="flex items-start gap-4 relative z-10">
                                         <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 font-black text-lg relative z-10 border-4 border-white shadow-md">
                                             <i className="fas fa-check"></i>
@@ -597,8 +598,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                             <div
                                 className="border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:scale-[0.98] border-white bg-white p-5 rounded-2xl"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 transition-opacity opacity-0 group-hover:opacity-100 backdrop-blur-sm"></div>
-                                <div className={`absolute inset-0 bg-gradient-to-br ${isNext ? 'from-blue-50/90 to-white/90' : 'from-white/95 to-blue-50/20'} backdrop-blur-sm -z-10`}></div>
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm"></div>
                                 <div className="flex items-start gap-4 relative z-10">
                                     <div className={`w-12 h-12 rounded-full ${isNext ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-400'} flex items-center justify-center flex-shrink-0 font-black text-lg relative z-10 border-4 border-white shadow-md`}>
                                         {prayerIdx}
