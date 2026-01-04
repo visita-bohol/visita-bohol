@@ -287,14 +287,14 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
                         <div className="flex gap-3">
                             <button
                                 onClick={onClose}
-                                className="px-5 bg-blue-50 text-blue-600 border border-blue-100 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-50 active:scale-95 transition-all"
+                                className="flex-1 bg-blue-50 text-blue-600 border border-blue-100 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-50 active:scale-95 transition-all"
                             >
                                 Close
                             </button>
                             {isStation && onVisitaComplete && (
                                 <button
                                     onClick={() => onVisitaComplete(stationNumber)}
-                                    className="flex-[2] bg-blue-600 text-white py-4 rounded-2xl font-black shadow-xl shadow-blue-200 active:scale-95 transition-all"
+                                    className="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black shadow-xl shadow-blue-200 active:scale-95 transition-all"
                                 >
                                     <i className="fas fa-check-circle mr-2"></i> Complete
                                 </button>
