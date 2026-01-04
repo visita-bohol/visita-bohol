@@ -199,7 +199,7 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
                                                 <i className="fas fa-church text-base"></i>
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <h3 className="font-black text-gray-900 text-base leading-tight truncate mb-1">
+                                                <h3 className="font-bold text-gray-900 text-base leading-tight truncate mb-1">
                                                     {church.Name}
                                                 </h3>
                                                 <div className="flex items-start justify-between gap-2 overflow-hidden mb-2">
@@ -209,9 +209,6 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
                                                     <div className="flex items-center gap-1.5 flex-shrink-0">
                                                         <span className={`${isTagbilaran ? 'text-blue-600' : 'text-amber-600'} font-bold text-[10px]`}>
                                                             <i className="fas fa-calendar-alt text-[9px] mr-1"></i>{church.Fiesta}
-                                                        </span>
-                                                        <span className="bg-blue-100 text-blue-600 text-[9px] px-2 py-1 rounded-full font-bold uppercase shadow-sm">
-                                                            {MONTHS[church.FiestaMonth]}
                                                         </span>
                                                     </div>
                                                 </div>
