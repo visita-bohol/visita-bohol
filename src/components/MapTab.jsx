@@ -312,7 +312,7 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                     id="add-btn"
                     className={`h-12 w-12 rounded-xl shadow-lg border transition-all pointer-events-auto ${(isAddMode || tempCoordinate)
                         ? 'bg-orange-100 text-orange-600 border-orange-200 scale-95 shadow-orange-100'
-                        : 'text-orange-500 !bg-white border-blue-100 hover:border-orange-500 hover:bg-orange-50/10 hover:shadow-orange-100 active:scale-95 shadow-sm'}`}
+                        : 'text-orange-500 !bg-white border-blue-100 hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:scale-95 shadow-sm'}`}
                     title="Add Missing Church"
                 >
                     <i className="fas fa-map-pin text-lg"></i>
