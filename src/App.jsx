@@ -200,7 +200,6 @@ function App() {
                             </div>
 
                             <h2 className="text-3xl font-black text-gray-900 mb-2 leading-tight relative z-10">Complete!</h2>
-                            <p className="text-gray-400 font-bold mb-8 text-sm px-4 leading-relaxed relative z-10">You have successfully visited the 7 churches of your pilgrimage.</p>
 
                             {/* Church List Card */}
                             <div className="bg-gray-50/50 rounded-3xl p-6 border border-gray-100 relative z-10 text-left mb-6">
