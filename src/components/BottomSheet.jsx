@@ -199,40 +199,9 @@ export default function BottomSheet({ isOpen, church, nearbyChurches, isVisited,
                                         </div>
                                     ) : (
                                         <div className="bg-blue-50/50 rounded-[32px] p-6 mb-4 border border-blue-50/50 shadow-inner">
-                                            <div className="text-gray-700 leading-relaxed whitespace-pre-line text-sm font-medium">
-                                                {currentChurch.History.split('\n').map((line, lIdx) => {
-                                                    const prayers = [
-                                                        { key: 'Our Father', icon: 'fas fa-hands-praying', color: 'bg-blue-600' },
-                                                        { key: 'Hail Mary', icon: 'fas fa-dove', color: 'bg-blue-500' },
-                                                        { key: 'Glory Be', icon: 'fas fa-sun', color: 'bg-blue-400' }
-                                                    ];
-
-                                                    let processedLine = line;
-                                                    let isPrayerLine = false;
-
-                                                    const foundPrayer = prayers.find(p => line.includes(p.key + '…') || line.includes(p.key + '...'));
-
-                                                    if (foundPrayer) {
-                                                        return (
-                                                            <div key={lIdx} className="my-4 flex flex-col items-center gap-2">
-                                                                <div className="w-full h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent mb-2 opacity-50"></div>
-                                                                <div className={`${foundPrayer.color} text-white px-5 py-3 rounded-2xl shadow-lg flex items-center gap-3 active:scale-95 transition-all cursor-default`}>
-                                                                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                                                                        <i className={foundPrayer.icon}></i>
-                                                                    </div>
-                                                                    <div className="text-left">
-                                                                        <p className="text-[10px] font-black uppercase tracking-widest opacity-80 leading-none mb-1">Recite</p>
-                                                                        <p className="text-base font-black leading-none">{foundPrayer.key}</p>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="w-full h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent mt-2 opacity-50"></div>
-                                                            </div>
-                                                        );
-                                                    }
-
-                                                    return <p key={lIdx} className="mb-2">{line}</p>;
-                                                })}
-                                            </div>
+                                            <p className="text-gray-700 leading-relaxed whitespace-pre-line text-sm font-medium">
+                                                {currentChurch.History}
+                                            </p>
                                         </div>
                                     )}
                                 </>

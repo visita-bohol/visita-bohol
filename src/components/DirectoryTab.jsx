@@ -190,7 +190,7 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
                                 return (
                                     <div
                                         key={church.id}
-                                        className="fiesta-card-horizontal rounded-2xl p-4 border border-blue-100/50 shadow-md shadow-blue-500/5 active:scale-95 transition-all hover:border-blue-300 relative overflow-hidden flex-shrink-0 snap-start group cursor-pointer"
+                                        className="fiesta-card-horizontal rounded-2xl p-4 border border-blue-100/50 shadow-md shadow-blue-500/5 active:scale-95 transition-all hover:border-blue-300 relative overflow-hidden flex-shrink-0 snap-start"
                                         onClick={() => onChurchClick(church)}
                                     >
                                         <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/50 backdrop-blur-sm -z-10"></div>
@@ -213,18 +213,12 @@ export default function DirectoryTab({ churches, visitedChurches, onChurchClick,
                                                     </div>
                                                 </div>
 
-                                                <div className="pt-2 border-t border-gray-100/50 flex items-end justify-between gap-2">
-                                                    <div className="flex-1 min-w-0">
-                                                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Sunday Mass</p>
-                                                        <p className="text-[10px] font-semibold text-gray-700 flex items-start gap-1.5 leading-tight">
-                                                            <i className={`fas fa-clock ${isTagbilaran ? 'text-blue-400' : 'text-amber-400'} mt-0.5`}></i>
-                                                            <span className="line-clamp-2">{church.Mass || "Schedule Varies"}</span>
-                                                        </p>
-                                                    </div>
-                                                    <div className="bg-white/80 text-gray-400 px-2 py-1 rounded-full text-[9px] font-bold flex items-center gap-1 border border-gray-100/50 group-hover:bg-blue-50 group-hover:text-blue-600 group-hover:border-blue-100 transition-all flex-shrink-0 mb-0.5">
-                                                        <i className="fas fa-eye text-[10px]"></i>
-                                                        <span>View</span>
-                                                    </div>
+                                                <div className="pt-2 border-t border-gray-100/50">
+                                                    <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Sunday Mass</p>
+                                                    <p className="text-[10px] font-semibold text-gray-700 flex items-center gap-1.5">
+                                                        <i className={`fas fa-clock ${isTagbilaran ? 'text-blue-400' : 'text-amber-400'}`}></i>
+                                                        <span className="truncate">{church.Mass || "Schedule Varies"}</span>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>

@@ -214,6 +214,9 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                             <i className="fas fa-grip-vertical text-lg"></i>
                                         </div>
 
+                                        <div className={`w-10 h-10 rounded-full ${markerColor} text-white flex items-center justify-center flex-shrink-0 font-black text-sm relative z-10 border-2 border-white shadow-sm`}>
+                                            {idx + 1}
+                                        </div>
                                         <div className="flex-1 min-w-0" onClick={() => editStep(idx)}>
                                             <div className="flex items-center justify-between gap-2">
                                                 <h3 className="font-bold text-gray-900 text-sm truncate">{church.Name}</h3>
@@ -224,10 +227,6 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                             <p className="text-[11px] text-gray-500 mt-0.5 flex items-center gap-1.5">
                                                 <i className={`fas fa-location-dot ${church.Diocese === 'Tagbilaran' ? 'text-blue-500' : 'text-amber-500'} text-[10px]`}></i> {church.Location}
                                             </p>
-                                        </div>
-
-                                        <div className={`w-10 h-10 rounded-full ${markerColor} text-white flex items-center justify-center flex-shrink-0 font-black text-sm relative z-10 border-2 border-white shadow-sm`}>
-                                            {idx + 1}
                                         </div>
                                     </div>
                                 </div>
@@ -562,7 +561,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                                 <div className="flex-1 min-w-0">
                                                     <h3 className="font-bold text-gray-900 text-lg truncate">{church.Name}</h3>
                                                     <p className="text-xs text-gray-500 mt-0.5">
-                                                        <i className={`fas fa-location-dot ${church.Diocese === 'Tagbilaran' ? 'text-blue-500' : 'text-amber-500'}`}></i> {church.Location}
+                                                        <i className="fas fa-location-dot text-blue-500"></i> {church.Location}
                                                     </p>
                                                 </div>
                                                 <span className="bg-blue-600 text-white text-[9px] px-2 py-1 rounded-full font-bold uppercase shadow-sm">Done</span>
@@ -605,7 +604,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                             <div className="flex-1 min-w-0">
                                                 <h3 className="font-bold text-gray-900 text-lg truncate">{church.Name}</h3>
                                                 <p className="text-xs text-gray-500 mt-0.5">
-                                                    <i className={`fas fa-location-dot ${church.Diocese === 'Tagbilaran' ? 'text-blue-500' : 'text-amber-500'}`}></i> {church.Location}
+                                                    <i className="fas fa-location-dot text-blue-500"></i> {church.Location}
                                                 </p>
                                             </div>
                                             {isNext && <span className="bg-blue-100 text-blue-600 text-[9px] px-2 py-1 rounded-full font-bold uppercase animate-pulse shadow-sm">Next</span>}
