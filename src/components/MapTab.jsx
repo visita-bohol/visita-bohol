@@ -93,9 +93,13 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
     };
 
     const enableAddMode = () => {
-        setIsAddMode(true);
-        setTempCoordinate(null);
-        // Clear search or filters if needed, or leave them
+        if (isAddMode || tempCoordinate) {
+            setIsAddMode(false);
+            setTempCoordinate(null);
+        } else {
+            setIsAddMode(true);
+            setTempCoordinate(null);
+        }
     };
 
     const handleMapClick = (latlng) => {
@@ -306,7 +310,7 @@ export default function MapTab({ churches, visitedChurches, onChurchClick, initi
                 <button
                     onClick={enableAddMode}
                     id="add-btn"
-                    className={`h-12 w-12 rounded-xl shadow-lg border transition-all pointer-events-auto ${isAddMode
+                    className={`h-12 w-12 rounded-xl shadow-lg border transition-all pointer-events-auto ${(isAddMode || tempCoordinate)
                         ? 'bg-orange-100 text-orange-600 border-orange-400 scale-95 shadow-orange-100'
                         : 'text-orange-500 !bg-white border-blue-100 hover:border-orange-500 hover:bg-orange-50/10 hover:shadow-orange-100 active:scale-95 shadow-sm'}`}
                     title="Add Missing Church"
