@@ -450,7 +450,7 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                                             }
                                         }
                                     }}
-                                    className={`border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 ${isCurrentSlot ? 'border-blue-600 bg-blue-50/20' : 'border-blue-100 bg-white'
+                                    className={`rounded-2xl p-4 border transition-all cursor-pointer relative overflow-hidden group shadow-sm hover:border-blue-600 hover:bg-blue-50/10 hover:shadow-md hover:shadow-blue-100 active:border-blue-600 active:bg-blue-50/10 ${isCurrentSlot ? 'border-blue-600 bg-blue-50/20' : 'border-blue-100 bg-white'
                                         }`}
                                 >
                                     <div className="flex items-start gap-3 relative z-10">
