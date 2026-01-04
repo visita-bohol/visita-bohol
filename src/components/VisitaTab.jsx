@@ -550,7 +550,12 @@ export default function VisitaTab({ churches, prayers, visitedChurches, visitaPr
                     if (isDone) {
                         return (
                             <div key={id} className="mb-4 relative px-0">
-                                <div className="rounded-2xl p-5 border border-blue-600 bg-blue-50/10 shadow-md shadow-blue-100 active:scale-98 transition-all hover:border-blue-200 relative overflow-hidden">
+                                <div className="rounded-2xl p-5 border border-blue-600 bg-blue-50/10 shadow-md shadow-blue-100 active:scale-98 transition-all hover:border-blue-600 active:border-blue-600 relative overflow-hidden cursor-pointer"
+                                    onClick={() => {
+                                        const p = prayers[prayerIdx];
+                                        onChurchClick({ ...church, Name: p.title, History: p.prayer }, { text: `STATION ${prayerIdx}`, icon: 'fas fa-book-open', color: 'text-blue-600' });
+                                    }}
+                                >
                                     <div className="absolute inset-0 bg-gradient-to-br from-blue-100/40 to-blue-600/5 backdrop-blur-sm -z-10"></div>
                                     <div className="flex items-start gap-4 relative z-10">
                                         <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 font-black text-lg relative z-10 border-4 border-white shadow-md">
